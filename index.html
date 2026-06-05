@@ -45,9 +45,9 @@ nav{
 /* ── HERO ────────────────────────────────────────────────────────────────── */
 .hero{
   background:var(--cream);
-  padding:3.5rem 2.5rem 0;
+  padding:2.25rem 2.5rem 0;
   position:relative;overflow:hidden;
-  min-height:calc(90vh - 50px);
+  min-height:calc(78vh - 50px);
   display:flex;flex-direction:column;justify-content:space-between;
 }
 .hero-bg{
@@ -63,25 +63,25 @@ nav{
 .hero-body{position:relative;z-index:1;flex:1}
 .hero-eye{
   font-size:10px;letter-spacing:2.5px;text-transform:uppercase;
-  color:var(--ink3);margin-bottom:1.5rem;
+  color:var(--ink3);margin-bottom:1rem;
 }
 .hero-h1{
   font-family:'Playfair Display',serif;
-  font-size:clamp(3rem,7vw,6rem);
+  font-size:clamp(2.5rem,6vw,5rem);
   font-weight:400;
   line-height:1.0;
   letter-spacing:-2px;
   color:var(--ink);
-  margin-bottom:1.5rem;
+  margin-bottom:1rem;
   max-width:800px;
 }
 .hero-h1 em{font-style:italic;color:var(--rust)}
 .hero-desc{
   font-size:15px;color:var(--ink2);
-  line-height:1.7;margin-bottom:2rem;
+  line-height:1.7;margin-bottom:1.25rem;
   max-width:440px;
 }
-.hero-btns{display:flex;flex-wrap:wrap;align-items:center;gap:1.25rem;margin-bottom:3.5rem}
+.hero-btns{display:flex;flex-wrap:wrap;align-items:center;gap:1.25rem;margin-bottom:2rem}
 .btn-dark{
   display:inline-flex;align-items:center;gap:8px;
   font-size:11.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;
@@ -97,13 +97,13 @@ nav{
 /* STATS STRIP */
 .stats-strip{
   border-top:1px solid var(--border);
-  padding:1rem 0;
+  padding:.5rem 0;
   display:grid;
   grid-template-columns:repeat(4,1fr);
   position:relative;z-index:1;
 }
 .stat-item{
-  padding:.625rem 0;
+  padding:.5rem 0;
   border-right:1px solid var(--border);
   display:flex;align-items:baseline;gap:.5rem;
   padding-left:1rem;
@@ -118,16 +118,16 @@ nav{
 .stat-l{font-size:10.5px;letter-spacing:.04em;color:var(--ink3)}
 
 /* ── PROCESS ─────────────────────────────────────────────────────────────── */
-.process{background:var(--dark);padding:3rem 2.5rem}
+.process{background:var(--dark);padding:2rem 2.5rem}
 .proc-head{
   display:flex;flex-direction:column;gap:.75rem;
-  margin-bottom:2rem;
+  margin-bottom:1.25rem;
 }
 @media(min-width:700px){.proc-head{flex-direction:row;align-items:flex-end;justify-content:space-between}}
 .proc-eye{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:.5rem}
 .proc-h2{
   font-family:'Playfair Display',serif;
-  font-size:clamp(1.75rem,4vw,3rem);
+  font-size:clamp(1.5rem,3.5vw,2.5rem);
   font-weight:400;line-height:1.05;letter-spacing:-.5px;
   color:#fff;
 }
@@ -138,31 +138,31 @@ nav{
   border:1px solid var(--border-dark);
 }
 .step{
-  padding:1.5rem 1.25rem;
+  padding:1.1rem 1rem;
   border-right:1px solid var(--border-dark);
   transition:background .2s;
 }
 .step:last-child{border-right:none}
 .step:hover{background:rgba(255,255,255,.04)}
-.step-n{font-family:monospace;font-size:11px;color:var(--rust);margin-bottom:1.5rem;display:block}
+.step-n{font-family:monospace;font-size:11px;color:var(--rust);margin-bottom:.875rem;display:block}
 .step-t{font-size:13.5px;font-weight:500;color:#fff;margin-bottom:.4rem}
 .step-d{font-size:12px;color:rgba(255,255,255,.38);line-height:1.6}
 .step-line{
-  margin-top:1.25rem;height:1px;width:1.75rem;
+  margin-top:.875rem;height:1px;width:1.75rem;
   background:rgba(255,255,255,.15);transition:all .25s;
 }
 .step:hover .step-line{width:3.5rem;background:var(--rust)}
 
 /* ── WHY ─────────────────────────────────────────────────────────────────── */
-.why{background:var(--cream);padding:2.75rem 2.5rem}
+.why{background:var(--cream);padding:1.75rem 2.5rem}
 .why-head{
-  display:grid;gap:1.25rem;margin-bottom:2rem;
+  display:grid;gap:1.25rem;margin-bottom:1.25rem;
 }
 @media(min-width:700px){.why-head{grid-template-columns:1fr 1fr;align-items:end}}
 .why-eye{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink3);margin-bottom:.5rem}
 .why-h2{
   font-family:'Playfair Display',serif;
-  font-size:clamp(1.75rem,4vw,3rem);
+  font-size:clamp(1.5rem,3.5vw,2.5rem);
   font-weight:400;line-height:1.05;letter-spacing:-.5px;color:var(--ink);
 }
 .why-h2 em{font-style:italic;color:var(--rust)}
@@ -170,7 +170,7 @@ nav{
 .why-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
 .wc{
   background:var(--cream);
-  padding:1.5rem 1.25rem;
+  padding:1.1rem 1rem;
   transition:background .2s;
 }
 .wc:hover{background:#fff}
@@ -182,18 +182,18 @@ nav{
 }
 .wc-stat{
   font-family:'Playfair Display',serif;
-  font-size:clamp(2rem,4.5vw,3.25rem);
+  font-size:clamp(1.6rem,3.5vw,2.5rem);
   font-style:italic;color:var(--ink);
   line-height:1;margin-bottom:.625rem;
 }
 .wc-desc{font-size:12.5px;color:var(--ink2);line-height:1.65}
-.wc-line{margin-top:1.25rem;height:1px;background:var(--border);transition:background .25s}
+.wc-line{margin-top:.875rem;height:1px;background:var(--border);transition:background .25s}
 .wc:hover .wc-line{background:var(--rust)}
 
 /* ── CTA ─────────────────────────────────────────────────────────────────── */
 .cta{
   background:var(--cream);
-  padding:3.5rem 2.5rem;
+  padding:2.25rem 2.5rem;
   text-align:center;
   position:relative;overflow:hidden;
 }
@@ -206,7 +206,7 @@ nav{
 .cta-eye{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink3);margin-bottom:1.25rem}
 .cta-h2{
   font-family:'Playfair Display',serif;
-  font-size:clamp(2.5rem,6vw,5rem);
+  font-size:clamp(2rem,5vw,4rem);
   font-weight:400;letter-spacing:-1.5px;line-height:1.05;
   color:var(--ink);margin-bottom:1.5rem;
   position:relative;z-index:1;
@@ -224,7 +224,7 @@ nav{
 .cta-s:hover{color:var(--rust)}
 
 /* ── FOOTER ──────────────────────────────────────────────────────────────── */
-footer{background:var(--dark);padding:2.5rem 2.5rem 1.5rem}
+footer{background:var(--dark);padding:1.75rem 2.5rem 1.25rem}
 .foot-top{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:2rem;margin-bottom:2rem}
 .foot-logo{font-family:'Playfair Display',serif;font-size:16px;font-weight:400;color:rgba(255,255,255,.6);margin-bottom:.5rem}
 .foot-logo em{font-style:italic;color:var(--rust)}
@@ -342,25 +342,25 @@ footer{background:var(--dark);padding:2.5rem 2.5rem 1.5rem}
   <div class="why-head">
     <div>
       <div class="why-eye">Why this exists</div>
-      <h2 class="why-h2">We tested two major OTAs.<br/><em>Here's what broke.</em></h2>
+      <h2 class="why-h2">We tested two major platforms.<br/><em>Here's what broke.</em></h2>
     </div>
-    <p class="why-sub">These weren't edge cases. This was a single booking flow, start to finish. Every issue would have cost time, money, or both.</p>
+    <p class="why-sub">These weren't edge cases. Same booking flow, start to finish — on two platforms most Indian travelers use daily.</p>
   </div>
   <div class="why-cards">
     <div class="wc">
-      <div class="wc-head"><span class="wc-platform">MakeMyTrip</span><span class="wc-tag">Price mismatch</span></div>
+      <div class="wc-head"><span class="wc-platform">Leading Indian OTA</span><span class="wc-tag">Price mismatch</span></div>
       <div class="wc-stat">3 prices</div>
       <div class="wc-desc">Same room showed ₹2,010 on listing, ₹9,000 at review, ₹4,551 at checkout. The math reconciles — but no user should have to figure that out.</div>
       <div class="wc-line"></div>
     </div>
     <div class="wc">
-      <div class="wc-head"><span class="wc-platform">Booking.com</span><span class="wc-tag">Hidden ratings</span></div>
+      <div class="wc-head"><span class="wc-platform">Global booking platform</span><span class="wc-tag">Hidden ratings</span></div>
       <div class="wc-stat">4.1 vs 5.0</div>
       <div class="wc-desc">Headline said "4.1 Disappointing" while every subcategory scored 5.0. The algorithm contradicted its own data.</div>
       <div class="wc-line"></div>
     </div>
     <div class="wc">
-      <div class="wc-head"><span class="wc-platform">Booking.com</span><span class="wc-tag">Missing amenities</span></div>
+      <div class="wc-head"><span class="wc-platform">Global booking platform</span><span class="wc-tag">Missing amenities</span></div>
       <div class="wc-stat">No WiFi</div>
       <div class="wc-desc">Asked if I was travelling for work. Still didn't mention the hotel has no internet. Found it buried three screens deep.</div>
       <div class="wc-line"></div>

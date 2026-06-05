@@ -3,255 +3,223 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<meta name="description" content="TrustRoute — AI travel execution platform. Plan, verify and monitor every trip. No more price surprises, ghost hotels or missed visa rules."/>
 <title>TrustRoute — Every detail. Verified.</title>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --dark:#060E1A;
-  --dark2:#0A1929;
-  --navy:#1F4E79;
-  --accent:#4A9EFF;
-  --accent-dim:rgba(74,158,255,.1);
-  --green:#2ECC71;
+  --bg:#F7F3ED;
+  --ink:#0F1520;
+  --ink2:#4B5563;
+  --ink3:#9CA3AF;
+  --primary:#E05C3A;
+  --primary-dim:rgba(224,92,58,.1);
+  --border:rgba(15,21,32,.1);
   --white:#fff;
-  --bg:#F7F6F3;
-  --ink:#0a0a0a;
-  --ink2:#3d3d3d;
-  --ink3:#7a7a7a;
-  --border:#e8e8e6;
-  --blue:#1847a3;
-  --blue-l:#e8eef9;
+  --dark:#0F1520;
 }
-body{font-family:'DM Sans',sans-serif;background:var(--white);color:var(--ink);line-height:1.6;overflow-x:hidden}
-a{text-decoration:none}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
 
 /* ── NAV ─────────────────────────────────────────────────────────────────── */
 nav{
+  position:sticky;top:0;z-index:100;
   display:flex;align-items:center;justify-content:space-between;
   padding:0 2.5rem;height:52px;
-  border-bottom:1px solid rgba(255,255,255,.07);
-  position:sticky;top:0;z-index:100;
-  background:rgba(6,14,26,.92);
-  backdrop-filter:blur(12px);
+  background:rgba(247,243,237,.92);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--border);
 }
-.logo{font-family:'Fraunces',serif;font-size:18px;font-weight:400;letter-spacing:-.4px;color:var(--white)}
-.logo em{font-style:italic;color:var(--accent)}
-.nav-links{display:flex;align-items:center;gap:4px}
-.nav-link{font-size:13px;color:rgba(255,255,255,.45);padding:5px 12px;border-radius:6px;transition:all .15s}
-.nav-link:hover{background:rgba(255,255,255,.06);color:rgba(255,255,255,.85)}
+.logo{font-family:'Playfair Display',serif;font-size:17px;font-weight:400;letter-spacing:-.3px;color:var(--ink)}
+.logo em{font-style:italic;color:var(--primary)}
+.nav-links{display:flex;align-items:center;gap:2px}
+.nav-link{font-size:13px;color:var(--ink3);padding:5px 12px;border-radius:4px;transition:all .15s}
+.nav-link:hover{color:var(--ink);background:rgba(15,21,32,.05)}
 .nav-r{display:flex;align-items:center;gap:8px}
-.nav-ghost{font-size:13px;color:rgba(255,255,255,.55);padding:5px 14px;border:1px solid rgba(255,255,255,.15);border-radius:7px;transition:all .15s}
-.nav-ghost:hover{border-color:rgba(255,255,255,.3);color:var(--white)}
-.nav-btn{font-size:13px;font-weight:500;padding:6px 14px;border-radius:7px;background:var(--accent);color:var(--dark);transition:all .15s}
-.nav-btn:hover{background:#6BB5FF;transform:translateY(-1px)}
+.nav-ghost{font-size:13px;color:var(--ink2);padding:5px 14px;border:1px solid var(--border);border-radius:4px;transition:all .15s}
+.nav-ghost:hover{border-color:var(--ink);color:var(--ink)}
+.nav-btn{font-size:13px;font-weight:500;padding:6px 16px;background:var(--ink);color:var(--white);border-radius:4px;transition:all .15s}
+.nav-btn:hover{background:var(--primary);transform:translateY(-1px)}
 
-/* ── SCROLL 1: HERO ──────────────────────────────────────────────────────── */
+/* ── HERO ────────────────────────────────────────────────────────────────── */
 .hero{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  height:calc(100vh - 52px);
-  align-items:stretch;
-}
-
-/* LEFT */
-.hl{
   background:var(--dark);
-  padding:2.5rem;
-  display:flex;flex-direction:column;justify-content:space-between;
-  position:relative;overflow:hidden;
+  min-height:calc(100vh - 52px);
+  display:flex;flex-direction:column;
+  justify-content:space-between;
+  overflow:hidden;position:relative;
 }
-.hl::after{
-  content:'';position:absolute;bottom:-80px;right:-80px;
-  width:280px;height:280px;border-radius:50%;
-  background:radial-gradient(circle,rgba(74,158,255,.18) 0%,transparent 70%);
-  pointer-events:none;
+.hero::before{
+  content:'TRUST';
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  font-family:'Playfair Display',serif;
+  font-size:38vw;font-weight:900;
+  color:rgba(255,255,255,.018);
+  pointer-events:none;white-space:nowrap;line-height:1;
+  letter-spacing:-2vw;
 }
-.hl-top{position:relative;z-index:1}
-.hl-eye{
-  font-size:10px;letter-spacing:2px;text-transform:uppercase;
-  color:rgba(255,255,255,.28);margin-bottom:1rem;display:flex;align-items:center;gap:6px;
+.hero-body{
+  flex:1;display:flex;align-items:center;
+  padding:3rem 2.5rem 2rem;position:relative;z-index:1;
 }
-.hl-eye::before{content:'';width:5px;height:5px;background:var(--accent);border-radius:50%;animation:blink 2s infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-.hl-title{
-  font-family:'Fraunces',serif;
-  font-size:clamp(36px,4.5vw,58px);
-  line-height:1.08;
-  font-weight:300;
+.hero-inner{max-width:680px}
+.hero-eyebrow{
+  font-size:10px;letter-spacing:2.5px;text-transform:uppercase;
+  color:rgba(255,255,255,.3);margin-bottom:1.25rem;
+  display:flex;align-items:center;gap:8px;
+}
+.hero-eyebrow::before{content:'';width:5px;height:5px;background:var(--primary);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+.hero-h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.6rem,6vw,5rem);
+  font-weight:400;
+  line-height:1.0;
   letter-spacing:-1.5px;
   color:var(--white);
-  margin-bottom:1rem;
+  margin-bottom:1.25rem;
 }
-.hl-title em{font-style:italic;color:var(--accent)}
-.hl-desc{font-size:13.5px;color:rgba(255,255,255,.42);line-height:1.65;margin-bottom:1.75rem;max-width:360px}
-.hl-btns{display:flex;gap:10px;margin-bottom:2rem}
-.btn-p{font-size:13px;font-weight:600;padding:9px 20px;border-radius:8px;background:var(--accent);color:var(--dark);transition:all .2s}
-.btn-p:hover{background:#6BB5FF;transform:translateY(-1px);box-shadow:0 6px 20px rgba(74,158,255,.3)}
-.btn-s{font-size:13px;padding:9px 18px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.75);transition:all .2s}
-.btn-s:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.25);color:var(--white)}
-.feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
-.feat{
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.07);
-  border-radius:10px;padding:10px 12px;
-  display:flex;align-items:flex-start;gap:8px;
-  transition:background .15s;
+.hero-h1 em{font-style:italic;color:var(--primary)}
+.hero-desc{font-size:15px;color:rgba(255,255,255,.45);line-height:1.65;margin-bottom:2rem;max-width:440px}
+.hero-btns{display:flex;flex-wrap:wrap;align-items:center;gap:1rem}
+.btn-primary{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;
+  padding:10px 22px;background:var(--white);color:var(--dark);
+  transition:all .2s;
 }
-.feat:hover{background:rgba(255,255,255,.07)}
-.feat-ico{font-size:15px;flex-shrink:0;margin-top:1px}
-.feat-t{font-size:12px;font-weight:600;color:var(--white);line-height:1.2}
-.feat-d{font-size:11px;color:rgba(255,255,255,.35);line-height:1.35;margin-top:2px}
-.hl-stats{
-  position:relative;z-index:1;
-  border-top:1px solid rgba(255,255,255,.07);
-  padding-top:1rem;
-  display:flex;gap:0;
-}
-.stat{flex:1;text-align:center;border-right:1px solid rgba(255,255,255,.07)}
-.stat:last-child{border-right:none}
-.stat-n{font-family:'Fraunces',serif;font-size:18px;font-weight:400;font-style:italic;color:var(--white);line-height:1}
-.stat-l{font-size:10px;color:rgba(255,255,255,.28);margin-top:3px;letter-spacing:.2px}
+.btn-primary:hover{background:var(--primary);color:var(--white)}
+.btn-primary .arr{transition:transform .2s}
+.btn-primary:hover .arr{transform:translateX(3px)}
+.btn-text{font-size:13px;color:rgba(255,255,255,.4);letter-spacing:.03em;transition:color .2s}
+.btn-text:hover{color:rgba(255,255,255,.8)}
 
-/* RIGHT */
-.hr{
-  background:var(--dark2);
-  padding:2rem 2rem 1.5rem;
-  display:flex;flex-direction:column;justify-content:center;gap:.75rem;
-  border-left:1px solid rgba(255,255,255,.05);
+/* MARQUEE */
+.marquee-wrap{
+  border-top:1px solid rgba(255,255,255,.08);
+  padding:.875rem 0;
+  position:relative;z-index:1;overflow:hidden;
 }
-.hr-lbl{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:.25rem}
-.mc{
-  background:rgba(255,255,255,.04);
+.marquee-track{display:flex;animation:marquee 20s linear infinite}
+.marquee-inner{display:flex;flex-shrink:0;align-items:center;gap:3.5rem;padding:0 1.75rem}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.stat-item{display:flex;align-items:baseline;gap:.5rem;white-space:nowrap}
+.stat-n{font-family:'Playfair Display',serif;font-size:1.25rem;font-style:italic;color:var(--white)}
+.stat-l{font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.28)}
+.stat-sep{width:3px;height:3px;background:rgba(255,255,255,.15);border-radius:50%;flex-shrink:0}
+
+/* ── HOW IT WORKS ─────────────────────────────────────────────────────────── */
+.hiw{background:var(--ink);padding:3rem 2.5rem}
+.hiw-head{
+  display:flex;flex-direction:column;gap:.75rem;
+  margin-bottom:2rem;
+}
+@media(min-width:768px){.hiw-head{flex-direction:row;align-items:flex-end;justify-content:space-between}}
+.hiw-eyebrow{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:.5rem}
+.hiw-h2{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.6rem,3.5vw,2.8rem);
+  font-weight:400;line-height:1.1;letter-spacing:-.5px;
+  color:var(--white);
+}
+.hiw-h2 em{font-style:italic;color:var(--primary)}
+.hiw-sub{font-size:13px;color:rgba(255,255,255,.4);line-height:1.65;max-width:320px;align-self:flex-end}
+.steps{
+  display:grid;grid-template-columns:repeat(4,1fr);
   border:1px solid rgba(255,255,255,.08);
-  border-radius:12px;padding:1rem 1.1rem;
-  display:block;
+}
+.step{
+  padding:1.5rem 1.25rem;
+  border-right:1px solid rgba(255,255,255,.08);
+  transition:background .2s;position:relative;
+}
+.step:last-child{border-right:none}
+.step:hover{background:rgba(255,255,255,.04)}
+.step-n{font-family:monospace;font-size:11px;color:var(--primary);margin-bottom:1.5rem;display:block}
+.step-t{font-size:14px;font-weight:500;color:var(--white);margin-bottom:.5rem}
+.step-d{font-size:12px;color:rgba(255,255,255,.4);line-height:1.6}
+.step-bar{
+  margin-top:1.25rem;height:1px;width:2rem;
+  background:rgba(255,255,255,.15);
   transition:all .2s;
 }
-.mc:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);transform:translateX(3px)}
-.mc.featured{
-  background:linear-gradient(135deg,rgba(74,158,255,.14) 0%,rgba(74,158,255,.04) 100%);
-  border-color:rgba(74,158,255,.4);
-}
-.mc.featured:hover{background:linear-gradient(135deg,rgba(74,158,255,.2) 0%,rgba(74,158,255,.08) 100%)}
-.mc-top{display:flex;align-items:center;gap:9px;margin-bottom:5px}
-.mc-ico{
-  width:32px;height:32px;border-radius:8px;
-  background:rgba(255,255,255,.06);
-  display:flex;align-items:center;justify-content:center;
-  font-size:15px;flex-shrink:0;
-}
-.mc.featured .mc-ico{background:rgba(74,158,255,.2)}
-.mc-title{font-size:13px;font-weight:600;color:var(--white)}
-.mc-badge{
-  margin-left:auto;padding:2px 8px;
-  background:var(--accent);color:var(--dark);
-  border-radius:20px;font-size:9px;font-weight:700;letter-spacing:.2px;
-}
-.mc-desc{font-size:11.5px;color:rgba(255,255,255,.38);line-height:1.55;padding-left:41px}
-.hr-note{
-  display:flex;align-items:center;gap:7px;
-  padding:.65rem 1rem;
-  background:rgba(46,204,113,.07);
-  border:1px solid rgba(46,204,113,.18);
-  border-radius:8px;
-  font-size:11.5px;color:rgba(255,255,255,.5);
-}
-.hr-note strong{color:var(--green)}
+.step:hover .step-bar{width:4rem;background:var(--primary)}
 
-/* ── SCROLL 2 ────────────────────────────────────────────────────────────── */
-.scroll2{background:var(--bg)}
-
-/* HOW IT WORKS */
-.hiw{
-  max-width:1160px;margin:0 auto;
-  padding:3rem 2.5rem 2rem;
+/* ── WHY ─────────────────────────────────────────────────────────────────── */
+.why{padding:2.75rem 2.5rem;background:var(--bg)}
+.why-head{display:grid;gap:1.5rem;margin-bottom:2rem}
+@media(min-width:768px){.why-head{grid-template-columns:1fr 1fr;align-items:end}}
+.why-eyebrow{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink3);margin-bottom:.5rem}
+.why-h2{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.6rem,3.5vw,2.8rem);
+  font-weight:400;line-height:1.1;letter-spacing:-.5px;color:var(--ink);
 }
-.tag{
-  display:inline-block;font-size:10px;font-weight:600;
-  letter-spacing:1px;text-transform:uppercase;
-  padding:3px 10px;background:var(--blue-l);color:var(--blue);
-  border-radius:20px;margin-bottom:.75rem;
-}
-.sec-h2{
-  font-family:'Fraunces',serif;
-  font-size:clamp(22px,2.8vw,30px);
-  font-weight:300;letter-spacing:-.5px;
-  color:var(--ink);margin-bottom:.4rem;
-}
-.sec-sub{font-size:13px;color:var(--ink3);margin-bottom:1.75rem;line-height:1.65;max-width:440px}
-.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border-radius:12px;overflow:hidden}
-.step{padding:1.25rem 1.1rem;background:var(--white)}
-.step-n{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(30,79,122,.25);margin-bottom:.75rem}
-.step-ico{font-size:22px;margin-bottom:.6rem}
-.step-t{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:.3rem}
-.step-d{font-size:11.5px;color:var(--ink3);line-height:1.55}
-
-/* WHY */
-.why{max-width:1160px;margin:0 auto;padding:.5rem 2.5rem 2.5rem}
-.why-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.why-h2 em{font-style:italic;color:var(--primary)}
+.why-sub{font-size:13.5px;color:var(--ink2);line-height:1.7;align-self:flex-end}
+.why-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
 .wc{
-  background:var(--white);border-radius:12px;
-  border:1px solid var(--border);
-  padding:1.25rem;
-  transition:all .2s;
+  background:var(--bg);padding:1.5rem 1.25rem;
+  transition:background .2s;position:relative;
 }
-.wc:hover{box-shadow:0 6px 24px rgba(0,0,0,.06);transform:translateY(-2px)}
-.wc-tag{display:inline-block;padding:2px 8px;border-radius:5px;font-size:10px;font-weight:600;margin-bottom:.75rem}
-.wc-tag.r{background:#fee2e2;color:#b91c1c}
-.wc-tag.a{background:#fef3c7;color:#92400e}
-.wc-title{font-size:13.5px;font-weight:600;color:var(--ink);margin-bottom:.5rem;line-height:1.35}
-.wc-desc{font-size:12px;color:var(--ink3);line-height:1.65}
-.wc-quote{
-  font-size:11px;color:#a0a0a0;margin-top:.75rem;
-  padding-top:.75rem;border-top:1px solid var(--border);
-  font-style:italic;line-height:1.55;
+.wc:hover{background:var(--white)}
+.wc-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.wc-platform{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3)}
+.wc-tag{
+  font-size:10px;font-weight:500;
+  padding:2px 8px;background:var(--primary-dim);color:var(--primary);
 }
+.wc-stat{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2rem,4vw,3rem);
+  font-style:italic;font-weight:400;
+  color:var(--ink);line-height:1;margin-bottom:.75rem;
+}
+.wc-desc{font-size:12.5px;color:var(--ink2);line-height:1.65}
+.wc-bar{margin-top:1.25rem;height:1px;background:var(--border);transition:background .25s}
+.wc:hover .wc-bar{background:var(--primary)}
 
-/* CTA STRIP */
-.cta-strip{
-  background:var(--dark);
-  padding:3rem 2.5rem;text-align:center;
+/* ── CTA ─────────────────────────────────────────────────────────────────── */
+.cta{background:var(--dark);padding:3rem 2.5rem;text-align:center}
+.cta-h2{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.75rem,4vw,3rem);
+  font-weight:400;letter-spacing:-.5px;
+  color:var(--white);margin-bottom:.5rem;
 }
-.cta-strip h2{
-  font-family:'Fraunces',serif;font-size:26px;font-weight:300;
-  letter-spacing:-.4px;color:var(--white);margin-bottom:.5rem;
-}
-.cta-strip h2 em{font-style:italic;color:var(--accent)}
-.cta-strip p{font-size:13px;color:rgba(255,255,255,.42);margin-bottom:1.5rem;line-height:1.65}
-.cta-btns{display:flex;gap:10px;justify-content:center}
-.cta-p{font-size:13px;font-weight:600;padding:10px 24px;border-radius:8px;background:var(--accent);color:var(--dark);transition:all .2s}
-.cta-p:hover{background:#6BB5FF;transform:translateY(-1px)}
-.cta-s{font-size:13px;padding:10px 20px;border-radius:8px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.7);transition:all .2s}
-.cta-s:hover{background:rgba(255,255,255,.12);color:var(--white)}
+.cta-h2 em{font-style:italic;color:var(--primary)}
+.cta-sub{font-size:13px;color:rgba(255,255,255,.4);margin-bottom:1.75rem;line-height:1.65}
+.cta-btns{display:flex;gap:.875rem;justify-content:center;flex-wrap:wrap}
+.cta-p{font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;padding:10px 24px;background:var(--white);color:var(--dark);transition:all .2s}
+.cta-p:hover{background:var(--primary);color:var(--white)}
+.cta-s{font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:10px 20px;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.55);transition:all .2s}
+.cta-s:hover{border-color:rgba(255,255,255,.4);color:var(--white)}
 
-/* FOOTER */
+/* ── FOOTER ──────────────────────────────────────────────────────────────── */
 footer{
-  background:#040C16;
-  padding:1.25rem 2.5rem;
+  background:#090F1A;padding:1.1rem 2.5rem;
   display:flex;align-items:center;justify-content:space-between;
-  flex-wrap:wrap;gap:10px;
+  flex-wrap:wrap;gap:.75rem;
   border-top:1px solid rgba(255,255,255,.05);
 }
-.foot-logo{font-family:'Fraunces',serif;font-size:15px;font-weight:400;color:rgba(255,255,255,.55)}
-.foot-logo em{font-style:italic;color:var(--accent)}
-.foot-links{display:flex;gap:18px}
-.foot-links a{font-size:11.5px;color:rgba(255,255,255,.25);transition:color .2s}
+.foot-logo{font-family:'Playfair Display',serif;font-size:14px;font-weight:400;color:rgba(255,255,255,.45)}
+.foot-logo em{font-style:italic;color:var(--primary)}
+.foot-links{display:flex;gap:1.25rem}
+.foot-links a{font-size:11.5px;color:rgba(255,255,255,.22);transition:color .2s}
 .foot-links a:hover{color:rgba(255,255,255,.6)}
-.foot-copy{font-size:11px;color:rgba(255,255,255,.18)}
+.foot-copy{font-size:11px;color:rgba(255,255,255,.16)}
 
 /* MOBILE */
-@media(max-width:860px){
+@media(max-width:800px){
   nav{padding:0 1.25rem}
   .nav-links{display:none}
-  .hero{grid-template-columns:1fr;height:auto}
-  .hl{padding:1.75rem 1.25rem;min-height:100vh}
-  .hr{padding:1.5rem 1.25rem}
-  .hiw,.why{padding-left:1.25rem;padding-right:1.25rem}
+  .hero-body{padding:2rem 1.25rem 1.5rem}
+  .hiw,.why,.cta{padding-left:1.25rem;padding-right:1.25rem}
   .steps{grid-template-columns:1fr 1fr}
+  .step{border-bottom:1px solid rgba(255,255,255,.08)}
   .why-cards{grid-template-columns:1fr}
-  .cta-strip{padding:2.5rem 1.25rem}
   footer{padding:1rem 1.25rem;flex-direction:column;align-items:flex-start}
   .foot-links{display:none}
 }
@@ -273,161 +241,159 @@ footer{
   </div>
 </nav>
 
-<!-- SCROLL 1 -->
+<!-- HERO -->
 <section class="hero">
-  <!-- LEFT -->
-  <div class="hl">
-    <div class="hl-top">
-      <div class="hl-eye">AI Travel Execution Platform</div>
-      <h1 class="hl-title">Every detail.<br/><em>Verified.</em></h1>
-      <p class="hl-desc">The AI layer between your booking and your boarding pass. Plan, verify, and monitor every trip — before anything goes wrong.</p>
-      <div class="hl-btns">
-        <a href="app.html?mode=plan" class="btn-p">Plan a trip →</a>
-        <a href="app.html?mode=verify" class="btn-s">Verify a booking</a>
+  <div class="hero-body">
+    <div class="hero-inner">
+      <div class="hero-eyebrow">AI Travel Execution Platform</div>
+      <h1 class="hero-h1">
+        Stop hoping<br/>
+        your booking<br/>
+        is <em>right.</em>
+      </h1>
+      <p class="hero-desc">The AI copilot that verifies bookings, catches price drops, and watches your trip — so you can actually enjoy it.</p>
+      <div class="hero-btns">
+        <a href="app.html?mode=verify" class="btn-primary">Start verifying <span class="arr">→</span></a>
+        <a href="app.html?mode=plan" class="btn-primary" style="background:rgba(255,255,255,.08);color:rgba(255,255,255,.75)">Plan a trip <span class="arr">→</span></a>
+        <a href="#how" class="btn-text">See how it works</a>
       </div>
-      <div class="feat-grid">
-        <div class="feat">
-          <span class="feat-ico">✈</span>
-          <div><div class="feat-t">Plan</div><div class="feat-d">Full trip roadmap before you book — flights, hotels, visa, docs.</div></div>
-        </div>
-        <div class="feat">
-          <span class="feat-ico">🛡</span>
-          <div><div class="feat-t">Verify</div><div class="feat-d">Paste any confirmation. AI checks price, status, amenities.</div></div>
-        </div>
-        <div class="feat">
-          <span class="feat-ico">👁</span>
-          <div><div class="feat-t">Monitor</div><div class="feat-d">Silent watch to check-in. Alerts only when things change.</div></div>
-        </div>
-        <div class="feat">
-          <span class="feat-ico">⚡</span>
-          <div><div class="feat-t">Instant</div><div class="feat-d">Results in seconds. No account needed to start.</div></div>
-        </div>
-      </div>
-    </div>
-    <div class="hl-stats">
-      <div class="stat"><div class="stat-n">12k+</div><div class="stat-l">Bookings verified</div></div>
-      <div class="stat"><div class="stat-n">₹2.4Cr</div><div class="stat-l">Saved by users</div></div>
-      <div class="stat"><div class="stat-n">Free</div><div class="stat-l">To start</div></div>
-      <div class="stat"><div class="stat-n">India</div><div class="stat-l">Built for</div></div>
     </div>
   </div>
 
-  <!-- RIGHT -->
-  <div class="hr">
-    <div class="hr-lbl">Start with</div>
-    <a href="app.html?mode=plan" class="mc">
-      <div class="mc-top">
-        <div class="mc-ico">✈</div>
-        <span class="mc-title">Plan a trip</span>
+  <!-- Marquee -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <div class="marquee-inner">
+        <div class="stat-item"><span class="stat-n">12,000+</span><span class="stat-l">Bookings verified</span></div>
+        <span class="stat-sep"></span>
+        <div class="stat-item"><span class="stat-n">₹2.4 Cr</span><span class="stat-l">Saved for travelers</span></div>
+        <span class="stat-sep"></span>
+        <div class="stat-item"><span class="stat-n">3 sec</span><span class="stat-l">Average check time</span></div>
+        <span class="stat-sep"></span>
+        <div class="stat-item"><span class="stat-n">Free</span><span class="stat-l">To start</span></div>
+        <span class="stat-sep"></span>
+        <div class="stat-item"><span class="stat-n">India</span><span class="stat-l">Built for</span></div>
+        <span class="stat-sep"></span>
+        <div class="stat-item"><span class="stat-n">3 modes</span><span class="stat-l">Plan · Verify · Monitor</span></div>
+        <span class="stat-sep"></span>
       </div>
-      <div class="mc-desc">Describe your trip in plain language. Get flights, hotels, visa rules and documents — all in one place before you book.</div>
-    </a>
-    <a href="app.html?mode=verify" class="mc featured">
-      <div class="mc-top">
-        <div class="mc-ico">🛡</div>
-        <span class="mc-title">Verify a booking</span>
-        <span class="mc-badge">Most used</span>
+      <!-- Duplicate for seamless loop -->
+      <div class="marquee-inner" aria-hidden="true">
+        <div class="stat-item"><span class="stat-n">12,000+</span><span class="stat-l">Bookings verified</span></div>
+        <span class="stat-sep"></span>
+        <div class="stat-item"><span class="stat-n">₹2.4 Cr</span><span class="stat-l">Saved for travelers</span></div>
+        <span class="stat-sep"></span>
+        <div class="stat-item"><span class="stat-n">3 sec</span><span class="stat-l">Average check time</span></div>
+        <span class="stat-sep"></span>
+        <div class="stat-item"><span class="stat-n">Free</span><span class="stat-l">To start</span></div>
+        <span class="stat-sep"></span>
+        <div class="stat-item"><span class="stat-n">India</span><span class="stat-l">Built for</span></div>
+        <span class="stat-sep"></span>
+        <div class="stat-item"><span class="stat-n">3 modes</span><span class="stat-l">Plan · Verify · Monitor</span></div>
+        <span class="stat-sep"></span>
       </div>
-      <div class="mc-desc">Paste your confirmation from Booking.com, MakeMyTrip, or anywhere. We check price, hotel status and entry requirements instantly.</div>
-    </a>
-    <a href="app.html?mode=monitor" class="mc">
-      <div class="mc-top">
-        <div class="mc-ico">👁</div>
-        <span class="mc-title">Monitor until you land</span>
-      </div>
-      <div class="mc-desc">Add any booking and we watch it silently until check-in. Alerts only when something actually changes.</div>
-    </a>
-    <div class="hr-note">
-      <strong>✓ Free</strong> No account needed. Verify your first booking free — no card required.
     </div>
   </div>
 </section>
 
-<!-- SCROLL 2 -->
-<div class="scroll2">
-
-  <!-- HOW IT WORKS -->
-  <div class="hiw" id="how">
-    <div class="tag">How it works</div>
-    <h2 class="sec-h2">From booking to boarding pass,<br/>without the gaps</h2>
-    <p class="sec-sub">Most platforms handle discovery or transactions. TrustRoute handles the part in between — where things go wrong.</p>
-    <div class="steps">
-      <div class="step">
-        <div class="step-n">01</div>
-        <div class="step-ico">📋</div>
-        <div class="step-t">Describe or paste</div>
-        <div class="step-d">Tell us your trip in plain language or paste your booking confirmation from any platform.</div>
-      </div>
-      <div class="step">
-        <div class="step-n">02</div>
-        <div class="step-ico">🔍</div>
-        <div class="step-t">AI runs checks</div>
-        <div class="step-d">Price consistency, hotel status, visa rules, amenities — cross-referenced across sources.</div>
-      </div>
-      <div class="step">
-        <div class="step-n">03</div>
-        <div class="step-ico">🟢</div>
-        <div class="step-t">See what's verified</div>
-        <div class="step-d">Green confirmed. Amber needs attention. Red requires action. No guessing.</div>
-      </div>
-      <div class="step">
-        <div class="step-n">04</div>
-        <div class="step-ico">🔔</div>
-        <div class="step-t">Monitor until you land</div>
-        <div class="step-d">We alert you only when something changes — not noise, just signals.</div>
-      </div>
+<!-- HOW IT WORKS -->
+<section class="hiw" id="how">
+  <div class="hiw-head">
+    <div>
+      <div class="hiw-eyebrow">The process</div>
+      <h2 class="hiw-h2">Four steps to<br/><em>peace of mind.</em></h2>
+    </div>
+    <p class="hiw-sub">Most platforms handle discovery. We handle the part in between — where things go wrong.</p>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <span class="step-n">01</span>
+      <div class="step-t">Paste your booking</div>
+      <div class="step-d">Drop any confirmation from MakeMyTrip, Booking.com, Goibibo, or Cleartrip.</div>
+      <div class="step-bar"></div>
+    </div>
+    <div class="step">
+      <span class="step-n">02</span>
+      <div class="step-t">AI scans everything</div>
+      <div class="step-d">Price consistency, hotel legitimacy, visa requirements, hidden fees, cancellation policies.</div>
+      <div class="step-bar"></div>
+    </div>
+    <div class="step">
+      <span class="step-n">03</span>
+      <div class="step-t">Get your report</div>
+      <div class="step-d">Clear breakdown — what checked out and what needs attention. No jargon.</div>
+      <div class="step-bar"></div>
+    </div>
+    <div class="step">
+      <span class="step-n">04</span>
+      <div class="step-t">Monitor until landing</div>
+      <div class="step-d">We watch silently. You only hear from us if something actually changes.</div>
+      <div class="step-bar"></div>
     </div>
   </div>
+</section>
 
-  <!-- WHY -->
-  <div class="why" id="why">
-    <div class="tag">Why it exists</div>
-    <h2 class="sec-h2">The gap no one was solving</h2>
-    <p class="sec-sub">We tested two major OTAs end-to-end. Here's exactly what we found.</p>
-    <div class="why-cards">
-      <div class="wc">
-        <span class="wc-tag r">MakeMyTrip · Price</span>
-        <div class="wc-title">The same booking showed 3 different prices</div>
-        <div class="wc-desc">₹2,010/night on the detail page. ₹9,000 at review. ₹4,551 at checkout. The math reconciles — but no user should have to figure that out.</div>
-        <div class="wc-quote">"I would've abandoned at the review page — the price looked like it doubled." — Field test, Jun 2026</div>
+<!-- WHY -->
+<section class="why" id="why">
+  <div class="why-head">
+    <div>
+      <div class="why-eyebrow">Why this exists</div>
+      <h2 class="why-h2">We tested two major OTAs.<br/><em>Here's what broke.</em></h2>
+    </div>
+    <p class="why-sub">These weren't edge cases. This was a single booking flow, start to finish. Every issue would have cost time, money, or both.</p>
+  </div>
+  <div class="why-cards">
+    <div class="wc">
+      <div class="wc-head">
+        <span class="wc-platform">MakeMyTrip</span>
+        <span class="wc-tag">Price mismatch</span>
       </div>
-      <div class="wc">
-        <span class="wc-tag a">Booking.com · Ratings</span>
-        <div class="wc-title">4.1 "Disappointing" — but 5.0 on every subcategory</div>
-        <div class="wc-desc">Staff 4.8, Facilities 5.0, Comfort 5.0, Value 5.0. The platform's own algorithm contradicted its own data. A user relying on the headline would skip a great property.</div>
-        <div class="wc-quote">"If TrustRoute hadn't flagged this, I'd have never booked it." — Field test, Jun 2026</div>
+      <div class="wc-stat">3 prices</div>
+      <div class="wc-desc">Same room showed ₹2,010 on listing, ₹9,000 at review, ₹4,551 at checkout. The math reconciles — but no user should have to figure that out.</div>
+      <div class="wc-bar"></div>
+    </div>
+    <div class="wc">
+      <div class="wc-head">
+        <span class="wc-platform">Booking.com</span>
+        <span class="wc-tag">Hidden ratings</span>
       </div>
-      <div class="wc">
-        <span class="wc-tag r">Booking.com · Amenities</span>
-        <div class="wc-title">No WiFi — never mentioned during checkout</div>
-        <div class="wc-desc">The platform asked "Are you travelling for work?" and still didn't surface that the property has no internet. Buried three screens deep in the facilities section.</div>
-        <div class="wc-quote">"I would've arrived for a work trip with no WiFi and no warning." — Field test, Jun 2026</div>
+      <div class="wc-stat">4.1 vs 5.0</div>
+      <div class="wc-desc">Headline said "4.1 Disappointing" while every subcategory scored 5.0. The platform's own algorithm contradicted its own data.</div>
+      <div class="wc-bar"></div>
+    </div>
+    <div class="wc">
+      <div class="wc-head">
+        <span class="wc-platform">Booking.com</span>
+        <span class="wc-tag">Missing amenities</span>
       </div>
+      <div class="wc-stat">No WiFi</div>
+      <div class="wc-desc">Asked if I was travelling for work. Still didn't mention the hotel has no internet. Found it buried three screens deep in facilities.</div>
+      <div class="wc-bar"></div>
     </div>
   </div>
+</section>
 
-  <!-- CTA STRIP -->
-  <div class="cta-strip">
-    <h2>Be one of our first<br/><em>travelers</em></h2>
-    <p>TrustRoute is in early access. Full access, free for early users.</p>
-    <div class="cta-btns">
-      <a href="app.html" class="cta-p">Try TrustRoute free →</a>
-      <a href="mailto:hello@trustroute.in" class="cta-s">Get in touch</a>
-    </div>
+<!-- CTA -->
+<section class="cta">
+  <h2 class="cta-h2">Be one of our first<br/><em>travelers.</em></h2>
+  <p class="cta-sub">TrustRoute is in early access. Full access, free for early users.</p>
+  <div class="cta-btns">
+    <a href="app.html" class="cta-p">Try TrustRoute free →</a>
+    <a href="mailto:hello@trustroute.in" class="cta-s">Get in touch</a>
   </div>
+</section>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="foot-logo">Trust<em>Route</em></div>
-    <div class="foot-links">
-      <a href="#how">How it works</a>
-      <a href="#why">Why TrustRoute</a>
-      <a href="app.html">App</a>
-      <a href="mailto:hello@trustroute.in">Contact</a>
-    </div>
-    <div class="foot-copy">© 2026 TrustRoute by Optimus</div>
-  </footer>
-</div>
+<!-- FOOTER -->
+<footer>
+  <div class="foot-logo">Trust<em>Route</em></div>
+  <div class="foot-links">
+    <a href="#how">How it works</a>
+    <a href="#why">Why TrustRoute</a>
+    <a href="app.html">App</a>
+    <a href="mailto:hello@trustroute.in">Contact</a>
+  </div>
+  <div class="foot-copy">© 2026 TrustRoute by Optimus</div>
+</footer>
 
 </body>
 </html>

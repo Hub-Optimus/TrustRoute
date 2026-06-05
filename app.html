@@ -398,6 +398,7 @@ const icons = {green:'✓', amber:'⚠', red:'✗'};
 let lastVerifyData = null;
 
 function renderVerify(d, fallbackProp, fallbackDates) {
+  console.log("API response:", JSON.stringify(d));
   lastVerifyData = {property: d.property || fallbackProp, dates: d.dates || fallbackDates, score: d.trustScore};
   let html = '';
   const sc = d.trustScore || 50;
@@ -410,8 +411,15 @@ function renderVerify(d, fallbackProp, fallbackDates) {
     </div>
   </div>`;
   // Checks
-  if (d.checks && d.checks.length) {
-    d.checks.forEach(c => {
+  const normalizeStatus = s => { s = (s||"green").toLowerCase().trim(); if(s.includes("amber")||s.includes("warn")||s.includes("caution")) return "amber"; if(s.includes("red")||s.includes("fail")||s.includes("error")||s.includes("risk")) return "red"; return "green"; };
+  const checkList = d.checks || d.verifications || d.results || [];
+  if (checkList.length) {
+    checkList.forEach(c => {
+      const st = normalizeStatus(c.status || c.severity || c.level);
+      const title = c.title || c.name || c.check || "Check";
+      const detail = c.detail || c.description || c.message || "";
+      const action = c.action || c.recommendation || "";
+      c = {...c, status: st, title, detail, action};
       html += `<div class="check-card ${c.status}">
         <div class="cc-head">${icons[c.status] || '·'} ${c.title}</div>
         <p class="cc-detail">${c.detail}</p>

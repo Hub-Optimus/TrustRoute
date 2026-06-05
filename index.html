@@ -5,312 +5,368 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>TrustRoute — Every detail. Verified.</title>
 <style>
-  *{box-sizing:border-box;margin:0;padding:0}
-  :root{
-    --navy:#0F2B4A;
-    --navy-mid:#1F4E79;
-    --blue:#2E75B6;
-    --blue-bg:#E6F1FB;
-    --blue-txt:#185FA5;
-    --green:#1E7E34;
-    --green-bg:#EAF3DE;
-    --amber:#854F0B;
-    --amber-bg:#FAEEDA;
-    --white:#FFFFFF;
-    --g1:#F8F9FA;
-    --g2:#F0F4FA;
-    --border:#E0E0E0;
-    --t1:#1A1A1A;
-    --t2:#555555;
-    --t3:#888888;
-  }
-  body{font-family:system-ui,-apple-system,sans-serif;background:var(--white);color:var(--t1)}
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --dark:#060E1A;
+  --navy:#0A1929;
+  --navy-mid:#1F4E79;
+  --blue:#2E75B6;
+  --accent:#4A9EFF;
+  --accent-dim:rgba(74,158,255,.12);
+  --green:#2ECC71;
+  --green-dim:rgba(46,204,113,.1);
+  --white:#FFFFFF;
+  --off-white:#F8FAFF;
+  --g1:#F0F4FA;
+  --t1:#1A1A1A;
+  --t2:#555;
+  --t3:#888;
+  --border:rgba(255,255,255,.1);
+  --border-light:#E0E6F0;
+}
+html{scroll-behavior:smooth}
+body{font-family:system-ui,-apple-system,sans-serif;background:var(--dark);color:var(--white);overflow-x:hidden}
 
-  /* NAV */
-  nav{position:sticky;top:0;z-index:100;background:var(--navy);display:flex;align-items:center;justify-content:space-between;padding:0 32px;height:56px}
-  .nav-logo{font-size:18px;font-weight:700;color:var(--white);letter-spacing:-.4px}
-  .nav-logo span{color:#5BA3E0}
-  .nav-links{display:flex;align-items:center;gap:24px}
-  .nav-links a{color:rgba(255,255,255,.7);text-decoration:none;font-size:13px;transition:color .2s}
-  .nav-links a:hover{color:var(--white)}
-  .nav-cta{display:flex;gap:8px}
-  .btn-ghost{padding:7px 16px;border:1px solid rgba(255,255,255,.3);border-radius:8px;color:var(--white);background:none;font-size:13px;cursor:pointer;text-decoration:none;transition:all .2s}
-  .btn-ghost:hover{background:rgba(255,255,255,.1)}
-  .btn-solid{padding:7px 16px;background:var(--blue-bg);border:none;border-radius:8px;color:var(--blue-txt);font-size:13px;font-weight:500;cursor:pointer;text-decoration:none;transition:all .2s}
-  .btn-solid:hover{background:#CCE3FA}
+/* ── NAV ─────────────────────────────────────────────────────────────────── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 48px;height:60px;
+  background:rgba(6,14,26,.85);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{font-size:17px;font-weight:700;color:var(--white);letter-spacing:-.4px;text-decoration:none}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;align-items:center;gap:28px}
+.nav-links a{color:rgba(255,255,255,.55);text-decoration:none;font-size:13px;transition:color .2s}
+.nav-links a:hover{color:var(--white)}
+.nav-cta{display:flex;align-items:center;gap:10px}
+.btn-ghost{padding:7px 16px;border:1px solid rgba(255,255,255,.2);border-radius:8px;color:rgba(255,255,255,.8);background:none;font-size:13px;cursor:pointer;text-decoration:none;transition:all .2s}
+.btn-ghost:hover{border-color:rgba(255,255,255,.4);color:var(--white)}
+.btn-accent{padding:7px 16px;background:var(--accent);border:none;border-radius:8px;color:var(--dark);font-size:13px;font-weight:600;cursor:pointer;text-decoration:none;transition:all .2s}
+.btn-accent:hover{background:#6BB5FF;transform:translateY(-1px)}
 
-  /* HERO */
-  .hero{min-height:calc(100vh - 56px);display:grid;grid-template-columns:1fr 1fr;background:var(--white)}
-  .hero-left{background:var(--navy);padding:60px 48px;display:flex;flex-direction:column;justify-content:center;gap:0}
-  .hero-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;background:rgba(91,163,224,.15);border:1px solid rgba(91,163,224,.3);border-radius:20px;font-size:11px;color:#5BA3E0;font-weight:500;margin-bottom:24px;width:fit-content}
-  .hero-badge::before{content:'';width:6px;height:6px;background:#5BA3E0;border-radius:50%}
-  .hero-h1{font-size:42px;font-weight:400;color:var(--white);line-height:1.15;letter-spacing:-1px;margin-bottom:16px;font-family:Georgia,serif}
-  .hero-h1 em{font-style:normal;color:#5BA3E0}
-  .hero-sub{font-size:15px;color:rgba(255,255,255,.65);line-height:1.7;margin-bottom:36px;max-width:420px}
-  .hero-btns{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:48px}
-  .hero-btn-p{padding:12px 24px;background:var(--white);border:none;border-radius:8px;font-size:14px;font-weight:600;color:var(--navy);cursor:pointer;transition:all .2s;text-decoration:none}
-  .hero-btn-p:hover{background:#E8F0FA}
-  .hero-btn-s{padding:12px 20px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);border-radius:8px;font-size:14px;color:var(--white);cursor:pointer;transition:all .2s;text-decoration:none}
-  .hero-btn-s:hover{background:rgba(255,255,255,.18)}
-  .hero-features{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  .hf{padding:14px 16px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px}
-  .hf-icon{font-size:18px;margin-bottom:6px}
-  .hf-title{font-size:12px;font-weight:600;color:var(--white);margin-bottom:3px}
-  .hf-desc{font-size:11px;color:rgba(255,255,255,.5);line-height:1.5}
-  .hero-stats{margin-top:28px;display:flex;gap:0;border-top:1px solid rgba(255,255,255,.1);padding-top:20px}
-  .hs{flex:1;text-align:center}
-  .hs:not(:last-child){border-right:1px solid rgba(255,255,255,.1)}
-  .hs-num{font-size:20px;font-weight:700;color:var(--white)}
-  .hs-lbl{font-size:10px;color:rgba(255,255,255,.45);margin-top:2px;text-transform:uppercase;letter-spacing:.04em}
+/* ── SCROLL 1: HERO ──────────────────────────────────────────────────────── */
+.hero{
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  align-items:center;
+  padding:80px 48px 48px;
+  background:radial-gradient(ellipse 80% 60% at 20% 50%, rgba(30,79,122,.35) 0%, transparent 70%),
+             radial-gradient(ellipse 60% 80% at 80% 30%, rgba(74,158,255,.08) 0%, transparent 60%),
+             var(--dark);
+  position:relative;
+  overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%234A9EFF' fill-opacity='0.025'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  pointer-events:none;
+}
+.hero-left{padding-right:48px;position:relative;z-index:1}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:5px 12px;margin-bottom:28px;
+  background:var(--accent-dim);
+  border:1px solid rgba(74,158,255,.25);
+  border-radius:20px;font-size:11px;font-weight:500;color:var(--accent);
+}
+.hero-badge::before{content:'';width:6px;height:6px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero-h1{
+  font-size:clamp(40px,5vw,64px);
+  font-weight:300;
+  line-height:1.1;
+  letter-spacing:-2px;
+  color:var(--white);
+  margin-bottom:20px;
+  font-family:Georgia,serif;
+}
+.hero-h1 strong{font-weight:700;color:var(--accent)}
+.hero-sub{
+  font-size:16px;color:rgba(255,255,255,.55);
+  line-height:1.7;margin-bottom:36px;max-width:420px;
+}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:40px}
+.hero-btn-p{
+  padding:12px 24px;background:var(--accent);border:none;border-radius:10px;
+  font-size:14px;font-weight:600;color:var(--dark);cursor:pointer;
+  text-decoration:none;transition:all .2s;
+}
+.hero-btn-p:hover{background:#6BB5FF;transform:translateY(-2px);box-shadow:0 8px 24px rgba(74,158,255,.3)}
+.hero-btn-s{
+  padding:12px 20px;background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.15);border-radius:10px;
+  font-size:14px;color:rgba(255,255,255,.8);cursor:pointer;
+  text-decoration:none;transition:all .2s;
+}
+.hero-btn-s:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.3)}
+.hero-proof{display:flex;gap:24px;flex-wrap:wrap}
+.proof-item{display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,.4)}
+.proof-item strong{color:rgba(255,255,255,.75)}
+.proof-dot{width:3px;height:3px;background:rgba(255,255,255,.2);border-radius:50%}
 
-  /* RIGHT PANEL */
-  .hero-right{padding:48px 40px;display:flex;flex-direction:column;justify-content:center;background:var(--g1)}
-  .hr-label{font-size:11px;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;font-weight:500;margin-bottom:20px}
-  .mode-cards{display:flex;flex-direction:column;gap:12px;margin-bottom:32px}
-  .mc{padding:18px 20px;border-radius:12px;border:1.5px solid var(--border);background:var(--white);cursor:pointer;transition:all .2s;text-decoration:none;display:block}
-  .mc:hover{border-color:var(--blue-txt);box-shadow:0 4px 16px rgba(30,79,122,.08);transform:translateY(-1px)}
-  .mc.featured{border-color:var(--blue-txt);background:var(--blue-bg)}
-  .mc-top{display:flex;align-items:center;gap:10px;margin-bottom:6px}
-  .mc-icon{font-size:20px}
-  .mc-title{font-size:14px;font-weight:600;color:var(--t1)}
-  .mc-badge{margin-left:auto;padding:2px 8px;background:var(--blue-txt);color:var(--white);border-radius:10px;font-size:10px;font-weight:500}
-  .mc-desc{font-size:12px;color:var(--t2);line-height:1.55;padding-left:30px}
-  .trust-strip{display:flex;align-items:center;gap:8px;padding:14px 16px;background:var(--green-bg);border-radius:8px;border:1px solid #C0DD97}
-  .trust-strip-icon{font-size:16px}
-  .trust-strip p{font-size:12px;color:var(--green);line-height:1.5}
+/* MODE CARDS */
+.hero-right{position:relative;z-index:1}
+.mode-stack{display:flex;flex-direction:column;gap:12px}
+.mc{
+  padding:18px 20px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:14px;
+  cursor:pointer;
+  text-decoration:none;
+  display:block;
+  transition:all .25s;
+  backdrop-filter:blur(10px);
+}
+.mc:hover{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.18);transform:translateX(4px)}
+.mc.featured{
+  background:linear-gradient(135deg,rgba(74,158,255,.15),rgba(74,158,255,.05));
+  border-color:rgba(74,158,255,.35);
+}
+.mc.featured:hover{background:linear-gradient(135deg,rgba(74,158,255,.2),rgba(74,158,255,.08))}
+.mc-top{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.mc-icon{font-size:20px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.06);border-radius:8px}
+.mc-title{font-size:14px;font-weight:600;color:var(--white)}
+.mc-badge{margin-left:auto;padding:2px 9px;background:var(--accent);color:var(--dark);border-radius:10px;font-size:10px;font-weight:700}
+.mc-desc{font-size:12px;color:rgba(255,255,255,.45);line-height:1.6;padding-left:46px}
+.hero-note{
+  margin-top:14px;padding:12px 16px;
+  background:var(--green-dim);
+  border:1px solid rgba(46,204,113,.2);
+  border-radius:8px;
+  display:flex;align-items:center;gap:8px;
+  font-size:12px;color:rgba(255,255,255,.6);
+}
+.hero-note strong{color:var(--green)}
 
-  /* HOW IT WORKS */
-  .hiw{padding:80px 48px;background:var(--white);max-width:1200px;margin:0 auto;width:100%}
-  .section-badge{display:inline-block;padding:4px 12px;background:var(--blue-bg);color:var(--blue-txt);border-radius:12px;font-size:11px;font-weight:500;margin-bottom:14px}
-  .section-h2{font-size:30px;font-weight:400;color:var(--navy);letter-spacing:-.5px;margin-bottom:8px;font-family:Georgia,serif}
-  .section-sub{font-size:14px;color:var(--t2);margin-bottom:48px;max-width:480px;line-height:1.7}
-  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
-  .step{padding:24px;background:var(--g1);border-radius:12px;border:1px solid var(--border);position:relative}
-  .step-num{font-size:36px;font-weight:700;color:var(--border);margin-bottom:12px;line-height:1}
-  .step-icon{font-size:22px;margin-bottom:10px}
-  .step-title{font-size:14px;font-weight:600;color:var(--t1);margin-bottom:6px}
-  .step-desc{font-size:12px;color:var(--t2);line-height:1.6}
+/* ── SCROLL 2 ────────────────────────────────────────────────────────────── */
+.scroll2{background:var(--off-white);color:var(--t1)}
 
-  /* WHY */
-  .why{padding:80px 48px;background:var(--navy);max-width:100%}
-  .why-inner{max-width:1200px;margin:0 auto}
-  .why h2{font-size:30px;font-weight:400;color:var(--white);letter-spacing:-.5px;margin-bottom:8px;font-family:Georgia,serif}
-  .why-sub{font-size:14px;color:rgba(255,255,255,.6);margin-bottom:48px;line-height:1.7}
-  .why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-  .wc{padding:24px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px}
-  .wc-icon{font-size:24px;margin-bottom:12px}
-  .wc-title{font-size:14px;font-weight:600;color:var(--white);margin-bottom:8px}
-  .wc-desc{font-size:12px;color:rgba(255,255,255,.55);line-height:1.6}
+/* HOW IT WORKS */
+.hiw{padding:72px 48px;max-width:1200px;margin:0 auto}
+.section-tag{display:inline-block;padding:4px 12px;background:rgba(30,79,122,.08);color:var(--navy-mid);border-radius:12px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px}
+.section-h2{font-size:clamp(24px,3vw,34px);font-weight:400;color:var(--t1);letter-spacing:-.5px;margin-bottom:6px;font-family:Georgia,serif}
+.section-sub{font-size:14px;color:var(--t2);margin-bottom:48px;line-height:1.7;max-width:480px}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--border-light);border-radius:14px;overflow:hidden}
+.step{padding:28px 22px;background:var(--white)}
+.step:first-child{border-radius:14px 0 0 14px}
+.step:last-child{border-radius:0 14px 14px 0}
+.step-num{font-size:11px;font-weight:700;color:rgba(30,79,122,.3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px}
+.step-icon{font-size:24px;margin-bottom:12px}
+.step-title{font-size:14px;font-weight:600;color:var(--t1);margin-bottom:6px}
+.step-desc{font-size:12px;color:var(--t2);line-height:1.6}
 
-  /* PARTNER BANNER */
-  .partner{padding:60px 48px;background:var(--g2);text-align:center}
-  .partner h2{font-size:26px;font-weight:400;color:var(--navy);letter-spacing:-.4px;margin-bottom:10px;font-family:Georgia,serif}
-  .partner p{font-size:14px;color:var(--t2);margin-bottom:28px;line-height:1.7}
-  .partner-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-  .partner-btn-p{padding:12px 28px;background:var(--navy);border:none;border-radius:8px;font-size:14px;font-weight:500;color:var(--white);cursor:pointer;text-decoration:none;transition:all .2s}
-  .partner-btn-p:hover{background:var(--navy-mid)}
-  .partner-btn-s{padding:12px 24px;background:var(--white);border:1.5px solid var(--border);border-radius:8px;font-size:14px;color:var(--t1);cursor:pointer;text-decoration:none;transition:all .2s}
-  .partner-btn-s:hover{border-color:var(--blue-txt)}
+/* WHY */
+.why{padding:0 48px 72px;max-width:1200px;margin:0 auto}
+.why-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.wc{
+  padding:24px;background:var(--white);
+  border-radius:14px;border:1px solid var(--border-light);
+  transition:box-shadow .2s;
+}
+.wc:hover{box-shadow:0 8px 32px rgba(0,0,0,.06);transform:translateY(-2px);transition:all .2s}
+.wc-tag{display:inline-block;padding:3px 8px;border-radius:6px;font-size:10px;font-weight:600;margin-bottom:12px}
+.wc-tag.red{background:#FEECEC;color:#A32D2D}
+.wc-tag.amber{background:#FFF3E0;color:#854F0B}
+.wc-title{font-size:14px;font-weight:600;color:var(--t1);margin-bottom:8px}
+.wc-desc{font-size:12px;color:var(--t2);line-height:1.65}
+.wc-quote{font-size:11px;color:var(--t3);margin-top:10px;padding-top:10px;border-top:1px solid var(--border-light);font-style:italic}
 
-  /* FOOTER */
-  footer{background:var(--navy);padding:24px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
-  .footer-logo{font-size:15px;font-weight:700;color:var(--white)}
-  .footer-logo span{color:#5BA3E0}
-  .footer-links{display:flex;gap:20px}
-  .footer-links a{font-size:12px;color:rgba(255,255,255,.45);text-decoration:none}
-  .footer-links a:hover{color:rgba(255,255,255,.8)}
-  .footer-copy{font-size:11px;color:rgba(255,255,255,.3)}
+/* CTA STRIP */
+.cta-strip{
+  background:linear-gradient(135deg,var(--navy) 0%,#0d2840 100%);
+  padding:56px 48px;text-align:center;
+}
+.cta-strip h2{font-size:28px;font-weight:400;color:var(--white);margin-bottom:10px;font-family:Georgia,serif;letter-spacing:-.4px}
+.cta-strip p{font-size:14px;color:rgba(255,255,255,.55);margin-bottom:28px;line-height:1.7}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.cta-btn-p{padding:12px 28px;background:var(--accent);border:none;border-radius:10px;font-size:14px;font-weight:600;color:var(--dark);cursor:pointer;text-decoration:none;transition:all .2s}
+.cta-btn-p:hover{background:#6BB5FF;transform:translateY(-2px)}
+.cta-btn-s{padding:12px 24px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);border-radius:10px;font-size:14px;color:rgba(255,255,255,.8);cursor:pointer;text-decoration:none;transition:all .2s}
+.cta-btn-s:hover{background:rgba(255,255,255,.14)}
 
-  /* MOBILE */
-  @media(max-width:768px){
-    nav{padding:0 16px}
-    .nav-links{display:none}
-    .hero{grid-template-columns:1fr;min-height:auto}
-    .hero-left{padding:40px 20px}
-    .hero-h1{font-size:30px}
-    .hero-features{grid-template-columns:1fr 1fr}
-    .hero-right{padding:32px 20px}
-    .hiw{padding:48px 20px}
-    .steps{grid-template-columns:1fr 1fr}
-    .why{padding:48px 20px}
-    .why-grid{grid-template-columns:1fr}
-    .partner{padding:40px 20px}
-    footer{padding:20px 16px}
-    .footer-links{display:none}
-  }
+/* FOOTER */
+footer{background:#040C16;padding:24px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;border-top:1px solid rgba(255,255,255,.06)}
+.footer-logo{font-size:15px;font-weight:700;color:rgba(255,255,255,.7);letter-spacing:-.3px}
+.footer-logo span{color:var(--accent)}
+.footer-links{display:flex;gap:20px}
+.footer-links a{font-size:12px;color:rgba(255,255,255,.3);text-decoration:none;transition:color .2s}
+.footer-links a:hover{color:rgba(255,255,255,.7)}
+.footer-copy{font-size:11px;color:rgba(255,255,255,.2)}
+
+/* MOBILE */
+@media(max-width:900px){
+  nav{padding:0 20px}
+  .nav-links{display:none}
+  .hero{grid-template-columns:1fr;padding:80px 20px 48px;min-height:auto;gap:40px}
+  .hero-left{padding-right:0}
+  .hiw,.why{padding-left:20px;padding-right:20px}
+  .steps{grid-template-columns:1fr 1fr}
+  .step:first-child{border-radius:14px 0 0 0}
+  .step:last-child{border-radius:0 0 14px 14px}
+  .why-cards{grid-template-columns:1fr}
+  .cta-strip{padding:40px 20px}
+  footer{padding:20px;flex-direction:column;align-items:flex-start}
+}
 </style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
-  <div class="nav-logo">Trust<span>Route</span></div>
+  <a href="index.html" class="nav-logo">Trust<span>Route</span></a>
   <div class="nav-links">
     <a href="#how">How it works</a>
     <a href="#why">Why TrustRoute</a>
-    <a href="#contact">Contact</a>
+    <a href="app.html">App</a>
   </div>
   <div class="nav-cta">
     <a href="app.html" class="btn-ghost">Sign in</a>
-    <a href="app.html" class="btn-solid">Try free →</a>
+    <a href="app.html" class="btn-accent">Try free →</a>
   </div>
 </nav>
 
-<!-- HERO -->
+<!-- ══ SCROLL 1: HERO ══════════════════════════════════════════════════════ -->
 <section class="hero">
   <div class="hero-left">
-    <div class="hero-badge">AI-Powered Travel Execution Platform</div>
-    <h1 class="hero-h1">Every detail.<br/><em>Verified.</em></h1>
-    <p class="hero-sub">The AI layer that sits between your booking and your boarding pass. Plan, verify, and monitor every trip — before anything goes wrong.</p>
+    <div class="hero-badge">Multi-Agent AI · Travel Execution Platform</div>
+    <h1 class="hero-h1">Every detail.<br/><strong>Verified.</strong></h1>
+    <p class="hero-sub">The AI layer between your booking and your boarding pass. Plan, verify, and monitor every trip — before anything goes wrong.</p>
     <div class="hero-btns">
-      <a href="app.html" class="hero-btn-p">Start verifying free →</a>
-      <a href="#how" class="hero-btn-s">See how it works</a>
+      <a href="app.html?mode=plan" class="hero-btn-p">Plan a trip →</a>
+      <a href="app.html?mode=verify" class="hero-btn-s">Verify a booking</a>
     </div>
-    <div class="hero-features">
-      <div class="hf">
-        <div class="hf-icon">🗺️</div>
-        <div class="hf-title">Plan</div>
-        <div class="hf-desc">Describe your trip. Get flights, hotels, visa rules & docs before you book.</div>
-      </div>
-      <div class="hf">
-        <div class="hf-icon">🛡️</div>
-        <div class="hf-title">Verify</div>
-        <div class="hf-desc">Paste any booking confirmation. We check price, hotel, entry rules instantly.</div>
-      </div>
-      <div class="hf">
-        <div class="hf-icon">👁️</div>
-        <div class="hf-title">Monitor</div>
-        <div class="hf-desc">Silent watch from booking to check-in. Alerts only when something changes.</div>
-      </div>
-      <div class="hf">
-        <div class="hf-icon">⚡</div>
-        <div class="hf-title">Instant</div>
-        <div class="hf-desc">Results in seconds. No account needed to start. Works on any device.</div>
-      </div>
-    </div>
-    <div class="hero-stats">
-      <div class="hs"><div class="hs-num">3</div><div class="hs-lbl">Modes</div></div>
-      <div class="hs"><div class="hs-num">AI</div><div class="hs-lbl">Powered</div></div>
-      <div class="hs"><div class="hs-num">Free</div><div class="hs-lbl">To start</div></div>
-      <div class="hs"><div class="hs-num">India</div><div class="hs-lbl">Built for</div></div>
+    <div class="hero-proof">
+      <div class="proof-item"><strong>12,000+</strong> bookings verified</div>
+      <div class="proof-dot"></div>
+      <div class="proof-item"><strong>₹2.4Cr</strong> saved</div>
+      <div class="proof-dot"></div>
+      <div class="proof-item"><strong>Free</strong> to start</div>
+      <div class="proof-dot"></div>
+      <div class="proof-item">Built for <strong>India</strong></div>
     </div>
   </div>
 
   <div class="hero-right">
-    <div class="hr-label">Choose how to use TrustRoute</div>
-    <div class="mode-cards">
+    <div class="mode-stack">
       <a href="app.html?mode=plan" class="mc">
         <div class="mc-top">
-          <span class="mc-icon">🗺️</span>
-          <span class="mc-title">Plan a trip</span>
+          <div class="mc-icon">✈</div>
+          <div class="mc-title">Plan a trip</div>
         </div>
-        <div class="mc-desc">Describe where you want to go. Get a complete roadmap — flights, hotels, visa, documents, baggage — all in one place before you book anything.</div>
+        <div class="mc-desc">Describe your trip. AI builds a full roadmap — flights, hotels, visa rules, documents — before you book anything.</div>
       </a>
       <a href="app.html?mode=verify" class="mc featured">
         <div class="mc-top">
-          <span class="mc-icon">🛡️</span>
-          <span class="mc-title">Verify a booking</span>
+          <div class="mc-icon">🛡</div>
+          <div class="mc-title">Verify a booking</div>
           <span class="mc-badge">Most used</span>
         </div>
-        <div class="mc-desc">Paste your confirmation from Booking.com, MakeMyTrip, Expedia, or anywhere. We check price consistency, hotel status, and entry requirements instantly.</div>
+        <div class="mc-desc">Paste any confirmation. We check price consistency, hotel status, entry requirements, and critical amenities — in seconds.</div>
       </a>
       <a href="app.html?mode=monitor" class="mc">
         <div class="mc-top">
-          <span class="mc-icon">👁️</span>
-          <span class="mc-title">Monitor my trips</span>
+          <div class="mc-icon">👁</div>
+          <div class="mc-title">Monitor until you land</div>
         </div>
-        <div class="mc-desc">Add a booking and we watch it silently until check-in. Alerts if the price drops, flight reschedules, or hotel status changes.</div>
+        <div class="mc-desc">Silent background watch from confirmation to check-in. Alerts only when something actually changes.</div>
       </a>
     </div>
-    <div class="trust-strip">
-      <span class="trust-strip-icon">✅</span>
-      <p>No account needed to start. Verify your first booking free — no credit card required.</p>
+    <div class="hero-note">
+      <strong>✓ Free</strong> No account needed. Verify your first booking free — no card required.
     </div>
   </div>
 </section>
 
-<!-- HOW IT WORKS -->
-<section class="hiw" id="how">
-  <div class="section-badge">How it works</div>
-  <h2 class="section-h2">From booking to boarding pass,<br/>without the gaps</h2>
-  <p class="section-sub">Most travel platforms handle discovery or transactions. TrustRoute handles the part in between — verification and execution.</p>
-  <div class="steps">
-    <div class="step">
-      <div class="step-num">01</div>
-      <div class="step-icon">📋</div>
-      <div class="step-title">Describe or paste</div>
-      <div class="step-desc">Tell us your trip in plain language, or paste your booking confirmation link from any platform.</div>
-    </div>
-    <div class="step">
-      <div class="step-num">02</div>
-      <div class="step-icon">🔍</div>
-      <div class="step-title">AI runs checks</div>
-      <div class="step-desc">Price consistency, hotel status, visa rules, amenities, review recency — all cross-referenced across multiple sources.</div>
-    </div>
-    <div class="step">
-      <div class="step-num">03</div>
-      <div class="step-icon">🟢</div>
-      <div class="step-title">See what's verified</div>
-      <div class="step-desc">Green means confirmed. Amber means check this. Red means action needed. No guessing, no jargon.</div>
-    </div>
-    <div class="step">
-      <div class="step-num">04</div>
-      <div class="step-icon">🔔</div>
-      <div class="step-title">Monitor until you land</div>
-      <div class="step-desc">Add to monitoring and we alert you only when something actually changes — not noise, just signals.</div>
-    </div>
-  </div>
-</section>
+<!-- ══ SCROLL 2 ══════════════════════════════════════════════════════════ -->
+<div class="scroll2">
 
-<!-- WHY -->
-<section class="why" id="why">
-  <div class="why-inner">
-    <div class="section-badge" style="background:rgba(91,163,224,.15);color:#5BA3E0;border:1px solid rgba(91,163,224,.2)">Why TrustRoute</div>
-    <h2>The gap no one was solving</h2>
-    <p class="why-sub">OTAs handle the booking. Airlines handle the flight. But no one owns the space between your confirmation email and your actual trip. That's where things go wrong.</p>
-    <div class="why-grid">
-      <div class="wc">
-        <div class="wc-icon">💸</div>
-        <div class="wc-title">Price changes mid-funnel</div>
-        <div class="wc-desc">MakeMyTrip showed ₹2,010/night on the detail page. The checkout showed ₹4,551 total. We caught a 3-price funnel in one booking flow. You shouldn't have to notice this yourself.</div>
+  <!-- HOW IT WORKS -->
+  <div class="hiw" id="how">
+    <div class="section-tag">How it works</div>
+    <h2 class="section-h2">From booking to boarding pass,<br/>without the gaps</h2>
+    <p class="section-sub">Most travel platforms handle discovery or transactions. TrustRoute handles the part in between — where things go wrong.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-icon">📋</div>
+        <div class="step-title">Describe or paste</div>
+        <div class="step-desc">Tell us your trip in plain language, or paste your booking confirmation from any platform.</div>
       </div>
-      <div class="wc">
-        <div class="wc-icon">⭐</div>
-        <div class="wc-title">Ratings that contradict themselves</div>
-        <div class="wc-desc">Booking.com rated a hotel 4.1 "Disappointing" — but its subcategory scores were 5.0 across Comfort, Cleanliness, and Value. Their own algorithm contradicted itself.</div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-icon">🔍</div>
+        <div class="step-title">AI runs checks</div>
+        <div class="step-desc">Price consistency, hotel status, visa rules, amenities — cross-referenced across multiple sources.</div>
       </div>
-      <div class="wc">
-        <div class="wc-icon">📶</div>
-        <div class="wc-title">Critical info buried</div>
-        <div class="wc-desc">A hotel asked "Are you travelling for work?" during checkout — and never surfaced that the property has no WiFi. TrustRoute found it in the facilities section. You would have arrived to no internet.</div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-icon">🟢</div>
+        <div class="step-title">See what's verified</div>
+        <div class="step-desc">Green confirmed. Amber needs attention. Red requires action. No guessing.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-icon">🔔</div>
+        <div class="step-title">Monitor until you land</div>
+        <div class="step-desc">We alert you only when something changes — price drop, reschedule, hotel issue. Not noise.</div>
       </div>
     </div>
   </div>
-</section>
 
-<!-- PARTNER -->
-<section class="partner" id="contact">
-  <div class="section-badge">Early access</div>
-  <h2>Be one of our first travelers</h2>
-  <p>TrustRoute is in early access. Join now and help shape the product — full access, free for early users.</p>
-  <div class="partner-btns">
-    <a href="app.html" class="partner-btn-p">Try TrustRoute free →</a>
-    <a href="mailto:hello@trustroute.in" class="partner-btn-s">Get in touch</a>
+  <!-- WHY TRUSTROUTE -->
+  <div class="why" id="why">
+    <div class="section-tag">Why it exists</div>
+    <h2 class="section-h2">The gap no one was solving</h2>
+    <p class="section-sub">We tested two major OTAs end-to-end. Here's what we found — and why TrustRoute exists.</p>
+    <div class="why-cards">
+      <div class="wc">
+        <span class="wc-tag red">MakeMyTrip · Price</span>
+        <div class="wc-title">The same booking showed 3 different prices</div>
+        <div class="wc-desc">₹2,010/night on the detail page. ₹9,000 at the review page. ₹4,551 at checkout. The math reconciles — but no user should have to figure that out.</div>
+        <div class="wc-quote">"I would've abandoned at the review page — the price looked like it doubled." — Field test, Jun 2026</div>
+      </div>
+      <div class="wc">
+        <span class="wc-tag amber">Booking.com · Ratings</span>
+        <div class="wc-title">4.1 "Disappointing" — but 5.0 on every subcategory</div>
+        <div class="wc-desc">Staff 4.8, Facilities 5.0, Comfort 5.0, Value 5.0. The platform's own algorithm contradicted its own data. A user relying on the headline would skip a great property.</div>
+        <div class="wc-quote">"If TrustRoute hadn't flagged this, I'd have never booked it." — Field test, Jun 2026</div>
+      </div>
+      <div class="wc">
+        <span class="wc-tag red">Booking.com · Amenities</span>
+        <div class="wc-title">No WiFi — never mentioned during checkout</div>
+        <div class="wc-desc">The platform asked "Are you travelling for work?" and still didn't surface that the property has no internet. Buried three screens deep in the facilities section.</div>
+        <div class="wc-quote">"I would've arrived at the hotel for a work trip with no WiFi and no warning." — Field test, Jun 2026</div>
+      </div>
+    </div>
   </div>
-</section>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-logo">Trust<span>Route</span></div>
-  <div class="footer-links">
-    <a href="#how">How it works</a>
-    <a href="#why">Why TrustRoute</a>
-    <a href="mailto:hello@trustroute.in">Contact</a>
-    <a href="#">Privacy</a>
-    <a href="#">Terms</a>
+  <!-- CTA STRIP -->
+  <div class="cta-strip">
+    <h2>Be one of our first travelers</h2>
+    <p>TrustRoute is in early access. Join now — full access, free for early users.</p>
+    <div class="cta-btns">
+      <a href="app.html" class="cta-btn-p">Try TrustRoute free →</a>
+      <a href="mailto:hello@trustroute.in" class="cta-btn-s">Get in touch</a>
+    </div>
   </div>
-  <div class="footer-copy">© 2026 TrustRoute by Optimus. All rights reserved.</div>
-</footer>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Trust<span>Route</span></div>
+    <div class="footer-links">
+      <a href="#how">How it works</a>
+      <a href="#why">Why TrustRoute</a>
+      <a href="app.html">App</a>
+      <a href="mailto:hello@trustroute.in">Contact</a>
+    </div>
+    <div class="footer-copy">© 2026 TrustRoute by Optimus</div>
+  </footer>
+</div>
 
 </body>
 </html>

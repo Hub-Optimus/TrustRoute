@@ -4,7 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>TrustRoute — Every detail. Verified.</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -13,10 +13,14 @@
   --ink2:#4A5568;
   --ink3:#9CA3AF;
   --rust:#D94F2F;
-  --rust-dim:rgba(217,79,47,.07);
+  --rust-dim:rgba(217,79,47,.08);
+  --green:#10B981;
+  --green-dim:rgba(16,185,129,.09);
+  --green-txt:#0A7A56;
   --dark:#0F1118;
   --border:rgba(15,17,24,.1);
-  --border-dark:rgba(255,255,255,.08);
+  --bdk:rgba(255,255,255,.08);
+  --white:#fff;
 }
 html{scroll-behavior:smooth}
 body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);line-height:1.6;overflow-x:hidden}
@@ -27,234 +31,237 @@ nav{
   position:sticky;top:0;z-index:100;
   display:flex;align-items:center;justify-content:space-between;
   padding:0 2.5rem;height:50px;
-  background:rgba(242,237,232,.94);
-  backdrop-filter:blur(10px);
+  background:rgba(242,237,232,.94);backdrop-filter:blur(10px);
   border-bottom:1px solid var(--border);
 }
-.logo{font-family:'Playfair Display',serif;font-size:16px;font-weight:400;letter-spacing:-.2px;color:var(--ink)}
+.logo{font-family:'Playfair Display',serif;font-size:16px;font-weight:400;color:var(--ink)}
 .logo em{font-style:italic;color:var(--rust)}
-.nav-c{display:flex;align-items:center;gap:4px}
+.nav-c{display:flex;gap:2px}
 .nav-link{font-size:12.5px;color:var(--ink3);padding:4px 10px;transition:color .15s}
 .nav-link:hover{color:var(--ink)}
 .nav-r{display:flex;align-items:center;gap:10px}
 .nav-ghost{font-size:12.5px;color:var(--ink2);transition:color .15s}
 .nav-ghost:hover{color:var(--ink)}
-.nav-btn{font-size:12px;font-weight:500;letter-spacing:.04em;padding:7px 16px;background:var(--ink);color:#fff;transition:background .15s}
+.nav-btn{font-size:12px;font-weight:500;letter-spacing:.04em;padding:6px 16px;background:var(--ink);color:#fff;transition:background .15s}
 .nav-btn:hover{background:var(--rust)}
 
-/* ── HERO ────────────────────────────────────────────────────────────────── */
+/* ── HERO 50/50 ──────────────────────────────────────────────────────────── */
 .hero{
+  display:grid;grid-template-columns:1fr 1fr;
+  min-height:calc(100vh - 50px);
   background:var(--cream);
-  padding:2.25rem 2.5rem 0;
-  position:relative;overflow:hidden;
-  min-height:calc(78vh - 50px);
+}
+/* LEFT */
+.hl{
+  padding:3rem 2.5rem 0;
   display:flex;flex-direction:column;justify-content:space-between;
+  border-right:1px solid var(--border);
 }
-.hero-bg{
-  position:absolute;top:50%;left:50%;
-  transform:translate(-50%,-54%);
-  font-family:'Playfair Display',serif;
-  font-size:32vw;font-weight:900;
-  color:rgba(15,17,24,.032);
-  pointer-events:none;white-space:nowrap;
-  line-height:1;letter-spacing:-1vw;
-  user-select:none;
-}
-.hero-body{position:relative;z-index:1;flex:1}
-.hero-eye{
-  font-size:10px;letter-spacing:2.5px;text-transform:uppercase;
-  color:var(--ink3);margin-bottom:1rem;
-}
+.hl-body{flex:1;display:flex;flex-direction:column;justify-content:center;padding-bottom:1rem}
+.hero-eye{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--ink3);margin-bottom:1.25rem}
 .hero-h1{
   font-family:'Playfair Display',serif;
-  font-size:clamp(2.5rem,6vw,5rem);
-  font-weight:400;
-  line-height:1.0;
-  letter-spacing:-2px;
-  color:var(--ink);
-  margin-bottom:1rem;
-  max-width:800px;
+  font-size:clamp(2.4rem,5.5vw,4.5rem);
+  font-weight:400;line-height:1.0;letter-spacing:-1.5px;
+  color:var(--ink);margin-bottom:1rem;
 }
 .hero-h1 em{font-style:italic;color:var(--rust)}
-.hero-desc{
-  font-size:15px;color:var(--ink2);
-  line-height:1.7;margin-bottom:1.25rem;
-  max-width:440px;
-}
-.hero-btns{display:flex;flex-wrap:wrap;align-items:center;gap:1.25rem;margin-bottom:2rem}
-.btn-dark{
+.hero-desc{font-size:14px;color:var(--ink2);line-height:1.7;margin-bottom:1.75rem;max-width:380px}
+.hero-cta{
   display:inline-flex;align-items:center;gap:8px;
   font-size:11.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;
-  padding:10px 22px;background:var(--ink);color:#fff;
+  padding:11px 24px;background:var(--ink);color:#fff;
+  transition:all .2s;width:fit-content;
+}
+.hero-cta:hover{background:var(--rust)}
+.hero-cta .arr{transition:transform .2s}
+.hero-cta:hover .arr{transform:translateX(3px)}
+.hero-trust{margin-top:.875rem;font-size:11.5px;color:var(--ink3)}
+.hero-trust strong{color:var(--green-txt)}
+/* Stats strip */
+.stats-strip{border-top:1px solid var(--border);display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border)}
+.stat-item{background:var(--cream);padding:.625rem .75rem;display:flex;align-items:baseline;gap:.375rem}
+.stat-n{font-family:'DM Sans',sans-serif;font-weight:700;font-size:1.2rem;color:var(--ink)}
+.stat-l{font-size:10px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink3)}
+
+/* RIGHT */
+.hr{
+  background:var(--white);
+  padding:2.5rem;
+  display:flex;flex-direction:column;justify-content:center;gap:1rem;
+}
+.hr-label{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink3);margin-bottom:.25rem}
+.hr-title{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:400;color:var(--ink);margin-bottom:.25rem}
+.hr-sub{font-size:12.5px;color:var(--ink3);margin-bottom:.875rem}
+.drop-area{
+  border:1.5px dashed var(--border);
+  padding:1.25rem;
+  background:var(--cream);
+  transition:border-color .2s;
+  cursor:text;
+}
+.drop-area:focus-within{border-color:var(--rust);background:#fff}
+.drop-area textarea{
+  width:100%;min-height:100px;background:transparent;
+  border:none;outline:none;resize:none;
+  font-family:'DM Sans',sans-serif;font-size:13px;
+  color:var(--ink);line-height:1.6;
+}
+.drop-area textarea::placeholder{color:var(--ink3)}
+.drop-meta{
+  border-top:1px solid var(--border);
+  padding-top:.625rem;margin-top:.625rem;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.drop-hint{font-size:11px;color:var(--ink3)}
+.drop-btn{
+  font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  padding:7px 16px;background:var(--ink);color:#fff;cursor:pointer;
+  border:none;transition:background .2s;font-family:'DM Sans',sans-serif;
+}
+.drop-btn:hover{background:var(--rust)}
+.hr-divider{display:flex;align-items:center;gap:.75rem;color:var(--ink3);font-size:11px}
+.hr-divider::before,.hr-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.mode-links{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.mode-link{
+  padding:.75rem 1rem;border:1px solid var(--border);
+  display:flex;align-items:center;gap:.625rem;
+  font-size:12.5px;color:var(--ink2);
   transition:all .2s;
 }
-.btn-dark:hover{background:var(--rust)}
-.btn-dark .arr{transition:transform .2s}
-.btn-dark:hover .arr{transform:translateX(3px)}
-.btn-link{font-size:13px;color:var(--ink3);transition:color .2s}
-.btn-link:hover{color:var(--ink)}
-
-/* STATS STRIP */
-.stats-strip{
-  border-top:1px solid var(--border);
-  padding:.5rem 0;
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  position:relative;z-index:1;
-}
-.stat-item{
-  padding:.5rem 0;
-  border-right:1px solid var(--border);
-  display:flex;align-items:baseline;gap:.5rem;
-  padding-left:1rem;
-}
-.stat-item:last-child{border-right:none}
-.stat-item:first-child{padding-left:0}
-.stat-n{
-  font-family:'Playfair Display',serif;
-  font-size:1.5rem;font-weight:400;font-style:italic;
-  color:var(--ink);
-}
-.stat-l{font-size:10.5px;letter-spacing:.04em;color:var(--ink3)}
+.mode-link:hover{border-color:var(--ink);color:var(--ink);background:var(--cream)}
+.mode-link .ico{font-size:16px}
+.mode-link .lbl{font-weight:500;font-size:12px;display:block}
+.mode-link .sub{font-size:10.5px;color:var(--ink3);display:block;margin-top:1px}
 
 /* ── PROCESS ─────────────────────────────────────────────────────────────── */
-.process{background:var(--dark);padding:2rem 2.5rem}
-.proc-head{
-  display:flex;flex-direction:column;gap:.75rem;
-  margin-bottom:1.25rem;
-}
+.process{background:var(--dark);padding:2.5rem 2.5rem}
+.proc-head{display:flex;flex-direction:column;gap:.75rem;margin-bottom:1.75rem}
 @media(min-width:700px){.proc-head{flex-direction:row;align-items:flex-end;justify-content:space-between}}
-.proc-eye{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:.5rem}
+.proc-eye{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:.4rem}
 .proc-h2{
   font-family:'Playfair Display',serif;
   font-size:clamp(1.5rem,3.5vw,2.5rem);
-  font-weight:400;line-height:1.05;letter-spacing:-.5px;
-  color:#fff;
+  font-weight:400;line-height:1.05;letter-spacing:-.5px;color:#fff;
 }
 .proc-h2 em{font-style:italic;color:var(--rust)}
-.proc-sub{font-size:13px;color:rgba(255,255,255,.38);line-height:1.65;max-width:300px;align-self:flex-end}
-.steps{
-  display:grid;grid-template-columns:repeat(4,1fr);
-  border:1px solid var(--border-dark);
-}
-.step{
-  padding:1.1rem 1rem;
-  border-right:1px solid var(--border-dark);
-  transition:background .2s;
-}
+.proc-sub{font-size:13px;color:rgba(255,255,255,.42);line-height:1.65;max-width:280px;align-self:flex-end}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--bdk)}
+.step{padding:1.25rem 1rem;border-right:1px solid var(--bdk);transition:background .2s}
 .step:last-child{border-right:none}
 .step:hover{background:rgba(255,255,255,.04)}
-.step-n{font-family:monospace;font-size:11px;color:var(--rust);margin-bottom:.875rem;display:block}
-.step-t{font-size:13.5px;font-weight:500;color:#fff;margin-bottom:.4rem}
-.step-d{font-size:12px;color:rgba(255,255,255,.38);line-height:1.6}
-.step-line{
-  margin-top:.875rem;height:1px;width:1.75rem;
-  background:rgba(255,255,255,.15);transition:all .25s;
-}
-.step:hover .step-line{width:3.5rem;background:var(--rust)}
+.step-n{font-family:'DM Mono',monospace;font-size:11px;color:var(--rust);margin-bottom:.875rem;display:block}
+.step-t{font-size:13px;font-weight:500;color:#fff;margin-bottom:.35rem}
+.step-d{font-size:12px;color:rgba(255,255,255,.62);line-height:1.6}
+.step-line{margin-top:.875rem;height:1px;width:1.5rem;background:rgba(255,255,255,.15);transition:all .25s}
+.step:hover .step-line{width:3rem;background:var(--rust)}
 
-/* ── WHY ─────────────────────────────────────────────────────────────────── */
-.why{background:var(--cream);padding:1.75rem 2.5rem}
-.why-head{
-  display:grid;gap:1.25rem;margin-bottom:1.25rem;
-}
+/* ── WHY — AUDIT REPORT STYLE ────────────────────────────────────────────── */
+.why{background:var(--cream);padding:2.25rem 2.5rem}
+.why-head{display:grid;gap:1rem;margin-bottom:1.75rem}
 @media(min-width:700px){.why-head{grid-template-columns:1fr 1fr;align-items:end}}
-.why-eye{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink3);margin-bottom:.5rem}
+.why-eye{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink3);margin-bottom:.4rem}
 .why-h2{
   font-family:'Playfair Display',serif;
   font-size:clamp(1.5rem,3.5vw,2.5rem);
   font-weight:400;line-height:1.05;letter-spacing:-.5px;color:var(--ink);
 }
 .why-h2 em{font-style:italic;color:var(--rust)}
-.why-sub{font-size:13.5px;color:var(--ink2);line-height:1.7;align-self:flex-end}
-.why-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
-.wc{
-  background:var(--cream);
-  padding:1.1rem 1rem;
-  transition:background .2s;
+.why-sub{font-size:13px;color:var(--ink2);line-height:1.7;align-self:flex-end}
+.audit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+
+/* Audit card */
+.ac{background:var(--white);border:1px solid var(--border);padding:1.25rem}
+.ac-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.875rem}
+.ac-platform{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink3)}
+.ac-badge{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:10px;font-weight:600;
+  padding:2px 7px;background:rgba(217,79,47,.1);color:var(--rust);
 }
-.wc:hover{background:#fff}
-.wc-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.875rem}
-.wc-platform{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3)}
-.wc-tag{
-  font-size:10px;font-weight:500;
-  padding:2px 8px;background:var(--rust-dim);color:var(--rust);
+.ac-badge::before{content:'⚠';font-size:9px}
+
+/* Price ladder */
+.price-ladder{display:flex;flex-direction:column;gap:2px;margin:.75rem 0}
+.pr{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:5px 8px;font-size:12px;
 }
-.wc-stat{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(1.6rem,3.5vw,2.5rem);
-  font-style:italic;color:var(--ink);
-  line-height:1;margin-bottom:.625rem;
+.pr-lbl{color:var(--ink3);font-size:10.5px}
+.pr-val{font-family:'DM Mono',monospace;font-weight:500;font-size:12.5px}
+.pr.ok{background:var(--green-dim);color:var(--green-txt)}
+.pr.warn{background:var(--rust-dim);color:var(--rust)}
+.pr.final{background:rgba(15,17,24,.05);color:var(--ink)}
+.pr-arrow{color:var(--ink3);font-size:10px;text-align:center;padding:1px 8px}
+
+/* Rating compare */
+.rating-compare{margin:.75rem 0}
+.rc-main{
+  display:flex;align-items:baseline;gap:.5rem;
+  padding:8px 10px;background:var(--rust-dim);margin-bottom:2px;
 }
-.wc-desc{font-size:12.5px;color:var(--ink2);line-height:1.65}
-.wc-line{margin-top:.875rem;height:1px;background:var(--border);transition:background .25s}
-.wc:hover .wc-line{background:var(--rust)}
+.rc-main .num{font-family:'DM Mono',monospace;font-size:1.5rem;font-weight:500;color:var(--rust)}
+.rc-main .lbl{font-size:11px;color:var(--rust)}
+.rc-subs{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.rc-sub{
+  padding:5px 6px;background:var(--green-dim);text-align:center;
+}
+.rc-sub .num{font-family:'DM Mono',monospace;font-size:13px;font-weight:600;color:var(--green-txt);display:block}
+.rc-sub .lbl{font-size:9px;color:var(--ink3)}
+
+/* WiFi card */
+.wifi-card{margin:.75rem 0;padding:10px 12px;background:rgba(15,17,24,.04);border-left:3px solid var(--rust)}
+.wifi-icon{font-size:1.75rem;margin-bottom:.375rem;display:block;filter:grayscale(1) opacity(.6)}
+.wifi-tag{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:600;color:var(--rust)}
+.wifi-depth{margin-top:.5rem;display:inline-block;font-family:'DM Mono',monospace;font-size:10px;padding:2px 7px;background:rgba(217,79,47,.08);color:var(--rust)}
+
+.ac-desc{font-size:12px;color:var(--ink2);line-height:1.6;margin-top:.625rem}
+.ac-line{margin-top:1rem;height:1px;background:var(--border);transition:background .25s}
+.ac:hover .ac-line{background:var(--rust)}
 
 /* ── CTA ─────────────────────────────────────────────────────────────────── */
-.cta{
-  background:var(--cream);
-  padding:2.25rem 2.5rem;
-  text-align:center;
-  position:relative;overflow:hidden;
-}
-.cta::before,.cta::after{
-  content:'';position:absolute;border-radius:50%;
-  background:rgba(217,79,47,.06);pointer-events:none;
-}
-.cta::before{width:420px;height:420px;top:50%;left:10%;transform:translateY(-50%)}
-.cta::after{width:320px;height:320px;top:50%;right:8%;transform:translateY(-50%)}
-.cta-eye{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink3);margin-bottom:1.25rem}
-.cta-h2{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(2rem,5vw,4rem);
-  font-weight:400;letter-spacing:-1.5px;line-height:1.05;
-  color:var(--ink);margin-bottom:1.5rem;
-  position:relative;z-index:1;
-}
+.cta{background:var(--cream);padding:3rem 2.5rem;text-align:center;position:relative;overflow:hidden}
+.cta::before,.cta::after{content:'';position:absolute;border-radius:50%;background:rgba(217,79,47,.06);pointer-events:none}
+.cta::before{width:360px;height:360px;top:50%;left:8%;transform:translateY(-50%)}
+.cta::after{width:280px;height:280px;top:50%;right:6%;transform:translateY(-50%)}
+.cta-eye{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink3);margin-bottom:1rem}
+.cta-h2{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.75rem);font-weight:400;letter-spacing:-1px;line-height:1.05;color:var(--ink);margin-bottom:1.5rem;position:relative;z-index:1}
 .cta-h2 em{font-style:italic;color:var(--rust)}
 .cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;position:relative;z-index:1}
-.cta-p{
-  font-size:11.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;
-  padding:11px 26px;background:var(--ink);color:#fff;
-  display:inline-flex;align-items:center;gap:6px;
-  transition:background .2s;
-}
+.cta-p{font-size:11.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;padding:11px 26px;background:var(--ink);color:#fff;display:inline-flex;align-items:center;gap:6px;transition:background .2s}
 .cta-p:hover{background:var(--rust)}
 .cta-s{font-size:13px;color:var(--ink2);transition:color .2s;padding:11px 4px}
 .cta-s:hover{color:var(--rust)}
 
 /* ── FOOTER ──────────────────────────────────────────────────────────────── */
-footer{background:var(--dark);padding:1.75rem 2.5rem 1.25rem}
-.foot-top{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:2rem;margin-bottom:2rem}
-.foot-logo{font-family:'Playfair Display',serif;font-size:16px;font-weight:400;color:rgba(255,255,255,.6);margin-bottom:.5rem}
+footer{background:var(--dark);padding:2rem 2.5rem 1.25rem}
+.foot-top{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:2rem;margin-bottom:1.75rem}
+.foot-logo{font-family:'Playfair Display',serif;font-size:15px;font-weight:400;color:rgba(255,255,255,.55);margin-bottom:.4rem}
 .foot-logo em{font-style:italic;color:var(--rust)}
-.foot-desc{font-size:12px;color:rgba(255,255,255,.25);line-height:1.65;max-width:240px}
-.foot-col-title{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:.875rem}
-.foot-links{display:flex;flex-direction:column;gap:.5rem}
-.foot-links a{font-size:13px;color:rgba(255,255,255,.4);transition:color .15s}
-.foot-links a:hover{color:rgba(255,255,255,.85)}
-.foot-bottom{
-  border-top:1px solid rgba(255,255,255,.07);
-  padding-top:1.25rem;
-  display:flex;align-items:center;justify-content:space-between;
-  flex-wrap:wrap;gap:.5rem;
-}
-.foot-copy{font-size:11px;color:rgba(255,255,255,.2)}
+.foot-desc{font-size:12px;color:rgba(255,255,255,.22);line-height:1.65;max-width:240px}
+.foot-col-title{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.22);margin-bottom:.75rem}
+.foot-links{display:flex;flex-direction:column;gap:.4rem}
+.foot-links a{font-size:12.5px;color:rgba(255,255,255,.38);transition:color .15s}
+.foot-links a:hover{color:rgba(255,255,255,.8)}
+.foot-bottom{border-top:1px solid rgba(255,255,255,.07);padding-top:1rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+.foot-copy{font-size:11px;color:rgba(255,255,255,.18)}
 .foot-legal{display:flex;gap:1.25rem}
-.foot-legal a{font-size:11px;color:rgba(255,255,255,.2);transition:color .2s}
+.foot-legal a{font-size:11px;color:rgba(255,255,255,.18);transition:color .2s}
 .foot-legal a:hover{color:rgba(255,255,255,.55)}
 
 /* MOBILE */
 @media(max-width:760px){
   nav{padding:0 1.25rem}
   .nav-c{display:none}
-  .hero,.process,.why,.cta{padding-left:1.25rem;padding-right:1.25rem}
-  .hero-h1{font-size:clamp(2.5rem,10vw,4rem)}
+  .hero{grid-template-columns:1fr}
+  .hl{padding:2rem 1.25rem 0}
+  .hr{padding:1.5rem 1.25rem}
+  .stats-strip{grid-template-columns:repeat(4,1fr)}
+  .process,.why,.cta{padding-left:1.25rem;padding-right:1.25rem}
   .steps{grid-template-columns:1fr 1fr}
-  .step{border-bottom:1px solid var(--border-dark)}
-  .why-cards{grid-template-columns:1fr}
-  .cta-h2{font-size:clamp(2rem,8vw,3.5rem)}
-  footer{padding:2rem 1.25rem 1.25rem}
+  .step{border-bottom:1px solid var(--bdk)}
+  .audit-grid{grid-template-columns:1fr}
+  footer{padding:1.75rem 1.25rem 1rem}
   .foot-top{grid-template-columns:1fr}
 }
 </style>
@@ -277,26 +284,46 @@ footer{background:var(--dark);padding:1.75rem 2.5rem 1.25rem}
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-bg" aria-hidden="true">TRUST</div>
-  <div class="hero-body">
-    <div class="hero-eye">AI Travel Verification</div>
-    <h1 class="hero-h1">
-      Stop hoping<br/>
-      your booking<br/>
-      is <em>right.</em>
-    </h1>
-    <p class="hero-desc">The AI copilot that verifies bookings, catches price drops, and watches your trip — so you can actually enjoy it.</p>
-    <div class="hero-btns">
-      <a href="app.html?mode=verify" class="btn-dark">Start verifying <span class="arr">→</span></a>
-      <a href="app.html?mode=plan" class="btn-dark" style="background:transparent;color:var(--ink);border:1px solid var(--border)">Plan a trip <span class="arr">→</span></a>
-      <a href="#process" class="btn-link">See how it works</a>
+  <!-- LEFT -->
+  <div class="hl">
+    <div class="hl-body">
+      <div class="hero-eye">AI Travel Verification</div>
+      <h1 class="hero-h1">Stop hoping<br/>your booking<br/>is <em>right.</em></h1>
+      <p class="hero-desc">The AI copilot that verifies bookings, catches price drops, and monitors your trip — so you can actually enjoy it.</p>
+      <a href="app.html?mode=verify" class="hero-cta">Start verifying <span class="arr">→</span></a>
+      <div class="hero-trust"><strong>✓ Free</strong> &nbsp;No account needed &nbsp;·&nbsp; Works with any OTA</div>
+    </div>
+    <div class="stats-strip">
+      <div class="stat-item"><span class="stat-n">12k+</span><span class="stat-l">Verified</span></div>
+      <div class="stat-item"><span class="stat-n">₹2.4Cr</span><span class="stat-l">Saved</span></div>
+      <div class="stat-item"><span class="stat-n">3 sec</span><span class="stat-l">Check time</span></div>
+      <div class="stat-item"><span class="stat-n">Free</span><span class="stat-l">To start</span></div>
     </div>
   </div>
-  <div class="stats-strip">
-    <div class="stat-item"><span class="stat-n">12,000+</span><span class="stat-l">Bookings verified</span></div>
-    <div class="stat-item"><span class="stat-n">₹2.4 Cr</span><span class="stat-l">Saved for travelers</span></div>
-    <div class="stat-item"><span class="stat-n">3 sec</span><span class="stat-l">Average check time</span></div>
-    <div class="stat-item"><span class="stat-n">100%</span><span class="stat-l">Free to start</span></div>
+
+  <!-- RIGHT: Drop zone -->
+  <div class="hr">
+    <div class="hr-label">Quick check</div>
+    <div class="hr-title">Paste your booking confirmation</div>
+    <p class="hr-sub">Drop any booking text, email, or confirmation number — we'll check it instantly.</p>
+    <div class="drop-area" onclick="this.querySelector('textarea').focus()">
+      <textarea id="booking-input" placeholder="Paste your MakeMyTrip, Booking.com, Goibibo or any OTA confirmation text here...&#10;&#10;e.g. Booking confirmed: Ref #5532556142, Luxzy Studio Goa, Jul 4–6, ₹1,366 + ₹68.30 GST"></textarea>
+      <div class="drop-meta">
+        <span class="drop-hint">Accepts: Any OTA · Flights · Hotels · Packages</span>
+        <button class="drop-btn" onclick="checkBooking()">Check instantly →</button>
+      </div>
+    </div>
+    <div class="hr-divider">or choose a mode</div>
+    <div class="mode-links">
+      <a href="app.html?mode=plan" class="mode-link">
+        <span class="ico">✈</span>
+        <span><span class="lbl">Plan a trip</span><span class="sub">Before you book</span></span>
+      </a>
+      <a href="app.html?mode=monitor" class="mode-link">
+        <span class="ico">👁</span>
+        <span><span class="lbl">Monitor</span><span class="sub">After you book</span></span>
+      </a>
+    </div>
   </div>
 </section>
 
@@ -325,19 +352,19 @@ footer{background:var(--dark);padding:1.75rem 2.5rem 1.25rem}
     <div class="step">
       <span class="step-n">03</span>
       <div class="step-t">Get your report</div>
-      <div class="step-d">Clear breakdown of what checked out and what needs attention. No jargon.</div>
+      <div class="step-d">Clear breakdown of what checked out and what needs your attention. No jargon.</div>
       <div class="step-line"></div>
     </div>
     <div class="step">
       <span class="step-n">04</span>
       <div class="step-t">Monitor until landing</div>
-      <div class="step-d">We watch silently. You only hear from us if something actually changes.</div>
+      <div class="step-d">We watch silently. You only hear from us when something actually changes.</div>
       <div class="step-line"></div>
     </div>
   </div>
 </section>
 
-<!-- WHY -->
+<!-- WHY — AUDIT REPORT CARDS -->
 <section class="why" id="why">
   <div class="why-head">
     <div>
@@ -346,25 +373,61 @@ footer{background:var(--dark);padding:1.75rem 2.5rem 1.25rem}
     </div>
     <p class="why-sub">These weren't edge cases. Same booking flow, start to finish — on two platforms most Indian travelers use daily.</p>
   </div>
-  <div class="why-cards">
-    <div class="wc">
-      <div class="wc-head"><span class="wc-platform">Leading Indian OTA</span><span class="wc-tag">Price mismatch</span></div>
-      <div class="wc-stat">3 prices</div>
-      <div class="wc-desc">Same room showed ₹2,010 on listing, ₹9,000 at review, ₹4,551 at checkout. The math reconciles — but no user should have to figure that out.</div>
-      <div class="wc-line"></div>
+  <div class="audit-grid">
+
+    <!-- Card 1: Price ladder -->
+    <div class="ac">
+      <div class="ac-head">
+        <span class="ac-platform">Leading Indian OTA</span>
+        <span class="ac-badge">Price mismatch</span>
+      </div>
+      <div class="price-ladder">
+        <div class="pr ok"><span class="pr-lbl">Hotel detail page</span><span class="pr-val">₹2,010/night</span></div>
+        <div class="pr-arrow">↓ jumped to</div>
+        <div class="pr warn"><span class="pr-lbl">Review page</span><span class="pr-val">₹9,000</span></div>
+        <div class="pr-arrow">↓ "discounted" to</div>
+        <div class="pr final"><span class="pr-lbl">Checkout total</span><span class="pr-val">₹4,551</span></div>
+      </div>
+      <div class="ac-desc">Same room. Three different numbers. The math reconciles — but no user should have to figure that out.</div>
+      <div class="ac-line"></div>
     </div>
-    <div class="wc">
-      <div class="wc-head"><span class="wc-platform">Global booking platform</span><span class="wc-tag">Hidden ratings</span></div>
-      <div class="wc-stat">4.1 vs 5.0</div>
-      <div class="wc-desc">Headline said "4.1 Disappointing" while every subcategory scored 5.0. The algorithm contradicted its own data.</div>
-      <div class="wc-line"></div>
+
+    <!-- Card 2: Rating conflict -->
+    <div class="ac">
+      <div class="ac-head">
+        <span class="ac-platform">Global booking platform</span>
+        <span class="ac-badge">Rating conflict</span>
+      </div>
+      <div class="rating-compare">
+        <div class="rc-main">
+          <span class="num">4.1</span>
+          <span class="lbl">"Disappointing" — overall</span>
+        </div>
+        <div class="rc-subs">
+          <div class="rc-sub"><span class="num">4.8</span><span class="lbl">Staff</span></div>
+          <div class="rc-sub"><span class="num">5.0</span><span class="lbl">Comfort</span></div>
+          <div class="rc-sub"><span class="num">5.0</span><span class="lbl">Value</span></div>
+        </div>
+      </div>
+      <div class="ac-desc">The platform's own algorithm contradicted its own data. A user trusting the headline would skip a great property.</div>
+      <div class="ac-line"></div>
     </div>
-    <div class="wc">
-      <div class="wc-head"><span class="wc-platform">Global booking platform</span><span class="wc-tag">Missing amenities</span></div>
-      <div class="wc-stat">No WiFi</div>
-      <div class="wc-desc">Asked if I was travelling for work. Still didn't mention the hotel has no internet. Found it buried three screens deep.</div>
-      <div class="wc-line"></div>
+
+    <!-- Card 3: WiFi -->
+    <div class="ac">
+      <div class="ac-head">
+        <span class="ac-platform">Global booking platform</span>
+        <span class="ac-badge">Missing info</span>
+      </div>
+      <div class="wifi-card">
+        <span class="wifi-icon">📶</span>
+        <div class="wifi-tag">No WiFi available</div>
+        <div class="wifi-depth">Buried · 3 screens deep</div>
+      </div>
+      <div class="ac-desc">The platform asked "Are you travelling for work?" — and still never surfaced that this property has no internet.</div>
+      <div class="ac-line"></div>
     </div>
+
   </div>
 </section>
 
@@ -404,12 +467,21 @@ footer{background:var(--dark);padding:1.75rem 2.5rem 1.25rem}
   </div>
   <div class="foot-bottom">
     <span class="foot-copy">© 2026 TrustRoute by Optimus. All rights reserved.</span>
-    <div class="foot-legal">
-      <a href="#">Privacy</a>
-      <a href="#">Terms</a>
-    </div>
+    <div class="foot-legal"><a href="#">Privacy</a><a href="#">Terms</a></div>
   </div>
 </footer>
 
+<script>
+function checkBooking() {
+  const input = document.getElementById('booking-input').value.trim();
+  if (input) {
+    sessionStorage.setItem('tr_booking_input', input);
+  }
+  window.location.href = 'app.html?mode=verify';
+}
+document.getElementById('booking-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) checkBooking();
+});
+</script>
 </body>
 </html>

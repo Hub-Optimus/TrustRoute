@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>TrustRoute — App</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0F2B4A;--navy-mid:#1F4E79;--blue:#2E75B6;
+  --blue-bg:#E6F1FB;--blue-txt:#185FA5;
+  --green:#1E7E34;--green-bg:#EAF3DE;--green-bdr:#C0DD97;
+  --amber:#854F0B;--amber-bg:#FAEEDA;--amber-bdr:#FAC775;
+  --red:#A32D2D;--red-bg:#FCEBEB;--red-bdr:#F7C1C1;
+  --white:#FFFFFF;--g1:#F8F9FA;--g2:#F0F4FA;
+  --border:#E0E0E0;--border-med:#CCCCCC;
+  --t1:#1A1A1A;--t2:#555555;--t3:#888888;
+}
+body{font-family:system-ui,-apple-system,sans-serif;background:var(--g1);color:var(--t1);min-height:100vh}
+
+/* NAV */
+nav{background:var(--navy);height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:sticky;top:0;z-index:100}
+.nav-logo{font-size:16px;font-weight:700;color:var(--white);letter-spacing:-.3px;text-decoration:none}
+.nav-logo span{color:#5BA3E0}
+.nav-tabs{display:flex;gap:4px}
+.tab-btn{padding:6px 16px;border-radius:20px;font-size:13px;cursor:pointer;border:none;background:rgba(255,255,255,.08);color:rgba(255,255,255,.65);transition:all .15s;font-family:inherit}
+.tab-btn:hover{background:rgba(255,255,255,.14);color:var(--white)}
+.tab-btn.active{background:var(--white);color:var(--navy);font-weight:500}
+.nav-home{font-size:12px;color:rgba(255,255,255,.5);text-decoration:none;transition:color .2s}
+.nav-home:hover{color:var(--white)}
+
+/* MODES */
+.mode{display:none}
+.mode.active{display:block}
+
+/* APP SHELL */
+.app-wrap{max-width:1100px;margin:0 auto;padding:32px 24px}
+.app-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+.panel{background:var(--white);border-radius:14px;border:1px solid var(--border);overflow:hidden}
+.panel-head{padding:18px 20px;border-bottom:1px solid var(--border)}
+.panel-head h2{font-size:15px;font-weight:600;color:var(--t1);margin-bottom:3px}
+.panel-head p{font-size:12px;color:var(--t3)}
+.panel-body{padding:20px}
+
+/* FORM ELEMENTS */
+label{display:block;font-size:12px;color:var(--t2);margin-bottom:5px;font-weight:500}
+textarea,input{width:100%;padding:10px 12px;border:1px solid var(--border-med);border-radius:8px;font-size:13px;color:var(--t1);font-family:inherit;outline:none;transition:border-color .2s;background:var(--white)}
+textarea{resize:vertical;min-height:90px}
+textarea:focus,input:focus{border-color:var(--blue-txt)}
+.field{margin-bottom:14px}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.hint-link{font-size:11px;color:var(--blue-txt);cursor:pointer;background:none;border:none;padding:0;font-family:inherit}
+.hint-link:hover{text-decoration:underline}
+.form-footer{display:flex;justify-content:space-between;align-items:center;margin-top:16px}
+.btn-primary{padding:10px 22px;background:var(--navy);color:var(--white);border:none;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;transition:background .2s;font-family:inherit}
+.btn-primary:hover{background:var(--navy-mid)}
+.btn-primary:disabled{opacity:.5;cursor:default}
+.btn-success{padding:10px 22px;background:var(--green);color:var(--white);border:none;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit}
+.btn-outline{padding:10px 18px;background:var(--white);color:var(--t1);border:1px solid var(--border-med);border-radius:8px;font-size:13px;cursor:pointer;font-family:inherit}
+.btn-outline:hover{border-color:var(--blue-txt)}
+
+/* SPINNER */
+.spinner{display:flex;align-items:center;gap:8px;color:var(--t3);font-size:13px;padding:12px 0}
+.spin{animation:spin 1s linear infinite;display:inline-block;font-size:16px}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+
+/* RESULT ITEMS */
+.res-section{margin-bottom:20px}
+.res-label{font-size:11px;font-weight:500;color:var(--t3);text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px;display:flex;align-items:center;gap:5px}
+.result-header{padding:14px 16px;background:var(--navy);border-radius:10px;color:var(--white);margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
+.rh-left h3{font-size:14px;font-weight:500}
+.rh-left p{font-size:12px;opacity:.65;margin-top:2px}
+.score-box{text-align:center;padding:8px 14px;border-radius:8px;flex-shrink:0}
+.score-num{font-size:22px;font-weight:700}
+.score-lbl{font-size:10px;font-weight:500;margin-top:1px}
+.check-card{padding:11px 13px;border-radius:8px;margin-bottom:8px;border:1px solid}
+.check-card.green{background:var(--green-bg);border-color:var(--green-bdr)}
+.check-card.amber{background:var(--amber-bg);border-color:var(--amber-bdr)}
+.check-card.red{background:var(--red-bg);border-color:var(--red-bdr)}
+.cc-head{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;margin-bottom:4px}
+.check-card.green .cc-head{color:var(--green)}
+.check-card.amber .cc-head{color:var(--amber)}
+.check-card.red .cc-head{color:var(--red)}
+.cc-detail{font-size:11px;color:var(--t2);line-height:1.55;margin:0}
+.cc-action{font-size:11px;font-weight:500;margin-top:4px;cursor:pointer}
+.check-card.green .cc-action{color:var(--green)}
+.check-card.amber .cc-action{color:var(--amber)}
+.check-card.red .cc-action{color:var(--red)}
+.summary-box{padding:11px 13px;background:var(--g1);border-radius:8px;font-size:12px;color:var(--t2);line-height:1.65;margin-bottom:12px}
+.flight-row,.hotel-row{display:flex;justify-content:space-between;align-items:flex-start;padding:9px 11px;background:var(--g1);border-radius:8px;margin-bottom:6px;border:1px solid var(--border)}
+.flight-info h4,.hotel-info h4{font-size:12px;font-weight:500;color:var(--t1)}
+.flight-info p,.hotel-info p{font-size:11px;color:var(--t3);margin-top:2px}
+.flight-info span,.hotel-info span{font-size:11px;color:var(--t2);margin-top:2px;display:block}
+.flight-price,.hotel-price{font-size:13px;font-weight:600;color:var(--navy-mid);flex-shrink:0;margin-left:12px}
+.visa-box{padding:11px 13px;border-radius:8px;border:1px solid}
+.visa-box.ok{background:var(--green-bg);border-color:var(--green-bdr)}
+.visa-box.req{background:var(--amber-bg);border-color:var(--amber-bdr)}
+.visa-title{font-size:12px;font-weight:500;margin-bottom:4px}
+.visa-box.ok .visa-title{color:var(--green)}
+.visa-box.req .visa-title{color:var(--amber)}
+.visa-detail{font-size:11px;color:var(--t2);line-height:1.5}
+.doc-chips{display:flex;flex-wrap:wrap;gap:5px}
+.doc-chip{padding:4px 10px;background:var(--blue-bg);color:var(--blue-txt);border-radius:10px;font-size:11px;font-weight:500}
+.warn-box{padding:11px 13px;background:var(--amber-bg);border-radius:8px;border:1px solid var(--amber-bdr)}
+.warn-title{font-size:11px;font-weight:500;color:var(--amber);margin-bottom:4px;text-transform:uppercase;letter-spacing:.03em}
+.warn-item{font-size:11px;color:var(--t2);margin-bottom:2px}
+.error-box{padding:12px;background:var(--red-bg);border:1px solid var(--red-bdr);border-radius:8px;color:var(--red);font-size:12px}
+
+/* MONITOR MODE */
+.monitor-wrap{max-width:900px;margin:0 auto;padding:32px 24px}
+.monitor-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.monitor-head h2{font-size:20px;font-weight:500;color:var(--t1)}
+.monitor-head p{font-size:13px;color:var(--t3);margin-top:3px}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+.stat-card{padding:12px 14px;background:var(--white);border-radius:10px;border:1px solid var(--border)}
+.stat-num{font-size:22px;font-weight:600;color:var(--t1)}
+.stat-lbl{font-size:11px;color:var(--t3);margin-top:2px}
+.trip-list{display:flex;flex-direction:column;gap:10px}
+.trip-item{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:14px 16px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.trip-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.dot-green{background:var(--green)}
+.dot-amber{background:#BA7517}
+.dot-blue{background:var(--blue-txt)}
+.trip-info h4{font-size:13px;font-weight:500;color:var(--t1)}
+.trip-info p{font-size:11px;color:var(--t3);margin-top:2px}
+.trip-info .trip-alert{font-size:11px;color:var(--amber);margin-top:4px}
+.trip-badge{padding:3px 9px;border-radius:10px;font-size:11px;font-weight:500;flex-shrink:0}
+.badge-green{background:var(--green-bg);color:var(--green)}
+.badge-amber{background:var(--amber-bg);color:var(--amber)}
+.badge-blue{background:var(--blue-bg);color:var(--blue-txt)}
+.empty-state{text-align:center;padding:60px 20px;color:var(--t3)}
+.empty-state h3{font-size:16px;font-weight:500;color:var(--t2);margin-bottom:8px}
+.empty-state p{font-size:13px;line-height:1.6;margin-bottom:20px}
+.monitor-note{padding:12px 14px;background:var(--blue-bg);border-radius:8px;font-size:12px;color:var(--blue-txt);line-height:1.65;margin-top:16px}
+
+/* MOBILE */
+@media(max-width:768px){
+  nav{padding:0 16px}
+  .nav-home{display:none}
+  .app-grid{grid-template-columns:1fr}
+  .field-row{grid-template-columns:1fr}
+  .stats-row{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">Trust<span>Route</span></a>
+  <div class="nav-tabs">
+    <button class="tab-btn active" onclick="switchMode('plan')">✈ Plan</button>
+    <button class="tab-btn" onclick="switchMode('verify')">🛡 Verify</button>
+    <button class="tab-btn" onclick="switchMode('monitor')">👁 Monitor <span id="monitor-badge" style="display:none;background:#E24B4A;color:#fff;border-radius:50%;width:14px;height:14px;font-size:9px;display:none;align-items:center;justify-content:center;margin-left:2px"></span></button>
+  </div>
+  <a href="index.html" class="nav-home">← Home</a>
+</nav>
+
+<!-- ══════════ PLAN MODE ══════════ -->
+<div id="mode-plan" class="mode active">
+  <div class="app-wrap">
+    <div class="app-grid">
+      <!-- Input -->
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Plan a trip</h2>
+          <p>Describe your trip in plain language — we'll handle the research</p>
+        </div>
+        <div class="panel-body">
+          <div class="field">
+            <label>Describe your trip</label>
+            <textarea id="plan-input" placeholder="e.g. Weekend trip to Goa for 2 adults, July 4–6 2026, budget ₹25,000 — need flights from Mumbai and a hotel near Calangute beach. Do we need a visa?"></textarea>
+          </div>
+          <div class="form-footer">
+            <button class="hint-link" onclick="fillPlanExample()">Try example ↗</button>
+            <button class="btn-primary" id="plan-btn" onclick="runPlan()">Build roadmap →</button>
+          </div>
+        </div>
+      </div>
+      <!-- Output -->
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Your trip roadmap</h2>
+          <p>Flights, hotels, visa rules, and documents — all in one place</p>
+        </div>
+        <div class="panel-body" id="plan-output">
+          <div style="text-align:center;padding:40px 0;color:var(--t3)">
+            <div style="font-size:32px;margin-bottom:10px">🗺️</div>
+            <div style="font-size:13px">Describe your trip and click "Build roadmap"</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ VERIFY MODE ══════════ -->
+<div id="mode-verify" class="mode">
+  <div class="app-wrap">
+    <div class="app-grid">
+      <!-- Input -->
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Verify a booking</h2>
+          <p>Enter your booking details — booked anywhere</p>
+        </div>
+        <div class="panel-body">
+          <div class="field">
+            <label>Hotel or Flight name</label>
+            <input id="v-property" type="text" placeholder="e.g. Luxzy Studio Apartments Goa"/>
+          </div>
+          <div class="field-row">
+            <div>
+              <label>Dates & guests</label>
+              <input id="v-dates" type="text" placeholder="e.g. July 4–6, 2 nights, 2 adults"/>
+            </div>
+            <div>
+              <label>Price paid</label>
+              <input id="v-price" type="text" placeholder="e.g. ₹1,366 + taxes"/>
+            </div>
+          </div>
+          <div class="field">
+            <label>Confirmation / Ref number</label>
+            <input id="v-ref" type="text" placeholder="e.g. 5532556142"/>
+          </div>
+          <div class="form-footer">
+            <button class="hint-link" onclick="fillVerifyExample()">Use Booking.com example ↗</button>
+            <button class="btn-primary" id="verify-btn" onclick="runVerify()">Verify now 🛡</button>
+          </div>
+        </div>
+      </div>
+      <!-- Output -->
+      <div class="panel">
+        <div class="panel-head">
+          <h2>Verification report</h2>
+          <p>Green = confirmed · Amber = check this · Red = action needed</p>
+        </div>
+        <div class="panel-body" id="verify-output">
+          <div style="text-align:center;padding:40px 0;color:var(--t3)">
+            <div style="font-size:32px;margin-bottom:10px">🛡️</div>
+            <div style="font-size:13px">Enter booking details and click "Verify now"</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ MONITOR MODE ══════════ -->
+<div id="mode-monitor" class="mode">
+  <div class="monitor-wrap">
+    <div class="monitor-head">
+      <div>
+        <h2>Active monitoring</h2>
+        <p>Trips being watched from booking to check-in</p>
+      </div>
+      <button class="btn-outline" onclick="switchMode('verify')">+ Verify new booking</button>
+    </div>
+    <div class="stats-row" id="monitor-stats">
+      <div class="stat-card"><div class="stat-num" id="s-total">0</div><div class="stat-lbl">Active trips</div></div>
+      <div class="stat-card"><div class="stat-num" id="s-alerts">0</div><div class="stat-lbl">Alerts</div></div>
+      <div class="stat-card"><div class="stat-num">Free</div><div class="stat-lbl">Current plan</div></div>
+      <div class="stat-card"><div class="stat-num">Live</div><div class="stat-lbl">Status</div></div>
+    </div>
+    <div class="trip-list" id="trip-list"></div>
+    <div class="monitor-note">🔔 TrustRoute monitors your trips and alerts you when prices change, flights reschedule, or hotel status updates. Monitoring runs every 4 hours.</div>
+  </div>
+</div>
+
+<script>
+// ── Mode switching ─────────────────────────────────────────────────────────
+function switchMode(mode) {
+  document.querySelectorAll('.mode').forEach(m => m.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('mode-' + mode).classList.add('active');
+  const tabs = {'plan':0,'verify':1,'monitor':2};
+  document.querySelectorAll('.tab-btn')[tabs[mode]].classList.add('active');
+  if (mode === 'monitor') renderMonitor();
+  // Read URL param on load
+}
+
+// Read URL param to set initial mode
+window.addEventListener('DOMContentLoaded', () => {
+  const params = new URLSearchParams(window.location.search);
+  const mode = params.get('mode');
+  if (mode === 'verify' || mode === 'monitor') switchMode(mode);
+  renderMonitor();
+});
+
+// ── Example fillers ────────────────────────────────────────────────────────
+function fillPlanExample() {
+  document.getElementById('plan-input').value = 'Weekend trip to Goa for 2 adults, July 4–6 2026, budget ₹25,000 — need flights from Mumbai and a hotel near Calangute beach. Do we need a visa?';
+}
+function fillVerifyExample() {
+  document.getElementById('v-property').value = 'Luxzy Studio Apartments Goa';
+  document.getElementById('v-dates').value = 'July 4–6 2026, 2 nights, 2 adults';
+  document.getElementById('v-price').value = '₹1,366 total + ₹68.30 GST';
+  document.getElementById('v-ref').value = '5532556142 via Booking.com';
+}
+
+// ── API call ───────────────────────────────────────────────────────────────
+async function callAI(mode, input) {
+  const res = await fetch('/api/ai', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({mode, input})
+  });
+  if (!res.ok) throw new Error('Server error ' + res.status);
+  return await res.json();
+}
+
+// ── PLAN ───────────────────────────────────────────────────────────────────
+async function runPlan() {
+  const input = document.getElementById('plan-input').value.trim();
+  if (!input) return;
+  const btn = document.getElementById('plan-btn');
+  const out = document.getElementById('plan-output');
+  btn.disabled = true;
+  out.innerHTML = '<div class="spinner"><span class="spin">↻</span> Building your trip roadmap...</div>';
+  try {
+    const data = await callAI('plan', input);
+    out.innerHTML = renderPlan(data);
+  } catch(e) {
+    out.innerHTML = '<div class="error-box">Could not build roadmap. Please try again.</div>';
+  }
+  btn.disabled = false;
+}
+
+function renderPlan(d) {
+  let html = '';
+  // Header
+  html += `<div class="result-header"><div class="rh-left"><h3>${d.destination || 'Your trip'}</h3><p>${d.dates || ''} · ${d.travelers || ''}</p></div><div style="font-size:11px;color:rgba(255,255,255,.5)">TrustRoute</div></div>`;
+  // Flights
+  if (d.flights && d.flights.length) {
+    html += '<div class="res-section"><div class="res-label">✈ Top flight options</div>';
+    d.flights.forEach(f => {
+      html += `<div class="flight-row"><div class="flight-info"><h4>${f.airline}</h4><p>${f.type} · ${f.duration}</p>${f.note?`<span>${f.note}</span>`:''}</div><div class="flight-price">${f.approxPrice}</div></div>`;
+    });
+    html += '</div>';
+  }
+  // Hotels
+  if (d.hotels && d.hotels.length) {
+    html += '<div class="res-section"><div class="res-label">🏨 Recommended hotels</div>';
+    d.hotels.forEach(h => {
+      html += `<div class="hotel-row"><div class="hotel-info"><h4>${h.name}</h4><p>${h.area} · ⭐ ${h.rating}</p>${h.note?`<span>${h.note}</span>`:''}</div><div class="hotel-price">${h.approxPrice}</div></div>`;
+    });
+    html += '</div>';
+  }
+  // Visa
+  if (d.visa) {
+    const ok = !d.visa.required;
+    html += `<div class="res-section"><div class="res-label">📋 Visa & entry</div>
+      <div class="visa-box ${ok?'ok':'req'}">
+        <div class="visa-title">${ok?'✓ No visa required':'⚠ Visa required'}</div>
+        <div class="visa-detail">${d.visa.details || ''}</div>
+        ${d.visa.documents&&d.visa.documents.length?`<ul style="margin:6px 0 0 14px;font-size:11px;color:var(--t2)">${d.visa.documents.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}
+      </div></div>`;
+  }
+  // Documents
+  const docs = (d.documents||[]).filter(Boolean);
+  if (docs.length) {
+    html += `<div class="res-section"><div class="res-label">✅ Document checklist</div><div class="doc-chips">${docs.map(x=>`<span class="doc-chip">✓ ${x}</span>`).join('')}</div></div>`;
+  }
+  // Warnings
+  const warns = (d.warnings||[]).filter(Boolean);
+  if (warns.length) {
+    html += `<div class="warn-box"><div class="warn-title">Important notes</div>${warns.map(w=>`<div class="warn-item">• ${w}</div>`).join('')}</div>`;
+  }
+  // Next step
+  html += `<button class="btn-primary" style="width:100%;margin-top:16px" onclick="switchMode('verify')">Now verify a specific booking →</button>`;
+  return html;
+}
+
+// ── VERIFY ─────────────────────────────────────────────────────────────────
+async function runVerify() {
+  const prop = document.getElementById('v-property').value.trim();
+  if (!prop) return;
+  const dates = document.getElementById('v-dates').value;
+  const price = document.getElementById('v-price').value;
+  const ref = document.getElementById('v-ref').value;
+  const input = `Property/Flight: ${prop}\nDates & guests: ${dates}\nPrice paid: ${price}\nConfirmation ref: ${ref}`;
+  const btn = document.getElementById('verify-btn');
+  const out = document.getElementById('verify-output');
+  btn.disabled = true;
+  out.innerHTML = '<div class="spinner"><span class="spin">↻</span> Running verification checks...</div>';
+  try {
+    const data = await callAI('verify', input);
+    out.innerHTML = renderVerify(data, prop, dates);
+  } catch(e) {
+    out.innerHTML = '<div class="error-box">Could not run verification. Please try again.</div>';
+  }
+  btn.disabled = false;
+}
+
+function scoreColor(s) { return s >= 80 ? 'var(--green)' : s >= 50 ? 'var(--amber)' : 'var(--red)'; }
+function scoreBg(s) { return s >= 80 ? 'var(--green-bg)' : s >= 50 ? 'var(--amber-bg)' : 'var(--red-bg)'; }
+const icons = {green:'✓', amber:'⚠', red:'✗'};
+
+let lastVerifyData = null;
+
+function renderVerify(d, fallbackProp, fallbackDates) {
+  lastVerifyData = {property: d.property || fallbackProp, dates: d.dates || fallbackDates, score: d.trustScore};
+  let html = '';
+  const sc = d.trustScore || 50;
+  // Header
+  html += `<div class="result-header">
+    <div class="rh-left"><h3>${d.property || fallbackProp}</h3><p>${d.dates || fallbackDates}</p></div>
+    <div class="score-box" style="background:${scoreBg(sc)}">
+      <div class="score-num" style="color:${scoreColor(sc)}">${sc}</div>
+      <div class="score-lbl" style="color:${scoreColor(sc)}">${d.trustLabel || ''}</div>
+    </div>
+  </div>`;
+  // Checks
+  if (d.checks && d.checks.length) {
+    d.checks.forEach(c => {
+      html += `<div class="check-card ${c.status}">
+        <div class="cc-head">${icons[c.status] || '·'} ${c.title}</div>
+        <p class="cc-detail">${c.detail}</p>
+        ${c.action ? `<div class="cc-action">${c.action} →</div>` : ''}
+      </div>`;
+    });
+  }
+  // Summary
+  if (d.summary) html += `<div class="summary-box">${d.summary}</div>`;
+  // Activate monitoring
+  html += `<button class="btn-success" style="width:100%;margin-top:4px" onclick="activateMonitor()">Activate monitoring for this trip 👁</button>`;
+  return html;
+}
+
+function activateMonitor() {
+  if (!lastVerifyData) return;
+  const trips = getTrips();
+  trips.unshift({
+    id: Date.now(),
+    property: lastVerifyData.property,
+    dates: lastVerifyData.dates,
+    score: lastVerifyData.score,
+    status: lastVerifyData.score >= 80 ? 'green' : lastVerifyData.score >= 50 ? 'amber' : 'amber',
+    label: lastVerifyData.score >= 80 ? 'All clear' : 'Needs attention',
+    addedAt: new Date().toLocaleString('en-IN', {day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})
+  });
+  saveTrips(trips);
+  updateBadge();
+  document.getElementById('verify-output').querySelector('.btn-success').textContent = '✓ Added to monitoring — view in Monitor tab';
+  document.getElementById('verify-output').querySelector('.btn-success').disabled = true;
+  switchMode('monitor');
+}
+
+// ── MONITOR ────────────────────────────────────────────────────────────────
+const SAMPLE_TRIPS = [
+  {id:1, property:'Bangkok Grand Palace Hotel', dates:'Aug 12–18, 2026 · 2 adults', score:55, status:'amber', label:'1 alert', addedAt:'4 Jun, 09:41', alert:'Price dropped ₹800 — check for a better rate'},
+  {id:2, property:'Manali Snowcrest Manor', dates:'Sep 2–8, 2026 · 4 adults', score:88, status:'green', label:'All clear', addedAt:'3 Jun, 11:00'}
+];
+
+function getTrips() {
+  try { return JSON.parse(localStorage.getItem('tr_trips') || 'null') || SAMPLE_TRIPS; } catch { return SAMPLE_TRIPS; }
+}
+function saveTrips(t) {
+  try { localStorage.setItem('tr_trips', JSON.stringify(t)); } catch {}
+}
+
+function renderMonitor() {
+  const trips = getTrips();
+  const alerts = trips.filter(t => t.status === 'amber').length;
+  document.getElementById('s-total').textContent = trips.length;
+  document.getElementById('s-alerts').textContent = alerts;
+  const list = document.getElementById('trip-list');
+  if (!trips.length) {
+    list.innerHTML = `<div class="empty-state"><h3>No trips being monitored yet</h3><p>Verify a booking first, then activate monitoring to add it here.</p><button class="btn-primary" onclick="switchMode('verify')">Verify a booking →</button></div>`;
+    return;
+  }
+  list.innerHTML = trips.map(t => `
+    <div class="trip-item">
+      <div style="display:flex;align-items:flex-start;gap:10px;flex:1">
+        <div class="trip-dot dot-${t.status}" style="margin-top:5px"></div>
+        <div class="trip-info">
+          <h4>${t.property}</h4>
+          <p>${t.dates}</p>
+          ${t.alert ? `<div class="trip-alert">⚠ ${t.alert}</div>` : ''}
+          <p style="margin-top:4px;font-size:10px;color:var(--t3)">Added ${t.addedAt}</p>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0">
+        <span class="trip-badge badge-${t.status === 'green' ? 'green' : t.status === 'amber' ? 'amber' : 'blue'}">${t.label}</span>
+        <span style="font-size:10px;color:var(--t3)">Score: ${t.score}/100</span>
+        <button onclick="removeTrip(${t.id})" style="font-size:10px;color:var(--t3);background:none;border:none;cursor:pointer">Remove</button>
+      </div>
+    </div>
+  `).join('');
+  updateBadge();
+}
+
+function removeTrip(id) {
+  saveTrips(getTrips().filter(t => t.id !== id));
+  renderMonitor();
+}
+
+function updateBadge() {
+  const trips = getTrips();
+  const alerts = trips.filter(t => t.status === 'amber').length;
+  const badge = document.getElementById('monitor-badge');
+  if (alerts > 0) {
+    badge.textContent = alerts;
+    badge.style.display = 'inline-flex';
+  } else {
+    badge.style.display = 'none';
+  }
+}
+</script>
+</body>
+</html>

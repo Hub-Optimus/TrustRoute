@@ -8,220 +8,254 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#F7F3ED;
-  --ink:#0F1520;
-  --ink2:#4B5563;
+  --cream:#F2EDE8;
+  --ink:#0F1118;
+  --ink2:#4A5568;
   --ink3:#9CA3AF;
-  --primary:#E05C3A;
-  --primary-dim:rgba(224,92,58,.1);
-  --border:rgba(15,21,32,.1);
-  --white:#fff;
-  --dark:#0F1520;
+  --rust:#D94F2F;
+  --rust-dim:rgba(217,79,47,.07);
+  --dark:#0F1118;
+  --border:rgba(15,17,24,.1);
+  --border-dark:rgba(255,255,255,.08);
 }
 html{scroll-behavior:smooth}
-body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;overflow-x:hidden}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);line-height:1.6;overflow-x:hidden}
 a{text-decoration:none;color:inherit}
 
 /* ── NAV ─────────────────────────────────────────────────────────────────── */
 nav{
   position:sticky;top:0;z-index:100;
   display:flex;align-items:center;justify-content:space-between;
-  padding:0 2.5rem;height:52px;
-  background:rgba(247,243,237,.92);
+  padding:0 2.5rem;height:50px;
+  background:rgba(242,237,232,.94);
   backdrop-filter:blur(10px);
   border-bottom:1px solid var(--border);
 }
-.logo{font-family:'Playfair Display',serif;font-size:17px;font-weight:400;letter-spacing:-.3px;color:var(--ink)}
-.logo em{font-style:italic;color:var(--primary)}
-.nav-links{display:flex;align-items:center;gap:2px}
-.nav-link{font-size:13px;color:var(--ink3);padding:5px 12px;border-radius:4px;transition:all .15s}
-.nav-link:hover{color:var(--ink);background:rgba(15,21,32,.05)}
-.nav-r{display:flex;align-items:center;gap:8px}
-.nav-ghost{font-size:13px;color:var(--ink2);padding:5px 14px;border:1px solid var(--border);border-radius:4px;transition:all .15s}
-.nav-ghost:hover{border-color:var(--ink);color:var(--ink)}
-.nav-btn{font-size:13px;font-weight:500;padding:6px 16px;background:var(--ink);color:var(--white);border-radius:4px;transition:all .15s}
-.nav-btn:hover{background:var(--primary);transform:translateY(-1px)}
+.logo{font-family:'Playfair Display',serif;font-size:16px;font-weight:400;letter-spacing:-.2px;color:var(--ink)}
+.logo em{font-style:italic;color:var(--rust)}
+.nav-c{display:flex;align-items:center;gap:4px}
+.nav-link{font-size:12.5px;color:var(--ink3);padding:4px 10px;transition:color .15s}
+.nav-link:hover{color:var(--ink)}
+.nav-r{display:flex;align-items:center;gap:10px}
+.nav-ghost{font-size:12.5px;color:var(--ink2);transition:color .15s}
+.nav-ghost:hover{color:var(--ink)}
+.nav-btn{font-size:12px;font-weight:500;letter-spacing:.04em;padding:7px 16px;background:var(--ink);color:#fff;transition:background .15s}
+.nav-btn:hover{background:var(--rust)}
 
 /* ── HERO ────────────────────────────────────────────────────────────────── */
 .hero{
-  background:var(--dark);
-  min-height:calc(100vh - 52px);
-  display:flex;flex-direction:column;
-  justify-content:space-between;
-  overflow:hidden;position:relative;
+  background:var(--cream);
+  padding:3.5rem 2.5rem 0;
+  position:relative;overflow:hidden;
+  min-height:calc(90vh - 50px);
+  display:flex;flex-direction:column;justify-content:space-between;
 }
-.hero::before{
-  content:'TRUST';
+.hero-bg{
   position:absolute;top:50%;left:50%;
-  transform:translate(-50%,-50%);
+  transform:translate(-50%,-54%);
   font-family:'Playfair Display',serif;
-  font-size:38vw;font-weight:900;
-  color:rgba(255,255,255,.018);
-  pointer-events:none;white-space:nowrap;line-height:1;
-  letter-spacing:-2vw;
+  font-size:32vw;font-weight:900;
+  color:rgba(15,17,24,.032);
+  pointer-events:none;white-space:nowrap;
+  line-height:1;letter-spacing:-1vw;
+  user-select:none;
 }
-.hero-body{
-  flex:1;display:flex;align-items:center;
-  padding:3rem 2.5rem 2rem;position:relative;z-index:1;
-}
-.hero-inner{max-width:680px}
-.hero-eyebrow{
+.hero-body{position:relative;z-index:1;flex:1}
+.hero-eye{
   font-size:10px;letter-spacing:2.5px;text-transform:uppercase;
-  color:rgba(255,255,255,.3);margin-bottom:1.25rem;
-  display:flex;align-items:center;gap:8px;
+  color:var(--ink3);margin-bottom:1.5rem;
 }
-.hero-eyebrow::before{content:'';width:5px;height:5px;background:var(--primary);border-radius:50%;animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
 .hero-h1{
   font-family:'Playfair Display',serif;
-  font-size:clamp(2.6rem,6vw,5rem);
+  font-size:clamp(3rem,7vw,6rem);
   font-weight:400;
   line-height:1.0;
-  letter-spacing:-1.5px;
-  color:var(--white);
-  margin-bottom:1.25rem;
+  letter-spacing:-2px;
+  color:var(--ink);
+  margin-bottom:1.5rem;
+  max-width:800px;
 }
-.hero-h1 em{font-style:italic;color:var(--primary)}
-.hero-desc{font-size:15px;color:rgba(255,255,255,.45);line-height:1.65;margin-bottom:2rem;max-width:440px}
-.hero-btns{display:flex;flex-wrap:wrap;align-items:center;gap:1rem}
-.btn-primary{
+.hero-h1 em{font-style:italic;color:var(--rust)}
+.hero-desc{
+  font-size:15px;color:var(--ink2);
+  line-height:1.7;margin-bottom:2rem;
+  max-width:440px;
+}
+.hero-btns{display:flex;flex-wrap:wrap;align-items:center;gap:1.25rem;margin-bottom:3.5rem}
+.btn-dark{
   display:inline-flex;align-items:center;gap:8px;
-  font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;
-  padding:10px 22px;background:var(--white);color:var(--dark);
+  font-size:11.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;
+  padding:10px 22px;background:var(--ink);color:#fff;
   transition:all .2s;
 }
-.btn-primary:hover{background:var(--primary);color:var(--white)}
-.btn-primary .arr{transition:transform .2s}
-.btn-primary:hover .arr{transform:translateX(3px)}
-.btn-text{font-size:13px;color:rgba(255,255,255,.4);letter-spacing:.03em;transition:color .2s}
-.btn-text:hover{color:rgba(255,255,255,.8)}
+.btn-dark:hover{background:var(--rust)}
+.btn-dark .arr{transition:transform .2s}
+.btn-dark:hover .arr{transform:translateX(3px)}
+.btn-link{font-size:13px;color:var(--ink3);transition:color .2s}
+.btn-link:hover{color:var(--ink)}
 
-/* MARQUEE */
-.marquee-wrap{
-  border-top:1px solid rgba(255,255,255,.08);
-  padding:.875rem 0;
-  position:relative;z-index:1;overflow:hidden;
+/* STATS STRIP */
+.stats-strip{
+  border-top:1px solid var(--border);
+  padding:1rem 0;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  position:relative;z-index:1;
 }
-.marquee-track{display:flex;animation:marquee 20s linear infinite}
-.marquee-inner{display:flex;flex-shrink:0;align-items:center;gap:3.5rem;padding:0 1.75rem}
-@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.stat-item{display:flex;align-items:baseline;gap:.5rem;white-space:nowrap}
-.stat-n{font-family:'Playfair Display',serif;font-size:1.25rem;font-style:italic;color:var(--white)}
-.stat-l{font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.28)}
-.stat-sep{width:3px;height:3px;background:rgba(255,255,255,.15);border-radius:50%;flex-shrink:0}
+.stat-item{
+  padding:.625rem 0;
+  border-right:1px solid var(--border);
+  display:flex;align-items:baseline;gap:.5rem;
+  padding-left:1rem;
+}
+.stat-item:last-child{border-right:none}
+.stat-item:first-child{padding-left:0}
+.stat-n{
+  font-family:'Playfair Display',serif;
+  font-size:1.5rem;font-weight:400;font-style:italic;
+  color:var(--ink);
+}
+.stat-l{font-size:10.5px;letter-spacing:.04em;color:var(--ink3)}
 
-/* ── HOW IT WORKS ─────────────────────────────────────────────────────────── */
-.hiw{background:var(--ink);padding:3rem 2.5rem}
-.hiw-head{
+/* ── PROCESS ─────────────────────────────────────────────────────────────── */
+.process{background:var(--dark);padding:3rem 2.5rem}
+.proc-head{
   display:flex;flex-direction:column;gap:.75rem;
   margin-bottom:2rem;
 }
-@media(min-width:768px){.hiw-head{flex-direction:row;align-items:flex-end;justify-content:space-between}}
-.hiw-eyebrow{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:.5rem}
-.hiw-h2{
+@media(min-width:700px){.proc-head{flex-direction:row;align-items:flex-end;justify-content:space-between}}
+.proc-eye{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.28);margin-bottom:.5rem}
+.proc-h2{
   font-family:'Playfair Display',serif;
-  font-size:clamp(1.6rem,3.5vw,2.8rem);
-  font-weight:400;line-height:1.1;letter-spacing:-.5px;
-  color:var(--white);
+  font-size:clamp(1.75rem,4vw,3rem);
+  font-weight:400;line-height:1.05;letter-spacing:-.5px;
+  color:#fff;
 }
-.hiw-h2 em{font-style:italic;color:var(--primary)}
-.hiw-sub{font-size:13px;color:rgba(255,255,255,.4);line-height:1.65;max-width:320px;align-self:flex-end}
+.proc-h2 em{font-style:italic;color:var(--rust)}
+.proc-sub{font-size:13px;color:rgba(255,255,255,.38);line-height:1.65;max-width:300px;align-self:flex-end}
 .steps{
   display:grid;grid-template-columns:repeat(4,1fr);
-  border:1px solid rgba(255,255,255,.08);
+  border:1px solid var(--border-dark);
 }
 .step{
   padding:1.5rem 1.25rem;
-  border-right:1px solid rgba(255,255,255,.08);
-  transition:background .2s;position:relative;
+  border-right:1px solid var(--border-dark);
+  transition:background .2s;
 }
 .step:last-child{border-right:none}
 .step:hover{background:rgba(255,255,255,.04)}
-.step-n{font-family:monospace;font-size:11px;color:var(--primary);margin-bottom:1.5rem;display:block}
-.step-t{font-size:14px;font-weight:500;color:var(--white);margin-bottom:.5rem}
-.step-d{font-size:12px;color:rgba(255,255,255,.4);line-height:1.6}
-.step-bar{
-  margin-top:1.25rem;height:1px;width:2rem;
-  background:rgba(255,255,255,.15);
-  transition:all .2s;
+.step-n{font-family:monospace;font-size:11px;color:var(--rust);margin-bottom:1.5rem;display:block}
+.step-t{font-size:13.5px;font-weight:500;color:#fff;margin-bottom:.4rem}
+.step-d{font-size:12px;color:rgba(255,255,255,.38);line-height:1.6}
+.step-line{
+  margin-top:1.25rem;height:1px;width:1.75rem;
+  background:rgba(255,255,255,.15);transition:all .25s;
 }
-.step:hover .step-bar{width:4rem;background:var(--primary)}
+.step:hover .step-line{width:3.5rem;background:var(--rust)}
 
 /* ── WHY ─────────────────────────────────────────────────────────────────── */
-.why{padding:2.75rem 2.5rem;background:var(--bg)}
-.why-head{display:grid;gap:1.5rem;margin-bottom:2rem}
-@media(min-width:768px){.why-head{grid-template-columns:1fr 1fr;align-items:end}}
-.why-eyebrow{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink3);margin-bottom:.5rem}
+.why{background:var(--cream);padding:2.75rem 2.5rem}
+.why-head{
+  display:grid;gap:1.25rem;margin-bottom:2rem;
+}
+@media(min-width:700px){.why-head{grid-template-columns:1fr 1fr;align-items:end}}
+.why-eye{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink3);margin-bottom:.5rem}
 .why-h2{
   font-family:'Playfair Display',serif;
-  font-size:clamp(1.6rem,3.5vw,2.8rem);
-  font-weight:400;line-height:1.1;letter-spacing:-.5px;color:var(--ink);
+  font-size:clamp(1.75rem,4vw,3rem);
+  font-weight:400;line-height:1.05;letter-spacing:-.5px;color:var(--ink);
 }
-.why-h2 em{font-style:italic;color:var(--primary)}
+.why-h2 em{font-style:italic;color:var(--rust)}
 .why-sub{font-size:13.5px;color:var(--ink2);line-height:1.7;align-self:flex-end}
 .why-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
 .wc{
-  background:var(--bg);padding:1.5rem 1.25rem;
-  transition:background .2s;position:relative;
+  background:var(--cream);
+  padding:1.5rem 1.25rem;
+  transition:background .2s;
 }
-.wc:hover{background:var(--white)}
-.wc-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.wc:hover{background:#fff}
+.wc-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.875rem}
 .wc-platform{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3)}
 .wc-tag{
   font-size:10px;font-weight:500;
-  padding:2px 8px;background:var(--primary-dim);color:var(--primary);
+  padding:2px 8px;background:var(--rust-dim);color:var(--rust);
 }
 .wc-stat{
   font-family:'Playfair Display',serif;
-  font-size:clamp(2rem,4vw,3rem);
-  font-style:italic;font-weight:400;
-  color:var(--ink);line-height:1;margin-bottom:.75rem;
+  font-size:clamp(2rem,4.5vw,3.25rem);
+  font-style:italic;color:var(--ink);
+  line-height:1;margin-bottom:.625rem;
 }
 .wc-desc{font-size:12.5px;color:var(--ink2);line-height:1.65}
-.wc-bar{margin-top:1.25rem;height:1px;background:var(--border);transition:background .25s}
-.wc:hover .wc-bar{background:var(--primary)}
+.wc-line{margin-top:1.25rem;height:1px;background:var(--border);transition:background .25s}
+.wc:hover .wc-line{background:var(--rust)}
 
 /* ── CTA ─────────────────────────────────────────────────────────────────── */
-.cta{background:var(--dark);padding:3rem 2.5rem;text-align:center}
+.cta{
+  background:var(--cream);
+  padding:3.5rem 2.5rem;
+  text-align:center;
+  position:relative;overflow:hidden;
+}
+.cta::before,.cta::after{
+  content:'';position:absolute;border-radius:50%;
+  background:rgba(217,79,47,.06);pointer-events:none;
+}
+.cta::before{width:420px;height:420px;top:50%;left:10%;transform:translateY(-50%)}
+.cta::after{width:320px;height:320px;top:50%;right:8%;transform:translateY(-50%)}
+.cta-eye{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--ink3);margin-bottom:1.25rem}
 .cta-h2{
   font-family:'Playfair Display',serif;
-  font-size:clamp(1.75rem,4vw,3rem);
-  font-weight:400;letter-spacing:-.5px;
-  color:var(--white);margin-bottom:.5rem;
+  font-size:clamp(2.5rem,6vw,5rem);
+  font-weight:400;letter-spacing:-1.5px;line-height:1.05;
+  color:var(--ink);margin-bottom:1.5rem;
+  position:relative;z-index:1;
 }
-.cta-h2 em{font-style:italic;color:var(--primary)}
-.cta-sub{font-size:13px;color:rgba(255,255,255,.4);margin-bottom:1.75rem;line-height:1.65}
-.cta-btns{display:flex;gap:.875rem;justify-content:center;flex-wrap:wrap}
-.cta-p{font-size:12px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;padding:10px 24px;background:var(--white);color:var(--dark);transition:all .2s}
-.cta-p:hover{background:var(--primary);color:var(--white)}
-.cta-s{font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:10px 20px;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.55);transition:all .2s}
-.cta-s:hover{border-color:rgba(255,255,255,.4);color:var(--white)}
+.cta-h2 em{font-style:italic;color:var(--rust)}
+.cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;position:relative;z-index:1}
+.cta-p{
+  font-size:11.5px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;
+  padding:11px 26px;background:var(--ink);color:#fff;
+  display:inline-flex;align-items:center;gap:6px;
+  transition:background .2s;
+}
+.cta-p:hover{background:var(--rust)}
+.cta-s{font-size:13px;color:var(--ink2);transition:color .2s;padding:11px 4px}
+.cta-s:hover{color:var(--rust)}
 
 /* ── FOOTER ──────────────────────────────────────────────────────────────── */
-footer{
-  background:#090F1A;padding:1.1rem 2.5rem;
+footer{background:var(--dark);padding:2.5rem 2.5rem 1.5rem}
+.foot-top{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:2rem;margin-bottom:2rem}
+.foot-logo{font-family:'Playfair Display',serif;font-size:16px;font-weight:400;color:rgba(255,255,255,.6);margin-bottom:.5rem}
+.foot-logo em{font-style:italic;color:var(--rust)}
+.foot-desc{font-size:12px;color:rgba(255,255,255,.25);line-height:1.65;max-width:240px}
+.foot-col-title{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:.875rem}
+.foot-links{display:flex;flex-direction:column;gap:.5rem}
+.foot-links a{font-size:13px;color:rgba(255,255,255,.4);transition:color .15s}
+.foot-links a:hover{color:rgba(255,255,255,.85)}
+.foot-bottom{
+  border-top:1px solid rgba(255,255,255,.07);
+  padding-top:1.25rem;
   display:flex;align-items:center;justify-content:space-between;
-  flex-wrap:wrap;gap:.75rem;
-  border-top:1px solid rgba(255,255,255,.05);
+  flex-wrap:wrap;gap:.5rem;
 }
-.foot-logo{font-family:'Playfair Display',serif;font-size:14px;font-weight:400;color:rgba(255,255,255,.45)}
-.foot-logo em{font-style:italic;color:var(--primary)}
-.foot-links{display:flex;gap:1.25rem}
-.foot-links a{font-size:11.5px;color:rgba(255,255,255,.22);transition:color .2s}
-.foot-links a:hover{color:rgba(255,255,255,.6)}
-.foot-copy{font-size:11px;color:rgba(255,255,255,.16)}
+.foot-copy{font-size:11px;color:rgba(255,255,255,.2)}
+.foot-legal{display:flex;gap:1.25rem}
+.foot-legal a{font-size:11px;color:rgba(255,255,255,.2);transition:color .2s}
+.foot-legal a:hover{color:rgba(255,255,255,.55)}
 
 /* MOBILE */
-@media(max-width:800px){
+@media(max-width:760px){
   nav{padding:0 1.25rem}
-  .nav-links{display:none}
-  .hero-body{padding:2rem 1.25rem 1.5rem}
-  .hiw,.why,.cta{padding-left:1.25rem;padding-right:1.25rem}
+  .nav-c{display:none}
+  .hero,.process,.why,.cta{padding-left:1.25rem;padding-right:1.25rem}
+  .hero-h1{font-size:clamp(2.5rem,10vw,4rem)}
   .steps{grid-template-columns:1fr 1fr}
-  .step{border-bottom:1px solid rgba(255,255,255,.08)}
+  .step{border-bottom:1px solid var(--border-dark)}
   .why-cards{grid-template-columns:1fr}
-  footer{padding:1rem 1.25rem;flex-direction:column;align-items:flex-start}
-  .foot-links{display:none}
+  .cta-h2{font-size:clamp(2rem,8vw,3.5rem)}
+  footer{padding:2rem 1.25rem 1.25rem}
+  .foot-top{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -230,9 +264,9 @@ footer{
 <!-- NAV -->
 <nav>
   <a href="index.html" class="logo">Trust<em>Route</em></a>
-  <div class="nav-links">
-    <a href="#how" class="nav-link">How it works</a>
-    <a href="#why" class="nav-link">Why TrustRoute</a>
+  <div class="nav-c">
+    <a href="#process" class="nav-link">Process</a>
+    <a href="#why" class="nav-link">Why Us</a>
     <a href="app.html" class="nav-link">App</a>
   </div>
   <div class="nav-r">
@@ -243,92 +277,62 @@ footer{
 
 <!-- HERO -->
 <section class="hero">
+  <div class="hero-bg" aria-hidden="true">TRUST</div>
   <div class="hero-body">
-    <div class="hero-inner">
-      <div class="hero-eyebrow">AI Travel Execution Platform</div>
-      <h1 class="hero-h1">
-        Stop hoping<br/>
-        your booking<br/>
-        is <em>right.</em>
-      </h1>
-      <p class="hero-desc">The AI copilot that verifies bookings, catches price drops, and watches your trip — so you can actually enjoy it.</p>
-      <div class="hero-btns">
-        <a href="app.html?mode=verify" class="btn-primary">Start verifying <span class="arr">→</span></a>
-        <a href="app.html?mode=plan" class="btn-primary" style="background:rgba(255,255,255,.08);color:rgba(255,255,255,.75)">Plan a trip <span class="arr">→</span></a>
-        <a href="#how" class="btn-text">See how it works</a>
-      </div>
+    <div class="hero-eye">AI Travel Verification</div>
+    <h1 class="hero-h1">
+      Stop hoping<br/>
+      your booking<br/>
+      is <em>right.</em>
+    </h1>
+    <p class="hero-desc">The AI copilot that verifies bookings, catches price drops, and watches your trip — so you can actually enjoy it.</p>
+    <div class="hero-btns">
+      <a href="app.html?mode=verify" class="btn-dark">Start verifying <span class="arr">→</span></a>
+      <a href="app.html?mode=plan" class="btn-dark" style="background:transparent;color:var(--ink);border:1px solid var(--border)">Plan a trip <span class="arr">→</span></a>
+      <a href="#process" class="btn-link">See how it works</a>
     </div>
   </div>
-
-  <!-- Marquee -->
-  <div class="marquee-wrap">
-    <div class="marquee-track">
-      <div class="marquee-inner">
-        <div class="stat-item"><span class="stat-n">12,000+</span><span class="stat-l">Bookings verified</span></div>
-        <span class="stat-sep"></span>
-        <div class="stat-item"><span class="stat-n">₹2.4 Cr</span><span class="stat-l">Saved for travelers</span></div>
-        <span class="stat-sep"></span>
-        <div class="stat-item"><span class="stat-n">3 sec</span><span class="stat-l">Average check time</span></div>
-        <span class="stat-sep"></span>
-        <div class="stat-item"><span class="stat-n">Free</span><span class="stat-l">To start</span></div>
-        <span class="stat-sep"></span>
-        <div class="stat-item"><span class="stat-n">India</span><span class="stat-l">Built for</span></div>
-        <span class="stat-sep"></span>
-        <div class="stat-item"><span class="stat-n">3 modes</span><span class="stat-l">Plan · Verify · Monitor</span></div>
-        <span class="stat-sep"></span>
-      </div>
-      <!-- Duplicate for seamless loop -->
-      <div class="marquee-inner" aria-hidden="true">
-        <div class="stat-item"><span class="stat-n">12,000+</span><span class="stat-l">Bookings verified</span></div>
-        <span class="stat-sep"></span>
-        <div class="stat-item"><span class="stat-n">₹2.4 Cr</span><span class="stat-l">Saved for travelers</span></div>
-        <span class="stat-sep"></span>
-        <div class="stat-item"><span class="stat-n">3 sec</span><span class="stat-l">Average check time</span></div>
-        <span class="stat-sep"></span>
-        <div class="stat-item"><span class="stat-n">Free</span><span class="stat-l">To start</span></div>
-        <span class="stat-sep"></span>
-        <div class="stat-item"><span class="stat-n">India</span><span class="stat-l">Built for</span></div>
-        <span class="stat-sep"></span>
-        <div class="stat-item"><span class="stat-n">3 modes</span><span class="stat-l">Plan · Verify · Monitor</span></div>
-        <span class="stat-sep"></span>
-      </div>
-    </div>
+  <div class="stats-strip">
+    <div class="stat-item"><span class="stat-n">12,000+</span><span class="stat-l">Bookings verified</span></div>
+    <div class="stat-item"><span class="stat-n">₹2.4 Cr</span><span class="stat-l">Saved for travelers</span></div>
+    <div class="stat-item"><span class="stat-n">3 sec</span><span class="stat-l">Average check time</span></div>
+    <div class="stat-item"><span class="stat-n">100%</span><span class="stat-l">Free to start</span></div>
   </div>
 </section>
 
-<!-- HOW IT WORKS -->
-<section class="hiw" id="how">
-  <div class="hiw-head">
+<!-- PROCESS -->
+<section class="process" id="process">
+  <div class="proc-head">
     <div>
-      <div class="hiw-eyebrow">The process</div>
-      <h2 class="hiw-h2">Four steps to<br/><em>peace of mind.</em></h2>
+      <div class="proc-eye">The process</div>
+      <h2 class="proc-h2">Four steps to<br/><em>peace of mind.</em></h2>
     </div>
-    <p class="hiw-sub">Most platforms handle discovery. We handle the part in between — where things go wrong.</p>
+    <p class="proc-sub">Most platforms handle discovery. We handle the part in between — where things go wrong.</p>
   </div>
   <div class="steps">
     <div class="step">
       <span class="step-n">01</span>
       <div class="step-t">Paste your booking</div>
       <div class="step-d">Drop any confirmation from MakeMyTrip, Booking.com, Goibibo, or Cleartrip.</div>
-      <div class="step-bar"></div>
+      <div class="step-line"></div>
     </div>
     <div class="step">
       <span class="step-n">02</span>
       <div class="step-t">AI scans everything</div>
       <div class="step-d">Price consistency, hotel legitimacy, visa requirements, hidden fees, cancellation policies.</div>
-      <div class="step-bar"></div>
+      <div class="step-line"></div>
     </div>
     <div class="step">
       <span class="step-n">03</span>
       <div class="step-t">Get your report</div>
-      <div class="step-d">Clear breakdown — what checked out and what needs attention. No jargon.</div>
-      <div class="step-bar"></div>
+      <div class="step-d">Clear breakdown of what checked out and what needs attention. No jargon.</div>
+      <div class="step-line"></div>
     </div>
     <div class="step">
       <span class="step-n">04</span>
       <div class="step-t">Monitor until landing</div>
       <div class="step-d">We watch silently. You only hear from us if something actually changes.</div>
-      <div class="step-bar"></div>
+      <div class="step-line"></div>
     </div>
   </div>
 </section>
@@ -337,62 +341,74 @@ footer{
 <section class="why" id="why">
   <div class="why-head">
     <div>
-      <div class="why-eyebrow">Why this exists</div>
+      <div class="why-eye">Why this exists</div>
       <h2 class="why-h2">We tested two major OTAs.<br/><em>Here's what broke.</em></h2>
     </div>
     <p class="why-sub">These weren't edge cases. This was a single booking flow, start to finish. Every issue would have cost time, money, or both.</p>
   </div>
   <div class="why-cards">
     <div class="wc">
-      <div class="wc-head">
-        <span class="wc-platform">MakeMyTrip</span>
-        <span class="wc-tag">Price mismatch</span>
-      </div>
+      <div class="wc-head"><span class="wc-platform">MakeMyTrip</span><span class="wc-tag">Price mismatch</span></div>
       <div class="wc-stat">3 prices</div>
       <div class="wc-desc">Same room showed ₹2,010 on listing, ₹9,000 at review, ₹4,551 at checkout. The math reconciles — but no user should have to figure that out.</div>
-      <div class="wc-bar"></div>
+      <div class="wc-line"></div>
     </div>
     <div class="wc">
-      <div class="wc-head">
-        <span class="wc-platform">Booking.com</span>
-        <span class="wc-tag">Hidden ratings</span>
-      </div>
+      <div class="wc-head"><span class="wc-platform">Booking.com</span><span class="wc-tag">Hidden ratings</span></div>
       <div class="wc-stat">4.1 vs 5.0</div>
-      <div class="wc-desc">Headline said "4.1 Disappointing" while every subcategory scored 5.0. The platform's own algorithm contradicted its own data.</div>
-      <div class="wc-bar"></div>
+      <div class="wc-desc">Headline said "4.1 Disappointing" while every subcategory scored 5.0. The algorithm contradicted its own data.</div>
+      <div class="wc-line"></div>
     </div>
     <div class="wc">
-      <div class="wc-head">
-        <span class="wc-platform">Booking.com</span>
-        <span class="wc-tag">Missing amenities</span>
-      </div>
+      <div class="wc-head"><span class="wc-platform">Booking.com</span><span class="wc-tag">Missing amenities</span></div>
       <div class="wc-stat">No WiFi</div>
-      <div class="wc-desc">Asked if I was travelling for work. Still didn't mention the hotel has no internet. Found it buried three screens deep in facilities.</div>
-      <div class="wc-bar"></div>
+      <div class="wc-desc">Asked if I was travelling for work. Still didn't mention the hotel has no internet. Found it buried three screens deep.</div>
+      <div class="wc-line"></div>
     </div>
   </div>
 </section>
 
 <!-- CTA -->
 <section class="cta">
-  <h2 class="cta-h2">Be one of our first<br/><em>travelers.</em></h2>
-  <p class="cta-sub">TrustRoute is in early access. Full access, free for early users.</p>
+  <div class="cta-eye">Early access</div>
+  <h2 class="cta-h2">Be one of our<br/>first <em>travelers.</em></h2>
   <div class="cta-btns">
     <a href="app.html" class="cta-p">Try TrustRoute free →</a>
-    <a href="mailto:hello@trustroute.in" class="cta-s">Get in touch</a>
+    <a href="mailto:hello@trustroute.in" class="cta-s">Or get in touch</a>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <div class="foot-logo">Trust<em>Route</em></div>
-  <div class="foot-links">
-    <a href="#how">How it works</a>
-    <a href="#why">Why TrustRoute</a>
-    <a href="app.html">App</a>
-    <a href="mailto:hello@trustroute.in">Contact</a>
+  <div class="foot-top">
+    <div>
+      <div class="foot-logo">Trust<em>Route</em></div>
+      <p class="foot-desc">The AI layer between your booking and your boarding pass. Built in India, for Indian travelers.</p>
+    </div>
+    <div>
+      <div class="foot-col-title">Navigate</div>
+      <div class="foot-links">
+        <a href="#process">Process</a>
+        <a href="#why">Why TrustRoute</a>
+        <a href="app.html">Early Access</a>
+      </div>
+    </div>
+    <div>
+      <div class="foot-col-title">Connect</div>
+      <div class="foot-links">
+        <a href="mailto:hello@trustroute.in">hello@trustroute.in</a>
+        <a href="#">Twitter</a>
+        <a href="#">LinkedIn</a>
+      </div>
+    </div>
   </div>
-  <div class="foot-copy">© 2026 TrustRoute by Optimus</div>
+  <div class="foot-bottom">
+    <span class="foot-copy">© 2026 TrustRoute by Optimus. All rights reserved.</span>
+    <div class="foot-legal">
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+    </div>
+  </div>
 </footer>
 
 </body>

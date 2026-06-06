@@ -504,7 +504,11 @@ footer{background:var(--dark);padding:2rem 2.5rem 1.25rem}
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script>
+const { createClient } = supabase;
+const sb = createClient('https://czrvpcycdilxccjnnqqz.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN6cnZwY3ljZGlseGNjam5ucXF6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3MjQwMzIsImV4cCI6MjA5NjMwMDAzMn0.ZCymVvq_E7B5LfH_hlPgg92GPQG2AIAvna3RmrqaYS8');
+
 // ── NAV SCROLL EFFECT ─────────────────────────────────────────────────────
 window.addEventListener('scroll', () => {
   document.getElementById('main-nav').classList.toggle('scrolled', window.scrollY > 20);
@@ -534,6 +538,18 @@ async function quickCheck() {
     const data = await res.json();
     if (data.error) throw new Error(data.error);
     renderResult(data);
+    // Save to Supabase
+    const user = JSON.parse(localStorage.getItem('tr_user') || 'null');
+    await sb.from('verifications').insert({
+      email: user?.email || null,
+      property: data.property || null,
+      dates: data.dates || null,
+      trust_score: data.trustScore || null,
+      trust_label: data.trustLabel || null,
+      checks: data.checks || null,
+      summary: data.summary || null,
+      raw_input: input.substring(0, 500)
+    });
   } catch(e) {
     document.getElementById('result-body').innerHTML =
       `<div class="error-box">Could not process verification. <a href="app.html?mode=verify" style="color:var(--rust);font-weight:500">Open in full app →</a></div>`;
@@ -589,20 +605,30 @@ function closeSignup() {
   document.getElementById('signup-modal').classList.remove('open');
   document.body.style.overflow = '';
 }
-function submitSignup() {
+async function submitSignup() {
   const name = document.getElementById('su-name').value.trim();
   const email = document.getElementById('su-email').value.trim();
+  const travel = document.getElementById('su-travel').value.trim();
   const errEl = document.getElementById('signup-error');
+  const btn = document.querySelector('.signup-btn');
   errEl.style.display = 'none';
   if (!name) { errEl.textContent = 'Please enter your name.'; errEl.style.display = 'block'; return; }
   if (!email || !email.includes('@')) { errEl.textContent = 'Please enter a valid email.'; errEl.style.display = 'block'; return; }
-  // Save to localStorage
-  const users = JSON.parse(localStorage.getItem('tr_signups') || '[]');
-  users.push({name, email, travel: document.getElementById('su-travel').value, date: new Date().toISOString()});
-  localStorage.setItem('tr_signups', JSON.stringify(users));
-  localStorage.setItem('tr_user', JSON.stringify({name, email}));
-  document.getElementById('signup-form-wrap').style.display = 'none';
-  document.getElementById('signup-success').style.display = 'block';
+  btn.textContent = 'Saving...'; btn.disabled = true;
+  try {
+    const { error } = await sb.from('early_access').insert({ name, email, travel_frequency: travel || null });
+    if (error && error.code !== '23505') throw error; // 23505 = duplicate, still ok
+    localStorage.setItem('tr_user', JSON.stringify({name, email}));
+    document.getElementById('signup-form-wrap').style.display = 'none';
+    document.getElementById('signup-success').style.display = 'block';
+    // Update nav
+    const ghost = document.querySelector('.nav-ghost');
+    if (ghost) { ghost.textContent = `Hi, ${name.split(' ')[0]} →`; ghost.href = 'app.html'; }
+  } catch(e) {
+    errEl.textContent = 'Something went wrong. Please try again.';
+    errEl.style.display = 'block';
+    btn.textContent = 'Get early access →'; btn.disabled = false;
+  }
 }
 
 // ── KEY SHORTCUTS ─────────────────────────────────────────────────────────

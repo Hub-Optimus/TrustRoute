@@ -266,7 +266,12 @@ textarea:focus,input:focus{border-color:var(--blue-txt)}
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script>
+const { createClient } = supabase;
+const sb = createClient('https://czrvpcycdilxccjnnqqz.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN6cnZwY3ljZGlseGNjam5ucXF6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3MjQwMzIsImV4cCI6MjA5NjMwMDAzMn0.ZCymVvq_E7B5LfH_hlPgg92GPQG2AIAvna3RmrqaYS8');
+const trUser = () => JSON.parse(localStorage.getItem('tr_user') || 'null');
+
 // ── Mode switching ─────────────────────────────────────────────────────────
 function switchMode(mode) {
   document.querySelectorAll('.mode').forEach(m => m.classList.remove('active'));
@@ -385,6 +390,20 @@ async function runVerify() {
   try {
     const data = await callAI('verify', input);
     out.innerHTML = renderVerify(data, prop, dates);
+    // Save to Supabase
+    try {
+      const user = trUser();
+      await sb.from('verifications').insert({
+        email: user?.email || null,
+        property: data.property || prop,
+        dates: data.dates || dates,
+        trust_score: data.trustScore || null,
+        trust_label: data.trustLabel || null,
+        checks: data.checks || null,
+        summary: data.summary || null,
+        raw_input: input.substring(0, 500)
+      });
+    } catch(_) {}
   } catch(e) {
     out.innerHTML = '<div class="error-box">Could not run verification. Please try again.</div>';
   }
@@ -399,7 +418,7 @@ let lastVerifyData = null;
 
 function renderVerify(d, fallbackProp, fallbackDates) {
   console.log("API response:", JSON.stringify(d));
-  lastVerifyData = {property: d.property || fallbackProp, dates: d.dates || fallbackDates, score: d.trustScore};
+  lastVerifyData = {property: d.property || fallbackProp, dates: d.dates || fallbackDates, score: d.trustScore || d.trust_score || d.score || sc};
   let html = '';
   const sc = d.trustScore || 50;
   // Header
@@ -434,44 +453,60 @@ function renderVerify(d, fallbackProp, fallbackDates) {
   return html;
 }
 
-function activateMonitor() {
+async function activateMonitor() {
   if (!lastVerifyData) return;
-  const trips = getTrips();
-  trips.unshift({
-    id: Date.now(),
+  const btn = document.getElementById('verify-output').querySelector('.btn-success');
+  btn.textContent = 'Adding...'; btn.disabled = true;
+  const user = trUser();
+  const trip = {
+    email: user?.email || null,
     property: lastVerifyData.property,
     dates: lastVerifyData.dates,
-    score: lastVerifyData.score,
-    status: lastVerifyData.score >= 80 ? 'green' : lastVerifyData.score >= 50 ? 'amber' : 'amber',
-    label: lastVerifyData.score >= 80 ? 'All clear' : 'Needs attention',
-    addedAt: new Date().toLocaleString('en-IN', {day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})
-  });
-  saveTrips(trips);
+    trust_score: lastVerifyData.score,
+    trust_label: lastVerifyData.score >= 80 ? 'All clear' : 'Needs attention',
+    status: lastVerifyData.score >= 80 ? 'green' : 'amber',
+    added_at: new Date().toLocaleString('en-IN', {day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})
+  };
+  try {
+    await sb.from('monitored_trips').insert(trip);
+  } catch(_) {
+    // fallback to localStorage if Supabase fails
+    const trips = getLocalTrips();
+    trips.unshift({id: Date.now(), ...trip, label: trip.trust_label, addedAt: trip.added_at});
+    saveLocalTrips(trips);
+  }
+  btn.textContent = '✓ Added to monitoring — view in Monitor tab';
   updateBadge();
-  document.getElementById('verify-output').querySelector('.btn-success').textContent = '✓ Added to monitoring — view in Monitor tab';
-  document.getElementById('verify-output').querySelector('.btn-success').disabled = true;
   switchMode('monitor');
 }
 
 // ── MONITOR ────────────────────────────────────────────────────────────────
 const SAMPLE_TRIPS = [
-  {id:1, property:'Bangkok Grand Palace Hotel', dates:'Aug 12–18, 2026 · 2 adults', score:55, status:'amber', label:'1 alert', addedAt:'4 Jun, 09:41', alert:'Price dropped ₹800 — check for a better rate'},
-  {id:2, property:'Manali Snowcrest Manor', dates:'Sep 2–8, 2026 · 4 adults', score:88, status:'green', label:'All clear', addedAt:'3 Jun, 11:00'}
+  {id:'s1', property:'Bangkok Grand Palace Hotel', dates:'Aug 12–18, 2026 · 2 adults', trust_score:55, status:'amber', trust_label:'1 alert', added_at:'4 Jun, 09:41', alert:'Price dropped ₹800 — check for a better rate'},
+  {id:'s2', property:'Manali Snowcrest Manor', dates:'Sep 2–8, 2026 · 4 adults', trust_score:88, status:'green', trust_label:'All clear', added_at:'3 Jun, 11:00'}
 ];
+// Local fallback
+function getLocalTrips() { try { return JSON.parse(localStorage.getItem('tr_trips') || 'null') || []; } catch { return []; } }
+function saveLocalTrips(t) { try { localStorage.setItem('tr_trips', JSON.stringify(t)); } catch {} }
 
-function getTrips() {
-  try { return JSON.parse(localStorage.getItem('tr_trips') || 'null') || SAMPLE_TRIPS; } catch { return SAMPLE_TRIPS; }
-}
-function saveTrips(t) {
-  try { localStorage.setItem('tr_trips', JSON.stringify(t)); } catch {}
-}
-
-function renderMonitor() {
-  const trips = getTrips();
+async function renderMonitor() {
+  const list = document.getElementById('trip-list');
+  list.innerHTML = '<div style="text-align:center;padding:32px;color:var(--t3);font-size:13px">Loading trips...</div>';
+  let trips = [];
+  try {
+    const { data, error } = await sb.from('monitored_trips')
+      .select('*').order('created_at', {ascending: false}).limit(20);
+    if (!error && data && data.length) {
+      trips = data;
+    } else {
+      trips = [...getLocalTrips(), ...SAMPLE_TRIPS];
+    }
+  } catch(_) {
+    trips = [...getLocalTrips(), ...SAMPLE_TRIPS];
+  }
   const alerts = trips.filter(t => t.status === 'amber').length;
   document.getElementById('s-total').textContent = trips.length;
   document.getElementById('s-alerts').textContent = alerts;
-  const list = document.getElementById('trip-list');
   if (!trips.length) {
     list.innerHTML = `<div class="empty-state"><h3>No trips being monitored yet</h3><p>Verify a booking first, then activate monitoring to add it here.</p><button class="btn-primary" onclick="switchMode('verify')">Verify a booking →</button></div>`;
     return;
@@ -479,32 +514,39 @@ function renderMonitor() {
   list.innerHTML = trips.map(t => `
     <div class="trip-item">
       <div style="display:flex;align-items:flex-start;gap:10px;flex:1">
-        <div class="trip-dot dot-${t.status}" style="margin-top:5px"></div>
+        <div class="trip-dot dot-${t.status||'green'}" style="margin-top:5px"></div>
         <div class="trip-info">
           <h4>${t.property}</h4>
-          <p>${t.dates}</p>
+          <p>${t.dates||''}</p>
           ${t.alert ? `<div class="trip-alert">⚠ ${t.alert}</div>` : ''}
-          <p style="margin-top:4px;font-size:10px;color:var(--t3)">Added ${t.addedAt}</p>
+          <p style="margin-top:4px;font-size:10px;color:var(--t3)">Added ${t.added_at||t.addedAt||''}</p>
         </div>
       </div>
       <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0">
-        <span class="trip-badge badge-${t.status === 'green' ? 'green' : t.status === 'amber' ? 'amber' : 'blue'}">${t.label}</span>
-        <span style="font-size:10px;color:var(--t3)">Score: ${t.score}/100</span>
-        <button onclick="removeTrip(${t.id})" style="font-size:10px;color:var(--t3);background:none;border:none;cursor:pointer">Remove</button>
+        <span class="trip-badge badge-${t.status==='green'?'green':t.status==='amber'?'amber':'blue'}">${t.trust_label||t.label||'Active'}</span>
+        <span style="font-size:10px;color:var(--t3)">Score: ${t.trust_score||t.score||'—'}/100</span>
+        <button onclick="removeTrip('${t.id}')" style="font-size:10px;color:var(--t3);background:none;border:none;cursor:pointer">Remove</button>
       </div>
     </div>
   `).join('');
-  updateBadge();
+  updateBadge(alerts);
 }
 
-function removeTrip(id) {
-  saveTrips(getTrips().filter(t => t.id !== id));
+async function removeTrip(id) {
+  if (String(id).startsWith('s')) {
+    // sample trip — just re-render
+    renderMonitor(); return;
+  }
+  try {
+    await sb.from('monitored_trips').delete().eq('id', id);
+  } catch(_) {
+    saveLocalTrips(getLocalTrips().filter(t => String(t.id) !== String(id)));
+  }
   renderMonitor();
 }
 
-function updateBadge() {
-  const trips = getTrips();
-  const alerts = trips.filter(t => t.status === 'amber').length;
+function updateBadge(alerts) {
+  if (alerts === undefined) alerts = 0;
   const badge = document.getElementById('monitor-badge');
   if (alerts > 0) {
     badge.textContent = alerts;

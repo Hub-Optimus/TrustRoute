@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TrustRoute — Wireframes v2</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:#EAEAEA;padding:20px;min-height:100vh}
+
+.wrapper{max-width:900px;margin:0 auto}
+
+.header{text-align:center;margin-bottom:24px}
+.header h1{font-size:20px;font-weight:600;color:#1A1A1A;letter-spacing:-.3px}
+.header p{font-size:12px;color:#666;margin-top:4px}
+.header .badge{display:inline-block;margin-top:8px;padding:3px 10px;background:#fff;border:1px solid #CCC;border-radius:12px;font-size:11px;color:#555}
+
+/* nav pills */
+.pill-bar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;background:#fff;padding:10px 12px;border-radius:10px;border:1px solid #DDD}
+.pill{padding:5px 13px;border-radius:20px;font-size:12px;cursor:pointer;border:1px solid #CCC;background:#FAFAFA;color:#555;white-space:nowrap;transition:all .15s;font-weight:400}
+.pill:hover{background:#F0F0F0}
+.pill.active{background:#1A1A1A;color:#FFF;border-color:#1A1A1A;font-weight:500}
+
+.screen-counter{font-size:11px;color:#888;text-align:right;margin-bottom:6px;padding-right:4px}
+
+/* device frame */
+.device{background:#FFF;border-radius:14px;border:2px solid #CCC;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.08)}
+
+/* annotation bar */
+.annotation{background:#FFFBE6;border-top:1px solid #E8D96C;padding:10px 16px;font-size:11px;color:#6B5800;line-height:1.6}
+.annotation strong{font-weight:600}
+
+/* topbar */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid #E8E8E8;background:#FFF}
+.logo{font-size:14px;font-weight:700;color:#1A1A1A;letter-spacing:-.3px}
+.logo span{color:#888;font-weight:400}
+.nav-links{display:flex;gap:14px;font-size:11px;color:#666}
+.topbar-right{display:flex;gap:8px;align-items:center}
+
+/* buttons */
+.btn{padding:6px 14px;border-radius:7px;font-size:12px;cursor:pointer;font-weight:500;border:1px solid transparent}
+.btn-primary{background:#1A1A1A;color:#FFF;border-color:#1A1A1A}
+.btn-secondary{background:#FFF;color:#1A1A1A;border-color:#CCC}
+.btn-ghost{background:transparent;color:#555;border:none;font-size:12px;cursor:pointer}
+.btn-full{width:100%;padding:10px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;background:#1A1A1A;color:#FFF;border:none}
+.btn-success{background:#1B6B2F;color:#FFF;border:none;border-radius:7px;padding:8px 16px;font-size:12px;font-weight:500;cursor:pointer}
+
+/* body area */
+.bd{padding:20px 20px}
+
+/* labels */
+.eyebrow{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:#888;margin-bottom:6px}
+.section-title{font-size:16px;font-weight:600;color:#1A1A1A;margin-bottom:4px}
+.section-sub{font-size:12px;color:#666;margin-bottom:16px;line-height:1.5}
+
+/* landing hero */
+.hero{text-align:center;padding:28px 20px 20px}
+.hero-tag{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;background:#F0F0F0;color:#444;border-radius:20px;font-size:11px;margin-bottom:14px;border:1px solid #E0E0E0}
+.hero h1{font-size:26px;font-weight:700;color:#1A1A1A;margin-bottom:10px;line-height:1.25;letter-spacing:-.5px}
+.hero h1 em{font-style:normal;text-decoration:underline;text-decoration-color:#CCC;text-underline-offset:3px}
+.hero p{font-size:12px;color:#555;margin-bottom:18px;line-height:1.65;max-width:420px;margin-left:auto;margin-right:auto}
+.hero-btns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+
+/* quick check box on landing */
+.quick-check{border:1px solid #CCC;border-radius:10px;padding:14px;margin:0 0 16px;background:#FAFAFA}
+.quick-check .qc-label{font-size:11px;font-weight:600;color:#444;margin-bottom:8px;display:flex;align-items:center;gap:5px}
+.qc-input-row{display:flex;gap:8px}
+.qc-input{flex:1;padding:8px 11px;border:1px solid #CCC;border-radius:7px;font-size:12px;color:#888;background:#FFF}
+
+/* why cards (audit findings) */
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.why-card{padding:12px;border:1px solid #E0E0E0;border-radius:10px;background:#FFF}
+.why-card .wc-head{font-size:11px;font-weight:600;color:#1A1A1A;margin-bottom:4px;display:flex;align-items:center;gap:5px}
+.why-card .wc-head i{color:#888;font-size:13px}
+.why-card p{font-size:11px;color:#666;line-height:1.5}
+.why-card .wc-badge{display:inline-block;margin-top:6px;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600}
+.badge-warn{background:#FFF3CD;color:#7A4B00;border:1px solid #FACB3A}
+.badge-err{background:#FDECEA;color:#8B1A1A;border:1px solid #F5A5A5}
+.badge-ok{background:#E8F5E9;color:#1B6B2F;border:1px solid #A5D6A7}
+
+/* mode cards */
+.mode-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.mode-card{padding:14px;border:1px solid #E0E0E0;border-radius:10px;background:#FFF;cursor:pointer;transition:border-color .15s}
+.mode-card:hover{border-color:#999}
+.mode-card.featured{border-color:#1A1A1A;background:#FAFAFA}
+.mode-card .mc-num{font-size:10px;font-weight:700;color:#888;margin-bottom:6px;letter-spacing:.08em;text-transform:uppercase}
+.mode-card .mc-icon{font-size:20px;color:#1A1A1A;margin-bottom:6px;display:block}
+.mode-card h3{font-size:12px;font-weight:600;margin-bottom:4px;color:#1A1A1A}
+.mode-card p{font-size:11px;color:#666;line-height:1.5}
+
+/* sign up modal hint */
+.modal-overlay{background:rgba(0,0,0,.35);position:relative;border-radius:0;padding:0;display:flex;align-items:center;justify-content:center;min-height:220px}
+.modal-box{background:#FFF;border-radius:12px;padding:20px;width:100%;max-width:340px;border:1px solid #E0E0E0;margin:20px auto}
+.modal-title{font-size:14px;font-weight:600;color:#1A1A1A;margin-bottom:4px}
+.modal-sub{font-size:11px;color:#666;margin-bottom:14px;line-height:1.5}
+.form-field{margin-bottom:10px}
+.form-field label{display:block;font-size:11px;color:#555;margin-bottom:4px;font-weight:500}
+.form-field input{width:100%;padding:8px 10px;border:1px solid #CCC;border-radius:7px;font-size:12px;color:#888;background:#FAFAFA}
+.modal-footer{font-size:10px;color:#888;margin-top:10px;text-align:center}
+
+/* plan mode */
+.prompt-box{width:100%;min-height:64px;padding:10px 12px;border:1px solid #CCC;border-radius:8px;font-size:12px;color:#888;background:#FAFAFA;margin-bottom:10px;line-height:1.5}
+.form-row{display:grid;grid-template-columns:110px 1fr;align-items:center;gap:8px;margin-bottom:10px;font-size:12px}
+.form-row label{color:#555;font-size:11px;font-weight:500}
+.fi{padding:7px 10px;border:1px solid #CCC;border-radius:7px;font-size:12px;color:#444;background:#FFF}
+.chip-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.chip{padding:4px 10px;border-radius:12px;font-size:11px;border:1px solid #CCC;color:#555;background:#FFF}
+.chip.on{background:#1A1A1A;color:#FFF;border-color:#1A1A1A}
+.divider{border:none;border-top:1px solid #EBEBEB;margin:14px 0}
+
+/* plan results */
+.result-section{margin-bottom:16px}
+.result-section .rs-head{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:#444;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.result-section .rs-head i{font-size:14px;color:#666}
+.flight-row{display:flex;align-items:center;justify-content:space-between;padding:9px 12px;border:1px solid #E0E0E0;border-radius:8px;margin-bottom:6px;background:#FFF}
+.flight-row .fr-left{font-size:12px;font-weight:500;color:#1A1A1A}
+.flight-row .fr-meta{font-size:11px;color:#666}
+.flight-row .fr-price{font-size:13px;font-weight:600;color:#1A1A1A}
+.flight-row .fr-badge{font-size:10px;padding:2px 8px;border-radius:10px;background:#E8F5E9;color:#1B6B2F;border:1px solid #A5D6A7;font-weight:500}
+.hotel-row{display:flex;align-items:flex-start;justify-content:space-between;padding:9px 12px;border:1px solid #E0E0E0;border-radius:8px;margin-bottom:6px;background:#FFF}
+.hotel-row .hr-name{font-size:12px;font-weight:500;color:#1A1A1A;margin-bottom:2px}
+.hotel-row .hr-meta{font-size:11px;color:#666;line-height:1.4}
+.hotel-row .hr-price{font-size:13px;font-weight:600;color:#1A1A1A;text-align:right;white-space:nowrap}
+.hotel-row .hr-dist{font-size:10px;color:#888;text-align:right}
+.doc-box{padding:10px 12px;border:1px solid #E0E0E0;border-radius:8px;background:#FFF}
+.doc-item{display:flex;align-items:center;gap:6px;font-size:12px;color:#444;padding:4px 0;border-bottom:1px solid #F0F0F0}
+.doc-item:last-child{border:none}
+.doc-item i{font-size:13px;color:#1B6B2F}
+.note-box{padding:10px 12px;border:1px solid #FACB3A;border-radius:8px;background:#FFFBE6;margin-top:10px;font-size:11px;color:#7A4B00;line-height:1.5}
+.note-box i{margin-right:4px}
+
+/* verify mode */
+.tabs{display:flex;border-bottom:1px solid #E8E8E8;margin-bottom:14px}
+.tab{padding:8px 14px;font-size:12px;color:#666;cursor:pointer;border-bottom:2px solid transparent}
+.tab.active{color:#1A1A1A;border-bottom-color:#1A1A1A;font-weight:500}
+.paste-row{display:flex;gap:8px;margin-bottom:8px}
+.paste-input{flex:1;padding:8px 11px;border:1px solid #CCC;border-radius:7px;font-size:12px;color:#888;background:#FFF}
+.support-text{font-size:11px;color:#888;margin-bottom:14px}
+.upload-zone{border:2px dashed #CCC;border-radius:10px;padding:20px;text-align:center;color:#888;font-size:12px;margin-bottom:12px;background:#FAFAFA}
+.upload-zone i{font-size:26px;display:block;margin-bottom:6px;color:#AAA}
+.check-list{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:12px}
+.check-item{display:flex;align-items:center;gap:5px;font-size:11px;color:#555}
+.check-item i{font-size:13px;color:#1B6B2F}
+
+/* verify results */
+.trust-score-bar{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-radius:10px;margin-bottom:14px;border:1px solid}
+.ts-amber{background:#FFF8E7;border-color:#FACB3A}
+.ts-green{background:#E8F5E9;border-color:#A5D6A7}
+.ts-red{background:#FDECEA;border-color:#F5A5A5}
+.ts-num{font-size:32px;font-weight:700}
+.ts-amber .ts-num{color:#7A4B00}
+.ts-green .ts-num{color:#1B6B2F}
+.ts-red .ts-num{color:#8B1A1A}
+.ts-label{font-size:12px;font-weight:600}
+.ts-sub{font-size:11px;color:#666;margin-top:2px}
+.check-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.check-card{padding:10px 11px;border-radius:8px;border:1px solid}
+.cc-green{background:#E8F5E9;border-color:#A5D6A7}
+.cc-amber{background:#FFF8E7;border-color:#FACB3A}
+.cc-red{background:#FDECEA;border-color:#F5A5A5}
+.cc-head{display:flex;align-items:center;gap:4px;font-size:11px;font-weight:600;margin-bottom:4px}
+.cc-green .cc-head{color:#1B6B2F}
+.cc-amber .cc-head{color:#7A4B00}
+.cc-red .cc-head{color:#8B1A1A}
+.cc-body{font-size:10px;color:#555;line-height:1.4}
+.cc-action{font-size:10px;font-weight:600;margin-top:5px;cursor:pointer}
+.cc-green .cc-action{color:#1B6B2F}
+.cc-amber .cc-action{color:#7A4B00}
+.cc-red .cc-action{color:#8B1A1A}
+.result-actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+
+/* monitor dashboard */
+.trip-card{display:flex;align-items:center;justify-content:space-between;padding:11px 13px;border:1px solid #E0E0E0;border-radius:9px;margin-bottom:8px;background:#FFF}
+.tc-left{display:flex;align-items:center;gap:10px}
+.tc-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.tc-dot-green{background:#2E7D32}
+.tc-dot-amber{background:#B45309}
+.tc-dot-blue{background:#1565C0}
+.tc-name{font-size:13px;font-weight:500;color:#1A1A1A}
+.tc-meta{font-size:11px;color:#666;margin-top:1px}
+.tc-right{display:flex;align-items:center;gap:8px}
+.status-badge{padding:3px 9px;border-radius:10px;font-size:11px;font-weight:500}
+.sb-green{background:#E8F5E9;color:#1B6B2F;border:1px solid #A5D6A7}
+.sb-amber{background:#FFF8E7;color:#7A4B00;border:1px solid #FACB3A}
+.sb-blue{background:#E3F2FD;color:#1565C0;border:1px solid #90CAF9}
+.time-ago{font-size:10px;color:#999}
+.alert-feed{margin-top:12px}
+.af-item{display:flex;align-items:flex-start;gap:9px;padding:9px 0;border-bottom:1px solid #F0F0F0;font-size:11px;color:#444;line-height:1.5}
+.af-item:last-child{border:none}
+.af-dot{width:7px;height:7px;border-radius:50%;margin-top:3px;flex-shrink:0}
+.af-dot-amber{background:#B45309}
+.af-dot-green{background:#2E7D32}
+.af-item strong{font-weight:600;color:#1A1A1A}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
+.stat-box{padding:10px;background:#FAFAFA;border-radius:8px;text-align:center;border:1px solid #E8E8E8}
+.stat-box .sn{font-size:18px;font-weight:700;color:#1A1A1A}
+.stat-box .sl{font-size:10px;color:#888;margin-top:2px}
+
+/* alert detail */
+.alert-detail-card{border:1px solid #FACB3A;background:#FFF8E7;border-radius:10px;padding:16px;margin-bottom:14px}
+.adc-head{display:flex;align-items:center;gap:7px;margin-bottom:10px}
+.adc-head i{font-size:18px;color:#7A4B00}
+.adc-head h2{font-size:14px;font-weight:600;color:#7A4B00}
+.price-compare{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px;background:#FFF;border-radius:8px;margin:10px 0;border:1px solid #E8E8E8}
+.pc-item{text-align:center}
+.pc-item .pc-label{font-size:10px;color:#666;margin-bottom:3px}
+.pc-item .pc-val{font-size:15px;font-weight:700;color:#1A1A1A}
+.pc-item .pc-val.saved{color:#1B6B2F}
+.adc-desc{font-size:11px;color:#555;line-height:1.6}
+.adc-actions{display:flex;gap:8px;margin-top:12px}
+.adc-expiry{font-size:10px;color:#7A4B00;margin-top:8px;display:flex;align-items:center;gap:4px}
+.share-strip{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border:1px solid #E0E0E0;border-radius:8px;background:#FFF}
+.share-strip p{font-size:11px;color:#666}
+.share-strip .ss-title{font-size:12px;font-weight:500;color:#1A1A1A;margin-bottom:2px}
+
+/* sign up modal overlay screen */
+.screen-overlay{position:relative}
+.screen-overlay .bg-blur{filter:blur(1px);pointer-events:none;opacity:.5}
+
+/* empty state */
+.empty{text-align:center;padding:30px 20px;color:#888;font-size:12px}
+.empty i{font-size:32px;display:block;margin-bottom:8px;color:#CCC}
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <div class="header">
+    <h1>TrustRoute — Product Wireframes</h1>
+    <p>UI flow documentation · All 3 modes + Landing & Sign-up</p>
+    <span class="badge">v2 · Matches live MVP at trust-route-nf9a.vercel.app</span>
+  </div>
+
+  <div class="pill-bar" id="np"></div>
+  <div class="screen-counter" id="sc"></div>
+  <div class="device" id="sw"></div>
+
+</div>
+
+<script>
+const scr = [
+  "1. Landing Page",
+  "2. Sign-up Modal",
+  "3. Plan — Input",
+  "4. Plan — Results",
+  "5. Verify — Input",
+  "6. Verify — Results",
+  "7. Monitor — Dashboard",
+  "8. Monitor — Alert Detail"
+];
+
+function topbar(right=""){
+  return `<div class="topbar">
+    <div style="display:flex;align-items:center;gap:18px">
+      <div class="logo">Trust<span>Route</span></div>
+      <div class="nav-links"><span>How it works</span><span>Pricing</span><span>Blog</span></div>
+    </div>
+    <div class="topbar-right">${right}</div>
+  </div>`;
+}
+
+const H = {
+
+// ── 1. LANDING ──────────────────────────────────────────────────
+0: topbar(`<button class="btn btn-secondary">Sign in</button><button class="btn btn-primary">Get early access</button>`) + `
+<div class="bd">
+  <div class="hero">
+    <div class="hero-tag"><i class="ti ti-shield-check" style="font-size:12px"></i> Real findings. Real trips. Verified.</div>
+    <h1>Book with confidence.<br><em>Travel without surprises.</em></h1>
+    <p>The AI layer between your booking and your boarding pass. TrustRoute verifies every detail — price, hotel status, documents, amenities — before you arrive.</p>
+    <div class="hero-btns">
+      <button class="btn btn-primary" style="padding:9px 20px;font-size:13px">Try free — paste any booking</button>
+      <button class="btn btn-secondary" style="padding:9px 18px;font-size:13px">See how it works</button>
+    </div>
+  </div>
+
+  <div class="quick-check">
+    <div class="qc-label"><i class="ti ti-bolt" style="font-size:13px;color:#888"></i> Quick check — paste any booking link or confirmation</div>
+    <div class="qc-input-row">
+      <div class="qc-input">https://booking.com/confirm/... or paste your confirmation text</div>
+      <button class="btn btn-primary" style="white-space:nowrap;padding:8px 14px"><i class="ti ti-shield-check"></i> Verify now</button>
+    </div>
+  </div>
+
+  <div class="eyebrow" style="margin-bottom:8px">Why TrustRoute — real findings from OTA research</div>
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="wc-head"><i class="ti ti-currency-rupee"></i> Three-price funnel</div>
+      <p>MakeMyTrip showed ₹2,010 on the listing, ₹9,000 on the review page, ₹4,551 at checkout — same booking.</p>
+      <span class="wc-badge badge-warn">Trust leak by design</span>
+    </div>
+    <div class="why-card">
+      <div class="wc-head"><i class="ti ti-star"></i> Rating contradiction</div>
+      <p>Booking.com rated a hotel 4.1 "Disappointing" — but every subcategory score was 4.8–5.0. Its own data disagreed.</p>
+      <span class="wc-badge badge-err">Data integrity gap</span>
+    </div>
+    <div class="why-card">
+      <div class="wc-head"><i class="ti ti-wifi-off"></i> Hidden WiFi gap</div>
+      <p>Full booking flow completed — search, detail, checkout, confirmation — and nowhere was it shown the property had no internet.</p>
+      <span class="wc-badge badge-err">Critical info hidden</span>
+    </div>
+  </div>
+
+  <div class="eyebrow" style="margin-bottom:8px">Three modes — one platform</div>
+  <div class="mode-grid">
+    <div class="mode-card">
+      <div class="mc-num">Mode 01</div>
+      <i class="ti ti-map-2 mc-icon"></i>
+      <h3>Plan</h3>
+      <p>Describe your trip in plain language. TrustRoute builds a verified roadmap — flights, hotels, visa rules, documents.</p>
+    </div>
+    <div class="mode-card featured">
+      <div class="mc-num">Mode 02</div>
+      <i class="ti ti-shield-check mc-icon"></i>
+      <h3>Verify</h3>
+      <p>Paste any booking confirmation. We run 12 trust checks in seconds and give you a score with flagged items.</p>
+    </div>
+    <div class="mode-card">
+      <div class="mc-num">Mode 03</div>
+      <i class="ti ti-eye mc-icon"></i>
+      <h3>Monitor</h3>
+      <p>Silent background watch from booking to check-in. Alerts only when something changes.</p>
+    </div>
+  </div>
+</div>`,
+annotation:`<strong>Landing Page</strong> · Hero leads with the real problem (not the product). Quick-check paste box on landing means users see value before signing up. "Why" cards show real field research findings — these are actual observations from MakeMyTrip and Booking.com field study. Three mode cards introduce the product structure. CTA is "Get early access" — connects to sign-up modal.`,
+
+// ── 2. SIGN-UP MODAL ──────────────────────────────────────────────
+1: topbar(`<button class="btn btn-secondary">Sign in</button><button class="btn btn-primary">Get early access</button>`) + `
+<div class="bd" style="position:relative">
+  <div style="filter:blur(2px);opacity:.4;pointer-events:none">
+    <div class="hero" style="padding:16px 20px 12px">
+      <div class="hero-tag">Real findings. Real trips. Verified.</div>
+      <h1>Book with confidence.<br>Travel without surprises.</h1>
+    </div>
+  </div>
+  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:100%;max-width:340px;padding:0 16px">
+    <div class="modal-box" style="margin:0">
+      <div class="modal-title">Get early access to TrustRoute</div>
+      <div class="modal-sub">Join 8,200+ travelers who verify before they fly. Free to start — no card required.</div>
+      <div class="form-field">
+        <label>Full name</label>
+        <input type="text" placeholder="Your name">
+      </div>
+      <div class="form-field">
+        <label>Email address</label>
+        <input type="email" placeholder="you@example.com">
+      </div>
+      <div class="form-field">
+        <label>How often do you travel?</label>
+        <input type="text" placeholder="2–3 times a year / Monthly / etc.">
+      </div>
+      <button class="btn-full" style="margin-top:4px">Join early access →</button>
+      <div class="modal-footer">Free forever on basic plan · No spam · Unsubscribe anytime</div>
+    </div>
+  </div>
+</div>`,
+annotation:`<strong>Sign-up Modal</strong> · Triggered by "Get early access" CTA on landing. Overlays the page — background is blurred, modal is foregrounded. Three fields only: name, email, travel frequency. Travel frequency is stored in Supabase early_access table — helps segment users for onboarding. Submit saves to database and shows confirmation. No password required at signup.`,
+
+// ── 3. PLAN — INPUT ───────────────────────────────────────────────
+2: topbar(`<button class="btn btn-ghost"><i class="ti ti-arrow-left"></i> Home</button><button class="btn btn-secondary" style="font-size:11px">My trips</button>`) + `
+<div class="bd">
+  <div class="eyebrow">Mode 01 — Plan</div>
+  <div class="section-title">Plan your trip</div>
+  <div class="section-sub">Describe your trip in plain language — TrustRoute handles the research and builds your verified roadmap.</div>
+
+  <div class="prompt-box">e.g. "Weekend trip to Goa for 2 adults, 4–6 July, budget ₹25,000 — need flights from Mumbai, hotel near Calangute beach, and do I need a visa?"</div>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+    <span style="font-size:11px;color:#888">AI will ask follow-up questions if needed</span>
+    <button class="btn btn-primary" style="font-size:12px"><i class="ti ti-send"></i> Build my roadmap</button>
+  </div>
+
+  <div class="divider"></div>
+  <div class="eyebrow" style="margin-bottom:10px">Or fill in manually</div>
+
+  <div class="form-row"><label>Destination</label><div class="fi">North Goa, India</div></div>
+  <div class="form-row"><label>Travel dates</label><div class="fi">4 July — 6 July 2026 &nbsp;(2 nights)</div></div>
+  <div class="form-row"><label>Travelers</label><div style="display:flex;gap:8px"><div class="fi">2 adults</div><div class="fi">0 children</div></div></div>
+  <div class="form-row"><label>Budget</label><div class="fi">₹ 25,000 total</div></div>
+  <div class="form-row" style="align-items:flex-start;padding-top:4px">
+    <label style="margin-top:4px">Include</label>
+    <div class="chip-row">
+      <div class="chip on">✈ Flights</div>
+      <div class="chip on">🏨 Hotels</div>
+      <div class="chip on">📄 Visa check</div>
+      <div class="chip">🚗 Car hire</div>
+      <div class="chip on">🧳 Baggage rules</div>
+      <div class="chip">🚂 Trains</div>
+    </div>
+  </div>
+  <button class="btn-full" style="margin-top:4px">Build my verified roadmap →</button>
+  <div class="check-list" style="margin-top:12px">
+    <div class="check-item"><i class="ti ti-check"></i> Top 3 flights compared across OTAs</div>
+    <div class="check-item"><i class="ti ti-check"></i> Hotels by verified rating & amenities</div>
+    <div class="check-item"><i class="ti ti-check"></i> Visa + entry requirements checked</div>
+    <div class="check-item"><i class="ti ti-check"></i> Document checklist generated</div>
+  </div>
+</div>`,
+annotation:`<strong>Plan Mode — Input</strong> · Two input paths: free-text prompt (primary) or structured form (secondary). Free-text is how most users start — the AI parses it and may ask follow-up questions. Manual form for users who prefer structured input. Include chips let users scope the search. "Build my verified roadmap" triggers the Groq AI call via Vercel serverless function. Results appear on the next screen.`,
+
+// ── 4. PLAN — RESULTS ─────────────────────────────────────────────
+3: topbar(`<button class="btn btn-ghost"><i class="ti ti-arrow-left"></i> Back</button><button class="btn btn-secondary" style="font-size:11px">Save trip</button>`) + `
+<div class="bd">
+  <div class="eyebrow">Plan results — Goa, 4–6 Jul · 2 adults · ₹25,000 budget</div>
+  <div class="section-title" style="margin-bottom:14px">Your verified roadmap</div>
+
+  <div class="result-section">
+    <div class="rs-head"><i class="ti ti-plane-tilt"></i> Best flights — Mumbai to Goa</div>
+    <div class="flight-row">
+      <div><div class="fr-left">IndiGo 6E-441</div><div class="fr-meta">07:00 → 08:15 · 1h 15m · Non-stop</div></div>
+      <div style="text-align:right"><div class="fr-price">₹4,280</div><span class="fr-badge">Best value</span></div>
+    </div>
+    <div class="flight-row">
+      <div><div class="fr-left">Air India AI-668</div><div class="fr-meta">11:30 → 12:50 · 1h 20m · Non-stop</div></div>
+      <div style="text-align:right"><div class="fr-price">₹5,100</div></div>
+    </div>
+    <div class="flight-row">
+      <div><div class="fr-left">SpiceJet SG-116</div><div class="fr-meta">16:45 → 18:00 · 1h 15m · Non-stop</div></div>
+      <div style="text-align:right"><div class="fr-price">₹3,990</div></div>
+    </div>
+  </div>
+
+  <div class="result-section">
+    <div class="rs-head"><i class="ti ti-building"></i> Recommended hotels — near Calangute</div>
+    <div class="hotel-row">
+      <div><div class="hr-name">Acacia Palms Resort</div><div class="hr-meta">★ 4.2 · 0.8 km from beach · WiFi ✓ · Breakfast incl.</div></div>
+      <div><div class="hr-price">₹3,200/night</div><div class="hr-dist">1.2 km to centre</div></div>
+    </div>
+    <div class="hotel-row">
+      <div><div class="hr-name">Sea View Inn Calangute</div><div class="hr-meta">★ 4.0 · 0.3 km from beach · WiFi ✓</div></div>
+      <div><div class="hr-price">₹2,450/night</div><div class="hr-dist">0.5 km to centre</div></div>
+    </div>
+    <div class="hotel-row">
+      <div><div class="hr-name">Zostel Goa (North)</div><div class="hr-meta">★ 4.4 · Hostel/Dorm · WiFi ✓ · Common kitchen</div></div>
+      <div><div class="hr-price">₹850/bed</div><div class="hr-dist">Budget option</div></div>
+    </div>
+  </div>
+
+  <div class="result-section">
+    <div class="rs-head"><i class="ti ti-file-text"></i> Documents & visa</div>
+    <div class="doc-box">
+      <div class="doc-item"><i class="ti ti-check"></i> Visa not required — domestic travel within India</div>
+      <div class="doc-item"><i class="ti ti-check"></i> Valid government-issued photo ID required at check-in</div>
+      <div class="doc-item"><i class="ti ti-check"></i> Aadhaar card or PAN card accepted</div>
+      <div class="doc-item"><i class="ti ti-check"></i> Boarding pass — web check-in opens 48 hrs before</div>
+    </div>
+  </div>
+
+  <div class="note-box"><i class="ti ti-info-circle"></i> <strong>Important:</strong> Prices sourced from multiple OTAs at time of search. Verify before booking. Use Verify mode to run a trust check on your chosen booking.</div>
+
+  <div style="display:flex;gap:8px;margin-top:14px">
+    <button class="btn btn-primary" style="flex:1">Verify a booking from this plan</button>
+    <button class="btn btn-secondary">Save this roadmap</button>
+  </div>
+</div>`,
+annotation:`<strong>Plan Mode — Results</strong> · Three sections always shown: Flights, Hotels, Documents. Results are sourced from Groq AI (llama-3.3-70b-versatile) which aggregates OTA data. Hotels include hostels/budget options — addressing the solo traveler gap identified in user research. Each result is presented with verified details. CTA directs user to Verify mode for further trust checking. "Save this roadmap" adds to Supabase monitored_trips table.`,
+
+// ── 5. VERIFY — INPUT ─────────────────────────────────────────────
+4: topbar(`<button class="btn btn-ghost"><i class="ti ti-arrow-left"></i> Home</button><button class="btn btn-secondary" style="font-size:11px">My trips</button>`) + `
+<div class="bd">
+  <div class="eyebrow">Mode 02 — Verify</div>
+  <div class="section-title">Verify your booking</div>
+  <div class="section-sub">Paste your confirmation link or text — booked anywhere. We run 12 trust checks in seconds.</div>
+
+  <div class="tabs">
+    <div class="tab active">Paste link or text</div>
+    <div class="tab">Upload PDF</div>
+    <div class="tab">Enter manually</div>
+  </div>
+
+  <div class="paste-row">
+    <div class="paste-input">https://booking.com/confirm/5532556142 &nbsp;&nbsp;or paste your confirmation email text</div>
+    <button class="btn btn-primary" style="white-space:nowrap"><i class="ti ti-shield-check"></i> Verify now</button>
+  </div>
+  <div class="support-text">Supports: Booking.com · MakeMyTrip · Expedia · Agoda · Goibibo · Airbnb · IRCTC · any booking PDF or email</div>
+
+  <div class="divider"></div>
+  <div class="upload-zone">
+    <i class="ti ti-upload"></i>
+    Drop your booking confirmation PDF or screenshot here
+    <div style="font-size:11px;margin-top:4px;color:#AAA">PDF, JPG, PNG supported · Max 10MB</div>
+  </div>
+
+  <div class="eyebrow" style="margin-bottom:8px">What we check in every verification</div>
+  <div class="check-list">
+    <div class="check-item"><i class="ti ti-check"></i> Price consistency across booking funnel</div>
+    <div class="check-item"><i class="ti ti-check"></i> Hotel open & listing matches</div>
+    <div class="check-item"><i class="ti ti-check"></i> Visa & entry requirements</div>
+    <div class="check-item"><i class="ti ti-check"></i> Critical amenities (WiFi, parking, breakfast)</div>
+    <div class="check-item"><i class="ti ti-check"></i> Review recency & rating integrity</div>
+    <div class="check-item"><i class="ti ti-check"></i> Booking validity & contact details</div>
+    <div class="check-item"><i class="ti ti-check"></i> Baggage allowance accuracy</div>
+    <div class="check-item"><i class="ti ti-check"></i> Cancellation policy clarity</div>
+  </div>
+</div>`,
+annotation:`<strong>Verify Mode — Input</strong> · Three input methods: paste link/text (primary — most OTA confirmation URLs work), upload PDF, or enter manually. "Paste link or text" tab is active by default — this is how the quick-check on the landing page also works. Verifications are logged to Supabase verifications table. The 12-point check list sets expectations before results appear.`,
+
+// ── 6. VERIFY — RESULTS ───────────────────────────────────────────
+5: topbar(`<button class="btn btn-ghost"><i class="ti ti-arrow-left"></i> Back</button><button class="btn btn-secondary" style="font-size:11px">Share</button>`) + `
+<div class="bd">
+  <div class="eyebrow">Verification report</div>
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">
+    <div>
+      <div class="section-title">Luxzy Studio Apartments Goa</div>
+      <div style="font-size:11px;color:#666">4–6 Jul 2026 · 2 adults · 2 nights · Ref: 5532556142</div>
+    </div>
+    <div class="trust-score-bar ts-amber" style="padding:10px 14px;margin:0;min-width:90px;text-align:center">
+      <div class="ts-num">72</div>
+      <div class="ts-label" style="font-size:11px">Trust score</div>
+      <div class="ts-sub">Needs attention</div>
+    </div>
+  </div>
+
+  <div class="check-grid">
+    <div class="check-card cc-green">
+      <div class="cc-head"><i class="ti ti-check"></i> Booking confirmed</div>
+      <div class="cc-body">Ref. 5532556142 valid. Property acknowledges the booking.</div>
+    </div>
+    <div class="check-card cc-green">
+      <div class="cc-head"><i class="ti ti-check"></i> Price consistent</div>
+      <div class="cc-body">₹1,366 matches across search, detail, review & checkout.</div>
+    </div>
+    <div class="check-card cc-green">
+      <div class="cc-head"><i class="ti ti-check"></i> Visa — clear</div>
+      <div class="cc-body">Indian citizen, domestic trip. No visa or entry docs needed.</div>
+    </div>
+  </div>
+
+  <div class="check-grid">
+    <div class="check-card cc-amber">
+      <div class="cc-head"><i class="ti ti-clock"></i> Review recency</div>
+      <div class="cc-body">Last review posted 8 months ago. Verify property is still operating.</div>
+      <div class="cc-action">Contact property →</div>
+    </div>
+    <div class="check-card cc-amber">
+      <div class="cc-head"><i class="ti ti-alert-triangle"></i> Rating conflict</div>
+      <div class="cc-body">Overall 4.1 "Disappointing" but subcategory scores are 4.8–5.0. Inconsistency flagged.</div>
+      <div class="cc-action">See breakdown →</div>
+    </div>
+    <div class="check-card cc-red">
+      <div class="cc-head"><i class="ti ti-wifi-off"></i> No WiFi</div>
+      <div class="cc-body">Property has no internet. This was not shown anywhere in the booking flow.</div>
+      <div class="cc-action">Find alternatives →</div>
+    </div>
+  </div>
+
+  <div class="result-actions">
+    <button class="btn-success"><i class="ti ti-eye"></i> Activate monitoring</button>
+    <button class="btn btn-secondary"><i class="ti ti-share"></i> Share verified trip</button>
+    <button class="btn btn-secondary"><i class="ti ti-download"></i> Download report</button>
+  </div>
+</div>`,
+annotation:`<strong>Verify Mode — Results</strong> · Trust score (0–100) at top right. Green cards = passed checks, Amber = needs attention, Red = critical issue. The three flagged items here (review recency, rating contradiction, missing WiFi) are the actual findings from the Booking.com field research. "Activate monitoring" adds the booking to Monitor mode in Supabase. "Share verified trip" generates a public shareable link — the viral growth loop entry point.`,
+
+// ── 7. MONITOR — DASHBOARD ────────────────────────────────────────
+6: topbar(`<button class="btn btn-primary" style="font-size:11px">+ Add trip</button><button class="btn btn-secondary" style="font-size:11px">Account</button>`) + `
+<div class="bd">
+  <div class="eyebrow">Mode 03 — Monitor</div>
+  <div class="section-title" style="margin-bottom:14px">Your active trips</div>
+
+  <div class="trip-card">
+    <div class="tc-left">
+      <div class="tc-dot tc-dot-green"></div>
+      <div><div class="tc-name">Goa Weekend</div><div class="tc-meta">Jul 4–6 · Luxzy Studio Apartments · 2 adults</div></div>
+    </div>
+    <div class="tc-right">
+      <span class="status-badge sb-green">All clear</span>
+      <span class="time-ago">2 min ago</span>
+      <button class="btn btn-secondary" style="padding:4px 10px;font-size:11px">View</button>
+    </div>
+  </div>
+
+  <div class="trip-card">
+    <div class="tc-left">
+      <div class="tc-dot tc-dot-amber"></div>
+      <div><div class="tc-name">Bangkok Trip</div><div class="tc-meta">Aug 12–18 · Agoda Hotel Bangkok · 2 adults</div></div>
+    </div>
+    <div class="tc-right">
+      <span class="status-badge sb-amber">1 alert</span>
+      <span class="time-ago">5 min ago</span>
+      <button class="btn btn-primary" style="padding:4px 10px;font-size:11px">View</button>
+    </div>
+  </div>
+
+  <div class="trip-card">
+    <div class="tc-left">
+      <div class="tc-dot tc-dot-blue"></div>
+      <div><div class="tc-name">Manali Family Trip</div><div class="tc-meta">Sep 2–8 · Hotel Snowcrest Manor · 4 adults</div></div>
+    </div>
+    <div class="tc-right">
+      <span class="status-badge sb-blue">Verifying...</span>
+      <span class="time-ago">Now</span>
+      <button class="btn btn-secondary" style="padding:4px 10px;font-size:11px">View</button>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="eyebrow" style="margin-bottom:8px">Recent activity</div>
+  <div class="alert-feed">
+    <div class="af-item">
+      <div class="af-dot af-dot-amber"></div>
+      <div><strong>Bangkok trip</strong> — Hotel price dropped ₹800 — alternative rate now available on Agoda</div>
+      <span class="time-ago" style="flex-shrink:0;margin-left:8px">Jun 4, 09:41</span>
+    </div>
+    <div class="af-item">
+      <div class="af-dot af-dot-green"></div>
+      <div><strong>Goa booking</strong> — All systems confirmed, no issues found in daily check</div>
+      <span class="time-ago" style="flex-shrink:0;margin-left:8px">Jun 4, 14:22</span>
+    </div>
+    <div class="af-item">
+      <div class="af-dot af-dot-green"></div>
+      <div><strong>Goa booking</strong> — Initial verification complete, 2 amber items actioned by user</div>
+      <span class="time-ago" style="flex-shrink:0;margin-left:8px">Jun 3, 09:00</span>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-box"><div class="sn">3</div><div class="sl">Active trips</div></div>
+    <div class="stat-box"><div class="sn">1</div><div class="sl">Alert this week</div></div>
+    <div class="stat-box"><div class="sn">₹800</div><div class="sl">Saving found</div></div>
+    <div class="stat-box"><div class="sn">28d</div><div class="sl">Coverage left</div></div>
+  </div>
+</div>`,
+annotation:`<strong>Monitor Mode — Dashboard</strong> · Lists all actively monitored trips. Each trip shows status dot (green = clear, amber = alert, blue = processing) and badge. Activity feed below shows recent automated checks. Stats row gives a quick summary. Trips are stored in Supabase monitored_trips table. Dashboard is the retention anchor — users with multiple trips here churn at significantly lower rates.`,
+
+// ── 8. ALERT DETAIL ───────────────────────────────────────────────
+7: topbar(`<button class="btn btn-ghost"><i class="ti ti-arrow-left"></i> Back to trips</button>`) + `
+<div class="bd">
+  <div class="eyebrow">Alert · Bangkok trip · Jun 4, 2026 · 09:41</div>
+
+  <div class="alert-detail-card">
+    <div class="adc-head">
+      <i class="ti ti-bell-ringing"></i>
+      <h2>TrustRoute caught something</h2>
+    </div>
+    <div style="font-size:13px;font-weight:600;color:#1A1A1A;margin-bottom:2px">Your Bangkok hotel price dropped</div>
+    <div style="font-size:11px;color:#666;margin-bottom:10px">Agoda Hotel Bangkok · Aug 12–18 · 2 adults</div>
+
+    <div class="price-compare">
+      <div class="pc-item"><div class="pc-label">You paid</div><div class="pc-val">₹18,400</div></div>
+      <div class="pc-item"><div class="pc-label">Current price</div><div class="pc-val">₹17,600</div></div>
+      <div class="pc-item"><div class="pc-label">You could save</div><div class="pc-val saved">₹800</div></div>
+    </div>
+
+    <div class="adc-desc">The same room is now listed at ₹17,600 on Agoda. Free cancellation is still available on your current booking until Jul 14. TrustRoute can help you rebook at the lower rate.</div>
+
+    <div class="adc-actions">
+      <button class="btn-success" style="flex:1;padding:10px">Cancel & rebook at ₹17,600 →</button>
+      <button class="btn btn-secondary" style="padding:10px 14px">Keep existing booking</button>
+    </div>
+    <div class="adc-expiry"><i class="ti ti-clock" style="font-size:12px"></i> Free cancellation window closes in 23 hours</div>
+  </div>
+
+  <div class="share-strip">
+    <div>
+      <div class="ss-title">Share this catch</div>
+      <p>Generate a "TrustRoute saved me ₹800" card — share with friends and earn a free month</p>
+    </div>
+    <button class="btn btn-secondary" style="font-size:12px;flex-shrink:0;margin-left:12px"><i class="ti ti-share"></i> Share</button>
+  </div>
+</div>`,
+annotation:`<strong>Monitor Mode — Alert Detail</strong> · Triggered when the Watchdog Agent detects a price change, cancellation, or issue. Shows price comparison (paid vs current vs saving). Two clear actions: rebook or keep. Countdown timer creates urgency around free cancellation window. Share strip at bottom is the "Caught Problem" viral loop — generates a shareable card with a QR code that brings new users into the platform.`
+
+};
+
+let cur = 0;
+
+// Split HTML and annotations
+const annotations = {};
+Object.keys(H).forEach(k => {
+  const val = H[k];
+  if (typeof val === 'object' && val.annotation) {
+    annotations[k] = val.annotation;
+    H[k] = val; // keep as-is, we read .annotation separately
+  }
+});
+
+function render() {
+  const html = typeof H[cur] === 'string' ? H[cur] : H[cur];
+  const note = annotations[cur] || H[cur].annotation || "";
+  document.getElementById('sw').innerHTML =
+    `<div>${html}</div>` +
+    (note ? `<div class="annotation">${note}</div>` : '');
+  document.getElementById('sc').textContent = `Screen ${cur + 1} of ${scr.length}`;
+  document.querySelectorAll('.pill').forEach((p, i) => p.classList.toggle('active', i === cur));
+}
+
+const np = document.getElementById('np');
+scr.forEach((s, i) => {
+  const b = document.createElement('button');
+  b.className = 'pill' + (i === 0 ? ' active' : '');
+  b.textContent = s;
+  b.onclick = () => { cur = i; render(); };
+  np.appendChild(b);
+});
+
+render();
+</script>
+</body>
+</html>

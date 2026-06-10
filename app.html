@@ -319,8 +319,24 @@ async function runPlan() {
   if (!input) return;
   const btn = document.getElementById('plan-btn');
   const out = document.getElementById('plan-output');
+
+  // Validate: must be a meaningful trip description
+  const words = input.split(/\s+/).filter(Boolean);
+  const travelKeywords = /\b(trip|travel|fly|flight|hotel|visit|goa|mumbai|delhi|bangalore|bengaluru|hyderabad|pune|jaipur|manali|kerala|bangkok|dubai|london|paris|tokyo|singapore|bali|europe|asia|india|international|domestic|beach|mountain|city|resort|hostel|days?|nights?|adults?|people|person|family|couple|budget|rupee|july|august|september|october|november|december|january|february|march|april|may|june|2025|2026|weekend|holiday|vacation|tour|where|when|from|to)\b/i;
+  const hasContext = travelKeywords.test(input);
+
+  if (words.length < 5 || !hasContext) {
+    out.innerHTML = `<div class="error-box" style="border-left:3px solid var(--amber);background:var(--amber-bg);padding:16px;border-radius:8px">
+      <div style="font-weight:600;color:var(--amber);margin-bottom:6px">&#9888; Need a bit more detail</div>
+      <div style="font-size:13px;color:var(--t2);line-height:1.5">Tell us where you're going, when, how many people, and your budget. For example:<br><br>
+      <em style="color:var(--t1)">"Weekend trip to Goa for 2 adults, July 4-6 2026, budget 25,000 - need flights from Mumbai and a hotel near Calangute beach."</em></div>
+      <button class="btn-secondary" style="margin-top:12px;font-size:12px;padding:6px 12px" onclick="fillPlanExample()">Use example &#8594;</button>
+    </div>`;
+    return;
+  }
+
   btn.disabled = true;
-  out.innerHTML = '<div class="spinner"><span class="spin">↻</span> Building your trip roadmap...</div>';
+  out.innerHTML = '<div class="spinner"><span class="spin">&#8635;</span> Building your trip roadmap...</div>';
   try {
     const data = await callAI('plan', input);
     out.innerHTML = renderPlan(data);
@@ -497,7 +513,14 @@ async function renderMonitor() {
     const { data, error } = await sb.from('monitored_trips')
       .select('*').order('created_at', {ascending: false}).limit(20);
     if (!error && data && data.length) {
-      trips = data;
+      // Deduplicate by property+dates — same booking added multiple times
+      const seen = new Set();
+      trips = data.filter(t => {
+        const key = (t.property || '').toLowerCase().trim() + '|' + (t.dates || '').toLowerCase().trim();
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
     } else {
       trips = [...getLocalTrips(), ...SAMPLE_TRIPS];
     }

@@ -314,27 +314,128 @@ async function callAI(mode, input) {
 }
 
 // ── PLAN ───────────────────────────────────────────────────────────────────
+// ── Trip field detector ────────────────────────────────────────────────────
+function detectTripFields(input) {
+  const txt = input.toLowerCase();
+  const found = {};
+
+  // Destination — first city/country mention
+  found.destination = /\b(goa|mumbai|delhi|bangalore|bengaluru|hyderabad|pune|jaipur|manali|kerala|bangkok|dubai|london|paris|tokyo|singapore|bali|iloilo|philippines|europe|maldives|sri lanka|nepal|bhutan|new york|sydney|amsterdam|rome|barcelona|istanbul|cairo|new zealand|australia|canada|usa|america|france|germany|italy|japan|thailand|indonesia|malaysia|vietnam|cambodia|myanmar)\b/i.test(input);
+
+  // Origin — "from [city]" or "flying from" or "depart from"
+  found.origin = /\b(from\s+\w+|flying from|depart from|travelling from|traveling from|starting from)\b/i.test(txt);
+
+  // Departure date
+  found.departure = /\b(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec|january|february|march|april|june|july|august|september|october|november|december|\d{1,2}[\/\-]\d{1,2}|\d+(?:st|nd|rd|th)\s+(?:of\s+)?(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec))\b/i.test(txt);
+
+  // Return date — "to [date]", "return", "coming back", "till", "until"
+  found.returnDate = /\b(return|coming back|fly back|back on|till|until|to \d|checkout|check.out|\d+\s+nights?)\b/i.test(txt) || (txt.match(/\b(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\b/gi) || []).length >= 2;
+
+  // Travelers
+  found.travelers = /\b(\d+\s+(?:adults?|pax|people|persons?|passengers?)|solo|couple|family|alone|myself|one person|two people|three people)\b/i.test(txt);
+
+  // Budget
+  found.budget = /\b(budget|₹|rs\.?|inr|\d{4,}|cheap|luxury|mid.range|affordable|economy|business class|backpacker)\b/i.test(txt);
+
+  return found;
+}
+
+function getMissingFields(detected) {
+  const missing = [];
+  if (!detected.destination) missing.push({ key:'destination', label:'Where are you going?', placeholder:'e.g. Goa, Bangkok, Dubai, Europe...', icon:'📍' });
+  if (!detected.origin)      missing.push({ key:'origin',      label:'Flying / travelling from?', placeholder:'e.g. Mumbai, Delhi, Bangalore...', icon:'🛫' });
+  if (!detected.departure)   missing.push({ key:'departure',   label:'Departure date', placeholder:'e.g. July 4 2026', icon:'📅' });
+  if (!detected.returnDate)  missing.push({ key:'returnDate',  label:'Return date', placeholder:'e.g. July 8 2026', icon:'📅' });
+  if (!detected.travelers)   missing.push({ key:'travelers',   label:'How many travellers?', placeholder:'e.g. 2 adults, family of 4, solo', icon:'👥' });
+  if (!detected.budget)      missing.push({ key:'budget',      label:'Budget (approx)', placeholder:'e.g. ₹25,000 total, luxury, budget-friendly', icon:'💰' });
+  return missing;
+}
+
+function showClarificationForm(baseInput, missing) {
+  const out = document.getElementById('plan-output');
+  const fields = missing.map(f => `
+    <div style="margin-bottom:12px">
+      <label style="display:block;font-size:12px;font-weight:600;color:var(--t2);margin-bottom:4px">${f.icon} ${f.label}</label>
+      <input id="clarify-${f.key}" type="text" placeholder="${f.placeholder}"
+        style="width:100%;padding:9px 12px;border:1px solid var(--border-med);border-radius:8px;font-size:13px;color:var(--t1);font-family:inherit;outline:none;background:var(--white);box-sizing:border-box"
+        onfocus="this.style.borderColor='var(--blue-txt)'" onblur="this.style.borderColor='var(--border-med)'"
+        onkeydown="if(event.key==='Enter')buildWithAnswers()" />
+    </div>`).join('');
+
+  out.innerHTML = `
+    <div style="background:var(--white);border:1px solid var(--border-med);border-radius:12px;padding:20px">
+      <div style="font-size:13px;font-weight:600;color:var(--navy);margin-bottom:4px">Almost there — a few quick details</div>
+      <div style="font-size:12px;color:var(--t3);margin-bottom:16px">We'll build your complete roadmap once we have these.</div>
+      ${fields}
+      <button class="btn-primary" style="width:100%;margin-top:4px" onclick="buildWithAnswers()">Build my roadmap →</button>
+    </div>`;
+
+  // Store base input so buildWithAnswers can access it
+  out.dataset.baseInput = baseInput;
+  // Focus first field
+  const first = out.querySelector('input');
+  if (first) setTimeout(() => first.focus(), 50);
+}
+
+async function buildWithAnswers() {
+  const out = document.getElementById('plan-output');
+  const base = out.dataset.baseInput || '';
+
+  // Collect answers
+  const keys = ['destination','origin','departure','returnDate','travelers','budget'];
+  const labels = { destination:'Destination', origin:'Travelling from', departure:'Departure date', returnDate:'Return date', travelers:'Travellers', budget:'Budget' };
+  let extras = [];
+  keys.forEach(k => {
+    const el = document.getElementById('clarify-' + k);
+    if (el && el.value.trim()) extras.push(labels[k] + ': ' + el.value.trim());
+  });
+
+  const fullInput = [base, ...extras].filter(Boolean).join('\n');
+
+  const btn = document.getElementById('plan-btn');
+  btn.disabled = true;
+  out.innerHTML = '<div class="spinner"><span class="spin">&#8635;</span> Building your trip roadmap...</div>';
+  try {
+    const data = await callAI('plan', fullInput);
+    out.innerHTML = renderPlan(data);
+  } catch(e) {
+    out.innerHTML = '<div class="error-box">Could not build roadmap. Please try again.</div>';
+  }
+  btn.disabled = false;
+}
+
 async function runPlan() {
   const input = document.getElementById('plan-input').value.trim();
   if (!input) return;
-  const btn = document.getElementById('plan-btn');
   const out = document.getElementById('plan-output');
+  const btn = document.getElementById('plan-btn');
 
-  // Validate: must be a meaningful trip description
+  // Reject completely non-travel input
   const words = input.split(/\s+/).filter(Boolean);
-  const travelKeywords = /\b(trip|travel|fly|flight|hotel|visit|goa|mumbai|delhi|bangalore|bengaluru|hyderabad|pune|jaipur|manali|kerala|bangkok|dubai|london|paris|tokyo|singapore|bali|europe|asia|india|international|domestic|beach|mountain|city|resort|hostel|days?|nights?|adults?|people|person|family|couple|budget|rupee|july|august|september|october|november|december|january|february|march|april|may|june|2025|2026|weekend|holiday|vacation|tour|where|when|from|to)\b/i;
-  const hasContext = travelKeywords.test(input);
-
-  if (words.length < 5 || !hasContext) {
-    out.innerHTML = `<div class="error-box" style="border-left:3px solid var(--amber);background:var(--amber-bg);padding:16px;border-radius:8px">
-      <div style="font-weight:600;color:var(--amber);margin-bottom:6px">&#9888; Need a bit more detail</div>
-      <div style="font-size:13px;color:var(--t2);line-height:1.5">Tell us where you're going, when, how many people, and your budget. For example:<br><br>
-      <em style="color:var(--t1)">"Weekend trip to Goa for 2 adults, July 4-6 2026, budget 25,000 - need flights from Mumbai and a hotel near Calangute beach."</em></div>
+  const hasTravelContext = /\b(trip|travel|go|fly|flight|hotel|visit|vacation|holiday|tour|journey|destination|book|stay|nights?|days?|adults?|pax|people|budget|₹|from|to|want to|plan|explore)\b/i.test(input);
+  if (words.length < 4 || !hasTravelContext) {
+    out.innerHTML = `<div style="border-left:3px solid var(--amber);background:var(--amber-bg);padding:16px;border-radius:8px">
+      <div style="font-weight:600;color:var(--amber);margin-bottom:6px">&#9888; Tell us about your trip</div>
+      <div style="font-size:13px;color:var(--t2);line-height:1.5">Describe where you want to go and we'll ask for any missing details.<br><br>
+      <em style="color:var(--t1)">"I want to go to Goa in July with 2 adults"</em> is enough to get started.</div>
       <button class="btn-secondary" style="margin-top:12px;font-size:12px;padding:6px 12px" onclick="fillPlanExample()">Use example &#8594;</button>
     </div>`;
     return;
   }
 
+  // Detect what's already in the input
+  const detected = detectTripFields(input);
+  const missing = getMissingFields(detected);
+
+  // If 2 or more critical fields missing — show clarification form
+  const critical = ['origin','departure','returnDate','travelers','budget'];
+  const missingCritical = missing.filter(f => critical.includes(f.key));
+  if (missingCritical.length >= 2) {
+    showClarificationForm(input, missingCritical);
+    return;
+  }
+
+  // Enough info — build directly
   btn.disabled = true;
   out.innerHTML = '<div class="spinner"><span class="spin">&#8635;</span> Building your trip roadmap...</div>';
   try {

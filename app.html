@@ -348,6 +348,9 @@ function getMissingFields(detected) {
   if (!detected.returnDate)  missing.push({ key:'returnDate',  label:'Return date', placeholder:'e.g. July 8 2026', icon:'📅' });
   if (!detected.travelers)   missing.push({ key:'travelers',   label:'How many travellers?', placeholder:'e.g. 2 adults, family of 4, solo', icon:'👥' });
   if (!detected.budget)      missing.push({ key:'budget',      label:'Budget (approx)', placeholder:'e.g. ₹25,000 total, luxury, budget-friendly', icon:'💰' });
+  // Always ask flight preference and class
+  missing.push({ key:'flightType', label:'Flight preference', placeholder:'Direct only / Any connection / No preference', icon:'✈️', isSelect:true, options:['Direct flights only','Any connection ok','No preference'] });
+  missing.push({ key:'travelClass', label:'Travel class', placeholder:'Economy / Business / First class', icon:'💺', isSelect:true, options:['Economy','Premium Economy','Business','First Class'] });
   return missing;
 }
 
@@ -356,10 +359,16 @@ function showClarificationForm(baseInput, missing) {
   const fields = missing.map(f => `
     <div style="margin-bottom:12px">
       <label style="display:block;font-size:12px;font-weight:600;color:var(--t2);margin-bottom:4px">${f.icon} ${f.label}</label>
-      <input id="clarify-${f.key}" type="text" placeholder="${f.placeholder}"
-        style="width:100%;padding:9px 12px;border:1px solid var(--border-med);border-radius:8px;font-size:13px;color:var(--t1);font-family:inherit;outline:none;background:var(--white);box-sizing:border-box"
-        onfocus="this.style.borderColor='var(--blue-txt)'" onblur="this.style.borderColor='var(--border-med)'"
-        onkeydown="if(event.key==='Enter')buildWithAnswers()" />
+      ${f.isSelect
+        ? `<select id="clarify-${f.key}" style="width:100%;padding:9px 12px;border:1px solid var(--border-med);border-radius:8px;font-size:13px;color:var(--t1);font-family:inherit;outline:none;background:var(--white);box-sizing:border-box;cursor:pointer">
+            <option value="">Select...</option>
+            ${f.options.map(o=>`<option value="${o}">${o}</option>`).join('')}
+           </select>`
+        : `<input id="clarify-${f.key}" type="text" placeholder="${f.placeholder}"
+            style="width:100%;padding:9px 12px;border:1px solid var(--border-med);border-radius:8px;font-size:13px;color:var(--t1);font-family:inherit;outline:none;background:var(--white);box-sizing:border-box"
+            onfocus="this.style.borderColor='var(--blue-txt)'" onblur="this.style.borderColor='var(--border-med)'"
+            onkeydown="if(event.key==='Enter')buildWithAnswers()" />`
+      }
     </div>`).join('');
 
   out.innerHTML = `
@@ -383,7 +392,7 @@ async function buildWithAnswers() {
 
   // Collect answers
   const keys = ['destination','origin','departure','returnDate','travelers','budget'];
-  const labels = { destination:'Destination', origin:'Travelling from', departure:'Departure date', returnDate:'Return date', travelers:'Travellers', budget:'Budget' };
+  const labels = { destination:'Destination', origin:'Travelling from', departure:'Departure date', returnDate:'Return date', travelers:'Travellers', budget:'Budget', flightType:'Flight preference', travelClass:'Travel class' };
   let extras = [];
   keys.forEach(k => {
     const el = document.getElementById('clarify-' + k);
@@ -391,6 +400,18 @@ async function buildWithAnswers() {
   });
 
   const fullInput = [base, ...extras].filter(Boolean).join('\n');
+
+  // Save context for booking link generation
+  window.tripCtx = {
+    origin:      (document.getElementById('clarify-origin')?.value||'').trim(),
+    destination: (document.getElementById('clarify-destination')?.value||'').trim(),
+    departure:   (document.getElementById('clarify-departure')?.value||'').trim(),
+    returnDate:  (document.getElementById('clarify-returnDate')?.value||'').trim(),
+    travelers:   (document.getElementById('clarify-travelers')?.value||'').trim(),
+    flightType:  (document.getElementById('clarify-flightType')?.value||''),
+    travelClass: (document.getElementById('clarify-travelClass')?.value||'Economy'),
+    rawInput:    fullInput
+  };
 
   const btn = document.getElementById('plan-btn');
   btn.disabled = true;
@@ -435,7 +456,10 @@ async function runPlan() {
     return;
   }
 
-  // Enough info — build directly
+  // Enough info — build directly; save what we can extract
+  const originMatch = input.match(/from\s+([A-Za-z\s]+?)(?:\s+(?:to|on|for|in)|,|$)/i);
+  window.tripCtx = { rawInput: input, origin: originMatch ? originMatch[1].trim() : '', travelClass:'Economy' };
+
   btn.disabled = true;
   out.innerHTML = '<div class="spinner"><span class="spin">&#8635;</span> Building your trip roadmap...</div>';
   try {
@@ -447,6 +471,35 @@ async function runPlan() {
   btn.disabled = false;
 }
 
+// ── Booking link builders ─────────────────────────────────────────────────
+function bookingLinkStyle(color) {
+  return `display:inline-block;padding:4px 9px;border-radius:5px;font-size:10px;font-weight:600;text-decoration:none;border:1px solid ${color};color:${color};white-space:nowrap;transition:all .15s`;
+}
+function buildFlightLinks(destination, airline) {
+  const ctx = window.tripCtx || {};
+  const origin = ctx.origin || '';
+  const cls = (ctx.travelClass||'Economy').toLowerCase().replace(' ','_');
+  const dest = (destination||'').split(',')[0].trim();
+  const q = encodeURIComponent(`flights from ${origin||'India'} to ${dest}`);
+  const skyscannerQ = encodeURIComponent(`${origin} to ${dest} flights`);
+  const mmtQ = encodeURIComponent(dest);
+  const links = [
+    `<a href="https://www.skyscanner.co.in/transport/flights/?query=${skyscannerQ}" target="_blank" rel="noopener" style="${bookingLinkStyle('#0770E3')}">Skyscanner</a>`,
+    `<a href="https://www.google.com/travel/flights?q=${q}" target="_blank" rel="noopener" style="${bookingLinkStyle('#4285F4')}">Google Flights</a>`,
+    `<a href="https://www.makemytrip.com/flights/" target="_blank" rel="noopener" style="${bookingLinkStyle('#E8534E')}">MakeMyTrip</a>`,
+  ];
+  return links.join('');
+}
+function buildHotelLinks(hotelName, destination, dates) {
+  const dest = encodeURIComponent((destination||'').split(',')[0].trim());
+  const hotel = encodeURIComponent(hotelName||'');
+  const links = [
+    `<a href="https://www.booking.com/searchresults.html?ss=${hotel}+${dest}" target="_blank" rel="noopener" style="${bookingLinkStyle('#003580')}">Booking.com</a>`,
+    `<a href="https://www.makemytrip.com/hotels/hotel-listing/?city=${dest}&hotelName=${hotel}" target="_blank" rel="noopener" style="${bookingLinkStyle('#E8534E')}">MakeMyTrip</a>`,
+  ];
+  return links.join('');
+}
+
 function renderPlan(d) {
   let html = '';
   // Header
@@ -455,7 +508,18 @@ function renderPlan(d) {
   if (d.flights && d.flights.length) {
     html += '<div class="res-section"><div class="res-label">✈ Top flight options</div>';
     d.flights.forEach(f => {
-      html += `<div class="flight-row"><div class="flight-info"><h4>${f.airline}</h4><p>${f.type} · ${f.duration}</p>${f.note?`<span>${f.note}</span>`:''}</div><div class="flight-price">${f.approxPrice}</div></div>`;
+      const flightLinks = buildFlightLinks(d.destination, f.airline);
+      html += `<div class="flight-row" style="flex-wrap:wrap;gap:6px">
+        <div class="flight-info" style="flex:1;min-width:0">
+          <h4>${f.airline}</h4>
+          <p>${f.type} · ${f.duration}</p>
+          ${f.note?`<span>${f.note}</span>`:''}
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0">
+          <div class="flight-price">${f.approxPrice}</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end">${flightLinks}</div>
+        </div>
+      </div>`;
     });
     html += '</div>';
   }
@@ -463,7 +527,18 @@ function renderPlan(d) {
   if (d.hotels && d.hotels.length) {
     html += '<div class="res-section"><div class="res-label">🏨 Recommended hotels</div>';
     d.hotels.forEach(h => {
-      html += `<div class="hotel-row"><div class="hotel-info"><h4>${h.name}</h4><p>${h.area} · ⭐ ${h.rating}</p>${h.note?`<span>${h.note}</span>`:''}</div><div class="hotel-price">${h.approxPrice}</div></div>`;
+      const hotelLinks = buildHotelLinks(h.name, d.destination, d.dates);
+      html += `<div class="hotel-row" style="flex-wrap:wrap;gap:6px">
+        <div class="hotel-info" style="flex:1;min-width:0">
+          <h4>${h.name}</h4>
+          <p>${h.area} · ⭐ ${h.rating}</p>
+          ${h.note?`<span>${h.note}</span>`:''}
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0">
+          <div class="hotel-price">${h.approxPrice}</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end">${hotelLinks}</div>
+        </div>
+      </div>`;
     });
     html += '</div>';
   }
